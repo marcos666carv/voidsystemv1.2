@@ -1,6 +1,9 @@
 import { ServiceCard } from "@/components/cards/ServiceCard";
 import { ProductCard } from "@/components/cards/ProductCard";
 import { Button } from "@/components/ui/button";
+import { MOCK_PRODUCTS, MOCK_SERVICES } from "@/lib/mockData";
+import { ComboBookingFlow } from "@/components/booking/ComboFlow";
+import { GiftCardConfig } from "@/components/products/GiftCardConfig";
 
 export function LandingPage() {
     return (
@@ -29,27 +32,30 @@ export function LandingPage() {
             <section className="container px-4 md:px-6">
                 <h2 className="text-3xl font-bold tracking-tighter mb-12 text-center">Our Services</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <ServiceCard
-                        title="Standard Float"
-                        duration="60 min"
-                        price="$60"
-                        benefitDescription="Perfect for first-timers. Experience deep relaxation and stress relief."
-                        onSelect={() => console.log("Selected Standard Float")}
-                    />
-                    <ServiceCard
-                        title="Deep Dive"
-                        duration="90 min"
-                        price="$85"
-                        benefitDescription="Extended session for profound meditation and physical recovery."
-                        onSelect={() => console.log("Selected Deep Dive")}
-                    />
-                    <ServiceCard
-                        title="Marathon"
-                        duration="120 min"
-                        price="$110"
-                        benefitDescription="The ultimate disconnect. For experienced floaters seeking total reset."
-                        onSelect={() => console.log("Selected Marathon")}
-                    />
+                    {MOCK_SERVICES.map((service) => (
+                        <ServiceCard key={service.id} service={service} />
+                    ))}
+                </div>
+            </section>
+
+            {/* Special Offers & Gifts */}
+            <section className="container px-4 md:px-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                    {/* Combo Deal */}
+                    <div className="p-8 rounded-2xl bg-gradient-to-br from-violet-500/10 to-indigo-500/10 border border-violet-500/20 space-y-6">
+                        <div className="space-y-2">
+                            <h3 className="text-2xl font-bold">The Ultimate Reset</h3>
+                            <p className="text-muted-foreground">Combine a 60min Float with a 60min Massage for the complete restoration experience.</p>
+                        </div>
+                        <div className="flex items-baseline gap-2">
+                            <span className="text-3xl font-bold">$140</span>
+                            <span className="text-lg text-muted-foreground line-through">$160</span>
+                        </div>
+                        <ComboBookingFlow />
+                    </div>
+
+                    {/* Gift Cards */}
+                    <GiftCardConfig />
                 </div>
             </section>
 
@@ -57,30 +63,9 @@ export function LandingPage() {
             <section className="container px-4 md:px-6 bg-muted/20 py-16 rounded-3xl">
                 <h2 className="text-3xl font-bold tracking-tighter mb-12 text-center">Void Essentials</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <ProductCard
-                        title="Void Candle"
-                        price="$25"
-                        imageUrl="https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&q=80&w=1000"
-                        rating={4.8}
-                    />
-                    <ProductCard
-                        title="Magnesium Salts"
-                        price="$35"
-                        imageUrl="https://images.unsplash.com/photo-1615486511484-92e172cc416d?auto=format&fit=crop&q=80&w=1000"
-                        rating={5.0}
-                    />
-                    <ProductCard
-                        title="Calm Tea Blend"
-                        price="$18"
-                        imageUrl="https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&q=80&w=1000"
-                        rating={4.7}
-                    />
-                    <ProductCard
-                        title="Essential Oil"
-                        price="$30"
-                        imageUrl="https://images.unsplash.com/photo-1608571423902-eed4a5e84e43?auto=format&fit=crop&q=80&w=1000"
-                        rating={4.9}
-                    />
+                    {MOCK_PRODUCTS.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
                 </div>
             </section>
         </div>
