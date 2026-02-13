@@ -94,7 +94,7 @@ export async function getDailyAvailability(dateStr: string, serviceId: string): 
         let availableTankId: string | undefined;
 
         for (const tank of activeTanks) {
-            const isTankBusy = dailyAppointments.some(appt => {
+            const isTankBusy = dailyAppointments.some((appt: any) => {
                 if (appt.tankId !== tank.id) return false;
 
                 // Check overlap
@@ -199,7 +199,7 @@ export async function createAppointment(params: CreateAppointmentParams) {
         });
 
         // Filter collisions in application code for simplicity regarding 15min buffer calculation on DB side
-        const hasConflict = conflicts.some(appt => {
+        const hasConflict = conflicts.some((appt: any) => {
             // For each existing appointment, determine its blocking range
             // We need its service duration to know its setup time? 
             // Or assume global 15min?
@@ -238,9 +238,9 @@ export async function createAppointment(params: CreateAppointmentParams) {
             const activeTanks = await db.query.tanks.findMany({ where: eq(tanks.active, true) });
 
             // Find a tank that has NO conflicts
-            const validTank = activeTanks.find(tank => {
-                const tankConflicts = conflicts.filter(c => c.tankId === tank.id);
-                const isBusy = tankConflicts.some(appt => {
+            const validTank = activeTanks.find((tank: any) => {
+                const tankConflicts = conflicts.filter((c: any) => c.tankId === tank.id);
+                const isBusy = tankConflicts.some((appt: any) => {
                     const apptStart = parseISO(appt.startTime);
                     const apptEnd = parseISO(appt.endTime);
                     const apptBlockingEnd = addMinutes(apptEnd, 15);
@@ -305,7 +305,7 @@ export async function getAdminSchedule(dateStr: string) {
     });
 
     // 3. Transform for Frontend
-    const bookings = _appointments.map(appt => ({
+    const bookings = _appointments.map((appt: any) => ({
         id: appt.id,
         tankName: appt.tank?.name || 'Unassigned',
         clientName: appt.client?.fullName || 'Unknown',
@@ -318,7 +318,7 @@ export async function getAdminSchedule(dateStr: string) {
     // Add fake "Cleaning" blocks?
     // User requirement: "Adicionar automaticamente 15min de 'Limpeza' após cada sessão".
     // We should visualize this in Gantt.
-    const cleaningBlocks = _appointments.map(appt => {
+    const cleaningBlocks = _appointments.map((appt: any) => {
         const end = parseISO(appt.endTime);
         const cleanupEnd = addMinutes(end, 15);
         return {
@@ -333,7 +333,7 @@ export async function getAdminSchedule(dateStr: string) {
     });
 
     return {
-        tanks: _tanks.map(t => ({ id: t.id, name: t.name })),
+        tanks: _tanks.map((t: any) => ({ id: t.id, name: t.name })),
         bookings: [...bookings, ...cleaningBlocks]
     };
 }

@@ -29,7 +29,7 @@ export async function getClientSegments() {
         }
     });
 
-    const segments: ClientSegment[] = allClients.map(client => {
+    const segments: ClientSegment[] = allClients.map((client: any) => {
         let segment: 'vip' | 'risk' | 'new' | 'active' = 'active';
 
         const lastVisitDate = client.lastVisit ? new Date(client.lastVisit) : null;
@@ -83,7 +83,7 @@ export async function getClientProfile(clientId: string) {
     // Construct Timeline
     // Merge appointments, purchase history (if we had a table, currently jsonb), and interaction history
     // For now, we mainly use appointments as the interaction log
-    const timeline = client.appointments.map(appt => ({
+    const timeline = client.appointments.map((appt: any) => ({
         id: appt.id,
         type: 'appointment',
         date: appt.startTime,

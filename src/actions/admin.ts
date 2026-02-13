@@ -45,9 +45,9 @@ export async function getMissionControlData() {
         }
     });
 
-    const usageStats = allTanks.map(tank => {
-        const tankAppts = recentAppointments.filter(a => a.tankId === tank.id);
-        const totalMinutes = tankAppts.reduce((acc, curr) => acc + curr.service.duration, 0);
+    const usageStats = allTanks.map((tank: any) => {
+        const tankAppts = recentAppointments.filter((a: any) => a.tankId === tank.id);
+        const totalMinutes = tankAppts.reduce((acc: number, curr: any) => acc + curr.service.duration, 0);
         return {
             tankId: tank.id,
             hoursLast30Days: Math.round(totalMinutes / 60)
@@ -55,7 +55,7 @@ export async function getMissionControlData() {
     });
 
     // 3. Transform for UI
-    const dashboardTanks = allTanks.map(tank => {
+    const dashboardTanks = allTanks.map((tank: any) => {
         // Find next session
         // We need to re-query or fix the order above. 
         // Let's do a quick separate query for next session to be robust for now, 
@@ -66,7 +66,7 @@ export async function getMissionControlData() {
             ...tank,
             nextSession: tank.appointments[0]?.startTime || null,
             activeIssue: tank.maintenanceLogs[0] || null,
-            usage: usageStats.find(u => u.tankId === tank.id)?.hoursLast30Days || 0
+            usage: usageStats.find((u: any) => u.tankId === tank.id)?.hoursLast30Days || 0
         };
     });
 

@@ -1,12 +1,11 @@
 // import { neon } from '@neondatabase/serverless';
 // import { drizzle } from 'drizzle-orm/neon-http';
-import * as schema from './schema';
 
 // Safely handle environment variables in both Node.js and Vite environments
-const getConnectionString = () => {
-    // ...
-    return undefined;
-};
+// const getConnectionString = () => {
+//     // ...
+//     return undefined;
+// };
 
 // const connectionString = getConnectionString();
 
