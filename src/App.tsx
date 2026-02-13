@@ -5,6 +5,10 @@ import { AdminLayout } from "@/layouts/AdminLayout";
 import { LandingPage } from "@/pages/public/LandingPage";
 import { ClientDashboard } from "@/pages/app/ClientDashboard";
 import { AdminDashboard } from "@/pages/admin/AdminDashboard";
+import { SchedulePage } from "@/pages/admin/SchedulePage";
+import { MissionControl } from "@/pages/admin/MissionControl";
+import { CommunicationFlow } from "@/pages/admin/CommunicationFlow";
+import { ClientProfile } from "@/pages/admin/ClientProfile";
 import { CartProvider } from "@/context/CartContext";
 
 function App() {
@@ -29,7 +33,11 @@ function App() {
           {/* Admin Routes - Protected in real app */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
-            <Route path="clients" element={<div>Clients (Placeholder)</div>} />
+            <Route path="mission" element={<MissionControl />} />
+            <Route path="schedule" element={<SchedulePage />} />
+            <Route path="crm" element={<CommunicationFlow />} />
+            <Route path="clients" element={<CommunicationFlow />} /> {/* Redirect for list view, eventually separate */}
+            <Route path="clients/:clientId" element={<ClientProfile />} />
             <Route path="controls" element={<div>Controls (Placeholder)</div>} />
           </Route>
 

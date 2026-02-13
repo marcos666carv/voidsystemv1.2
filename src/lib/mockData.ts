@@ -1,36 +1,41 @@
 import type { Product, Service } from "@/types/database";
 
-// Mock Services
 export const MOCK_SERVICES: Service[] = [
     {
         id: "s1",
         name: "Standard Float",
-        category: "flutuacao",
+        category: "flutuacao", // This might need to match schema if schema removed category? schema.ts has no category in services table!
         description: "Perfect for first-timers. Experience deep relaxation and stress relief.",
-        duration_minutes: 60,
-        setup_cleanup_minutes: 15,
-        base_price: 60,
-        active: true
+        duration: 60,
+        setupCleanupMinutes: 15,
+        price: 60,
+        active: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     },
     {
         id: "s2",
         name: "Deep Dive",
         category: "flutuacao",
         description: "Extended session for profound meditation and physical recovery.",
-        duration_minutes: 90,
-        setup_cleanup_minutes: 15,
-        base_price: 85,
-        active: true
+        duration: 90,
+        setupCleanupMinutes: 15,
+        price: 85,
+        active: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     },
     {
         id: "s3",
         name: "Marathon",
         category: "flutuacao",
         description: "The ultimate disconnect. For experienced floaters seeking total reset.",
-        duration_minutes: 120,
-        setup_cleanup_minutes: 15,
-        base_price: 110,
-        active: true
+        duration: 120,
+        setupCleanupMinutes: 15,
+        price: 110,
+        active: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     }
 ];
 

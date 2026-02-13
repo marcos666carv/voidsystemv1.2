@@ -68,10 +68,19 @@ export interface Service {
     name: string;
     category: ServiceCategory;
     description: string | null;
-    duration_minutes: number;
-    setup_cleanup_minutes: number;
-    base_price: number; // numeric(10,2)
+    duration: number;
+    // Wait, Drizzle infers camelCase if defined that way?
+    // In schema.ts: setupCleanupMinutes: integer("setup_cleanup_minutes")
+    // So the property on the object is setupCleanupMinutes.
+    // In types/database.ts it was setup_cleanup_minutes.
+    // I should probably fix that too to be safe/consistent with Drizzle inference if we use it, 
+    // but here we are defining an interface manually. 
+    // mockData uses setupCleanupMinutes now.
+    setupCleanupMinutes: number;
+    price: number; // numeric(10,2)
     active: boolean;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface Package {

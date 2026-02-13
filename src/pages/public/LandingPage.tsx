@@ -33,7 +33,14 @@ export function LandingPage() {
                 <h2 className="text-3xl font-bold tracking-tighter mb-12 text-center">Our Services</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {MOCK_SERVICES.map((service) => (
-                        <ServiceCard key={service.id} service={service} />
+                        <ServiceCard
+                            key={service.id}
+                            title={service.name}
+                            duration={`${service.duration} min`}
+                            price={`$${service.price}`}
+                            benefitDescription={service.description || "Experience total relaxation."}
+                            onSelect={() => console.log("Selected", service.name)}
+                        />
                     ))}
                 </div>
             </section>
