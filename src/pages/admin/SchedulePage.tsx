@@ -6,18 +6,28 @@ import { GanttTimeline } from "@/components/admin/schedule/GanttTimeline";
 import { OverrideBookingForm } from "@/components/admin/schedule/OverrideBookingForm";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAdminSchedule } from "@/actions/scheduling";
+// import { getAdminSchedule } from "@/actions/scheduling";
 
 export function SchedulePage() {
     const [date, setDate] = useState<Date | undefined>(new Date());
     const [scheduleData, setScheduleData] = useState<{ tanks: any[], bookings: any[] }>({ tanks: [], bookings: [] });
 
+    // Mock data for demo
     useEffect(() => {
-        if (date) {
-            getAdminSchedule(format(date, 'yyyy-MM-dd')).then(data => {
-                setScheduleData(data);
-            });
-        }
+        setScheduleData({
+            tanks: [
+                { id: '1', name: 'Tank 1 (Ocean)' },
+                { id: '2', name: 'Tank 2 (Void)' },
+                { id: '3', name: 'Tank 3 (Nebula)' },
+                { id: '4', name: 'Massage Room' }
+            ],
+            bookings: [
+                { id: '1', tankId: '1', tankName: 'Tank 1 (Ocean)', clientName: 'John Doe', startTime: '10:00', endTime: '11:00', duration: 60, type: 'float', status: 'confirmed' },
+                { id: '2', tankId: '1', tankName: 'Tank 1 (Ocean)', clientName: 'Sarah Smith', startTime: '14:30', endTime: '16:00', duration: 90, type: 'float', status: 'confirmed' },
+                { id: '3', tankId: '2', tankName: 'Tank 2 (Void)', clientName: 'Mike Ross', startTime: '11:00', endTime: '12:00', duration: 60, type: 'float', status: 'confirmed' },
+                { id: '4', tankId: '4', tankName: 'Massage Room', clientName: 'Emily Blunt', startTime: '13:00', endTime: '14:00', duration: 60, type: 'massage', status: 'confirmed' },
+            ]
+        });
     }, [date]);
 
     return (

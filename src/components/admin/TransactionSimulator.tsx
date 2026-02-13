@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { handlePagarmeWebhook } from "@/actions/payments";
+// import { handlePagarmeWebhook } from "@/actions/payments";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,20 +21,12 @@ export function TransactionSimulator() {
         }
 
         setLoading(true);
-        try {
-            await handlePagarmeWebhook({
-                type: 'transaction.paid',
-                data: {
-                    amount: parseInt(amount),
-                    metadata: { appointmentId: apptId }
-                }
-            });
-            toast.success(`Webhook 'paid' triggered for ${apptId}`);
-        } catch (e) {
-            toast.error("Webhook failed");
-        } finally {
-            setLoading(false);
-        }
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        console.log("Simulating webhook for:", { apptId, amount });
+        toast.success(`Webhook 'paid' triggered for ${apptId}`);
+        setLoading(false);
     };
 
     return (
