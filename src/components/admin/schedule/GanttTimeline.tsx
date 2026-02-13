@@ -1,120 +1,81 @@
-'use client';
+import { format } from "date-fns";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-import { format, parseISO, startOfDay, differenceInMinutes } from "date-fns";
-import { cn } from "@/lib/utils";
-
-// Types matching DB/Action return (mocked for visualization if specific action not yet created for this view)
-interface Booking {
-    id: string;
-    tankName: string;
-    clientName: string;
-    startTime: string;
-    endTime: string;
-    status: 'confirmed' | 'pending' | 'completed' | 'cancelled';
-    type: 'float' | 'massage' | 'cleaning';
-}
-
-interface GanttProps {
+interface TimelineProps {
     date: Date;
-    bookings: Booking[]; // In real implementation, this would be fetched
-    tanks: { id: string, name: string }[];
+    tanks: any[];
+    bookings: any[];
 }
 
-export function GanttTimeline({ date, bookings, tanks }: GanttProps) {
-    // Config
-    const START_HOUR = 8;
-    const END_HOUR = 22; // 10 PM
-    const TOTAL_MINUTES = (END_HOUR - START_HOUR) * 60;
+export function GanttTimeline({ date, tanks, bookings }: TimelineProps) {
+    const startHour = 8; // 8 AM
+    const endHour = 22; // 10 PM
+    const hours = Array.from({ length: endHour - startHour + 1 }, (_, i) => startHour + i);
+    const PIXELS_PER_HOUR = 120; // Width of one hour slot
 
-    // Helper to position blocks
     const getPosition = (timeStr: string) => {
-        const time = parseISO(timeStr);
-        const startOfDayTime = startOfDay(time);
-        startOfDayTime.setHours(START_HOUR, 0, 0, 0);
-
-        const diff = differenceInMinutes(time, startOfDayTime);
-        return (diff / TOTAL_MINUTES) * 100;
+        const [h, m] = timeStr.split(':').map(Number);
+        const totalMinutes = (h - startHour) * 60 + m;
+        return (totalMinutes / 60) * PIXELS_PER_HOUR;
     };
 
-    const getWidth = (startStr: string, endStr: string) => {
-        const start = parseISO(startStr);
-        const end = parseISO(endStr);
-        const duration = differenceInMinutes(end, start);
-        return (duration / TOTAL_MINUTES) * 100;
+    const getWidth = (durationMinutes: number) => {
+        return (durationMinutes / 60) * PIXELS_PER_HOUR;
     };
-
-    // Time markers
-    const hours = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => START_HOUR + i);
 
     return (
-        <div className="overflow-x-auto border rounded-xl bg-card">
-            <div className="min-w-[800px]">
-                {/* Header (Time Scale) */}
-                <div className="flex border-b border-border bg-muted/40 h-10 items-center">
-                    <div className="w-40 flex-shrink-0 px-4 font-medium text-sm text-muted-foreground border-r border-border flex flex-col justify-center">
-                        <span>Resource</span>
-                        <span className="text-xs font-normal">{format(date, 'MMM dd')}</span>
-                    </div>
-                    <div className="flex-1 relative h-full">
-                        {hours.map(hour => (
-                            <div
-                                key={hour}
-                                className="absolute h-full border-l border-border/50 text-xs text-muted-foreground pl-1 pt-2"
-                                style={{ left: `${((hour - START_HOUR) * 60 / TOTAL_MINUTES) * 100}%` }}
-                            >
-                                {hour}:00
-                            </div>
-                        ))}
-                    </div>
-                </div>
+        <div className="border rounded-xl bg-white overflow-hidden">
+            <ScrollArea className="w-full whitespace-nowrap">
+                <div className="flex flex-col min-w-max">
 
-                {/* Rows */}
-                <div className="divide-y divide-border">
-                    {tanks.map(tank => (
-                        <div key={tank.id} className="flex h-20 group hover:bg-muted/5 transition-colors">
-                            {/* Tank Name */}
-                            <div className="w-40 flex-shrink-0 p-4 border-r border-border flex items-center font-medium text-sm">
-                                {tank.name}
+                    {/* Header Row (Hours) */}
+                    <div className="flex border-b border-slate-200">
+                        <div className="w-48 shrink-0 sticky left-0 z-20 bg-white border-r border-slate-200 p-4 font-semibold text-sm text-slate-500">
+                            Resource
+                        </div>
+                        <div className="flex h-12">
+                            {hours.map(hour => (
+                                <div key={hour} className="border-r border-slate-100 flex items-center justify-center text-xs text-slate-400 font-mono" style={{ width: PIXELS_PER_HOUR }}>
+                                    {hour}:00
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Resource Rows */}
+                    {tanks.length > 0 ? tanks.map((tank, index) => (
+                        <div key={index} className="flex border-b border-slate-100 hover:bg-slate-50/50 transition-colors relative group">
+                            {/* Resource Label sticky to left */}
+                            <div className="w-48 shrink-0 sticky left-0 z-10 bg-white group-hover:bg-slate-50 px-4 py-8 border-r border-slate-200 flex items-center font-medium text-sm text-slate-700">
+                                {tank.name || tank}
                             </div>
 
-                            {/* Timeline Lane */}
-                            <div className="flex-1 relative h-full bg-[repeating-linear-gradient(90deg,transparent,transparent_calc(100%/14-1px),var(--border)_calc(100%/14-1px),var(--border)_calc(100%/14))]">
+                            {/* Timeline Track */}
+                            <div className="relative h-24 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmMWY1ZjkiLz4KPC9zdmc+')]">
+                                {/* Hour Markers (Vertical Lines) */}
+                                {hours.map(hour => (
+                                    <div key={hour} className="absolute top-0 bottom-0 border-r border-slate-100 border-dashed" style={{ left: (hour - startHour) * PIXELS_PER_HOUR, width: 1 }}></div>
+                                ))}
 
-                                {/* Bookings */}
-                                {bookings
-                                    .filter(b => b.tankName === tank.name) // In real app, match by ID
-                                    .map(booking => (
-                                        <div
-                                            key={booking.id}
-                                            className={cn(
-                                                "absolute top-2 bottom-2 rounded-md shadow-sm border text-xs flex flex-col justify-center px-2 truncate cursor-pointer transition-all hover:brightness-95",
-                                                booking.type === 'cleaning' ? "bg-slate-100 border-slate-200 text-slate-500 opacity-70" :
-                                                    booking.status === 'confirmed' ? "bg-violet-100 border-violet-200 text-violet-700" :
-                                                        booking.status === 'pending' ? "bg-amber-100 border-amber-200 text-amber-700" :
-                                                            "bg-gray-100 text-gray-500"
-                                            )}
-                                            style={{
-                                                left: `${getPosition(booking.startTime)}%`,
-                                                width: `${getWidth(booking.startTime, booking.endTime)}%`
-                                            }}
-                                            title={`${booking.clientName} (${format(parseISO(booking.startTime), 'HH:mm')} - ${format(parseISO(booking.endTime), 'HH:mm')})`}
-                                        >
-                                            {booking.type === 'cleaning' ? (
-                                                <span className="italic">Cleaning</span>
-                                            ) : (
-                                                <>
-                                                    <span className="font-semibold">{booking.clientName}</span>
-                                                    <span className="opacity-75 hidden sm:inline">{format(parseISO(booking.startTime), 'HH:mm')}</span>
-                                                </>
-                                            )}
-                                        </div>
-                                    ))
-                                }
+                                {/* Bookings for this tank */}
+                                {bookings.filter(b => b.tankId === tank.id).map(booking => (
+                                    <div
+                                        key={booking.id}
+                                        className="absolute top-4 h-16 rounded-lg bg-violet-100 border border-violet-200 text-violet-700 px-3 py-2 text-xs flex flex-col justify-center shadow-sm cursor-pointer hover:bg-violet-200 transition-colors z-10"
+                                        style={{ left: getPosition(booking.startTime), width: getWidth(booking.duration) }}
+                                    >
+                                        <span className="font-bold">{booking.clientName}</span>
+                                        <span className="opacity-75">{booking.startTime} - {booking.endTime}</span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <div className="p-8 text-center text-muted-foreground">No resources available for {date && format(date, 'yyyy-MM-dd')}</div>
+                    )}
                 </div>
-            </div>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
         </div>
     );
 }
