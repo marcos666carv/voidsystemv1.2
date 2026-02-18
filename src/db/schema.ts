@@ -38,6 +38,7 @@ export const clients = pgTable("clients", {
     id: text().primaryKey().notNull(),
     email: text().notNull(),
     fullName: text("full_name").notNull(),
+    passwordHash: text("password_hash"),
     phone: text(),
     cpf: text(),
     photoUrl: text("photo_url"),
@@ -46,6 +47,8 @@ export const clients = pgTable("clients", {
     birthDate: text("birth_date"),
     addressNeighborhood: text("address_neighborhood"),
     addressCity: text("address_city"),
+    addressCep: text("address_cep"),
+    addressCityNormalized: text("address_city_normalized"),
     profession: text(),
     leadSource: text("lead_source"),
     notes: text(),
@@ -69,9 +72,33 @@ export const clients = pgTable("clients", {
     sessionsMassage: integer("sessions_massage").default(0).notNull(),
     sessionsCombo: integer("sessions_combo").default(0).notNull(),
     lifeCycleStage: text("life_cycle_stage").default('new').notNull(),
+    // CRM import metadata
+    importedFromCrm: boolean("imported_from_crm").default(false),
+    crmCode: text("crm_code"),
+    crmCreatedAt: timestamp("crm_created_at", { mode: 'string' }),
+    crmUpdatedAt: timestamp("crm_updated_at", { mode: 'string' }),
 }, (table) => [
     unique("clients_email_unique").on(table.email),
 ]);
+
+export const sales = pgTable("sales", {
+    id: text().primaryKey().notNull(),
+    clientId: text("client_id").notNull(),
+    items: jsonb().notNull(),
+    totalAmount: integer("total_amount").notNull(),
+    paymentMethod: text("payment_method"),
+    status: text().default('completed').notNull(),
+    notes: text(),
+    createdBy: text("created_by"),
+    createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
+});
+
+export const clientTags = pgTable("client_tags", {
+    id: text().primaryKey().notNull(),
+    clientId: text("client_id").notNull(),
+    tag: text().notNull(),
+    createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
+});
 
 export const appointments = pgTable("appointments", {
     id: text().primaryKey().notNull(),
@@ -182,9 +209,25 @@ export const servicesRelations = relations(services, ({ many }) => ({
 
 export const clientsRelations = relations(clients, ({ many }) => ({
     appointments: many(appointments),
+    sales: many(sales),
+    tags: many(clientTags),
 }));
 
 export const locationsRelations = relations(locations, ({ many }) => ({
     tanks: many(tanks),
     appointments: many(appointments),
+}));
+
+export const salesRelations = relations(sales, ({ one }) => ({
+    client: one(clients, {
+        fields: [sales.clientId],
+        references: [clients.id],
+    }),
+}));
+
+export const clientTagsRelations = relations(clientTags, ({ one }) => ({
+    client: one(clients, {
+        fields: [clientTags.clientId],
+        references: [clients.id],
+    }),
 }));
