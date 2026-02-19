@@ -1,48 +1,39 @@
-import jwt from 'jsonwebtoken';
+import { getSupabaseAdmin } from './supabase.mjs';
 
-const JWT_SECRET = () => Netlify.env.get('JWT_SECRET') || 'void-system-dev-secret-2026';
-
-export interface JwtPayload {
+export interface AuthUser {
     userId: string;
     email: string;
     role: 'client' | 'admin' | 'staff';
+    fullName?: string;
 }
 
-export function signToken(payload: JwtPayload): string {
-    return jwt.sign(payload, JWT_SECRET(), { expiresIn: '7d' });
-}
-
-export function verifyToken(token: string): JwtPayload | null {
-    try {
-        return jwt.verify(token, JWT_SECRET()) as JwtPayload;
-    } catch {
-        return null;
-    }
-}
-
-export function getTokenFromRequest(req: Request): string | null {
+export async function verifySupabaseToken(req: Request): Promise<AuthUser | null> {
     const authHeader = req.headers.get('Authorization');
-    if (authHeader?.startsWith('Bearer ')) {
-        return authHeader.substring(7);
-    }
-    const cookie = req.headers.get('Cookie');
-    if (cookie) {
-        const match = cookie.match(/void_token=([^;]+)/);
-        if (match) return match[1];
-    }
-    return null;
+    if (!authHeader?.startsWith('Bearer ')) return null;
+
+    const token = authHeader.substring(7);
+    const supabase = getSupabaseAdmin();
+
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+
+    if (error || !user) return null;
+
+    const meta = user.user_metadata || {};
+
+    return {
+        userId: user.id,
+        email: user.email || '',
+        role: meta.role || 'client',
+        fullName: meta.full_name,
+    };
 }
 
-export function requireAuth(req: Request): JwtPayload {
-    const token = getTokenFromRequest(req);
-    if (!token) {
+export async function requireAuth(req: Request): Promise<AuthUser> {
+    const user = await verifySupabaseToken(req);
+    if (!user) {
         throw new Error('UNAUTHORIZED');
     }
-    const payload = verifyToken(token);
-    if (!payload) {
-        throw new Error('UNAUTHORIZED');
-    }
-    return payload;
+    return user;
 }
 
 export function jsonError(message: string, status: number) {

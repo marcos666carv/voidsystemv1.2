@@ -7,17 +7,25 @@ import {
     CalendarClock,
     Map,
     LogOut,
-    Bell
+    Bell,
+    ShoppingCart,
+    ShoppingBag,
+    Layers,
+    Crown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ADMIN_NAV = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+    { name: 'Serviços', href: '/admin/services', icon: Layers },
+    { name: 'Produtos', href: '/admin/products', icon: ShoppingBag },
+    { name: 'Void Club', href: '/admin/void-club', icon: Crown },
     { name: 'Mission Control', href: '/admin/mission', icon: Activity },
     { name: 'Schedule', href: '/admin/schedule', icon: CalendarClock },
     { name: 'Clients', href: '/admin/clients', icon: Users },
     { name: 'Communications', href: '/admin/crm', icon: Activity },
-    { name: 'Finance', href: '/admin/finance', icon: CreditCard }, // Placeholder
+    { name: 'Sales (POS)', href: '/admin/sales', icon: ShoppingCart },
+    { name: 'Finance', href: '/admin/finance', icon: CreditCard },
     { name: 'System Map', href: '/admin/system-map', icon: Map },
 ];
 

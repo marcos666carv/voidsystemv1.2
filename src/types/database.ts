@@ -93,15 +93,30 @@ export interface Package {
     active: boolean;
 }
 
+export type VariantType = 'color' | 'size' | 'weight' | 'custom';
+
+export interface ProductVariant {
+    id: string; // uuid
+    product_id: string;
+    name: string; // e.g. "Blue", "L", "500g"
+    type: VariantType;
+    price: number;
+    stock: number;
+    sku: string | null;
+    image_url: string | null;
+    active: boolean;
+}
+
 export interface Product {
     id: string; // uuid
     name: string;
     description: string | null;
-    price: number; // numeric(10,2)
-    current_stock: number;
+    price: number; // numeric(10,2) - Base price or range start
+    current_stock: number; // Total stock or base stock
     image_url: string | null;
     sku: string | null;
     active: boolean;
+    variants?: ProductVariant[]; // Optional list of variants
 }
 
 export interface Appointment {

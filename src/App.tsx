@@ -3,8 +3,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { AppLayout } from "@/layouts/AppLayout";
 import { AdminLayout } from "@/layouts/AdminLayout";
+import { PublicLayout } from "@/layouts/PublicLayout";
 import { CartProvider } from "@/context/CartContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { EasterEgg } from "@/components/common/EasterEgg";
 
 // Auth Pages
 const LoginPage = lazy(() => import("@/pages/auth/LoginPage"));
@@ -13,10 +15,17 @@ const AdminRegisterPage = lazy(() => import("@/pages/auth/AdminRegisterPage"));
 
 // Public Pages
 const LandingPage = lazy(() => import("@/pages/public/LandingPage").then(m => ({ default: m.LandingPage })));
+const ServicesPage = lazy(() => import("@/pages/public/ServicesPage"));
+const PublicBookingPage = lazy(() => import("@/pages/public/PublicBookingPage"));
+const VoidClubPage = lazy(() => import("@/pages/public/VoidClubPage"));
+const AboutPage = lazy(() => import("@/pages/public/AboutPage"));
 
 // Client App Pages
 const ClientDashboard = lazy(() => import("@/pages/app/ClientDashboard").then(m => ({ default: m.ClientDashboard })));
 const StorePage = lazy(() => import("@/pages/app/StorePage").then(m => ({ default: m.StorePage })));
+const BookingPage = lazy(() => import("@/pages/app/BookingPage"));
+const HistoryPage = lazy(() => import("@/pages/app/HistoryPage"));
+const ProfilePage = lazy(() => import("@/pages/app/ProfilePage"));
 
 // Admin Pages
 const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard").then(m => ({ default: m.AdminDashboard })));
@@ -26,21 +35,16 @@ const CommunicationFlow = lazy(() => import("@/pages/admin/CommunicationFlow").t
 const ClientProfile = lazy(() => import("@/pages/admin/ClientProfile").then(m => ({ default: m.ClientProfile })));
 const SystemMap = lazy(() => import("@/pages/admin/SystemMap").then(m => ({ default: m.SystemMap })));
 const ClientListPage = lazy(() => import("@/pages/admin/ClientListPage").then(m => ({ default: m.ClientListPage })));
-
-// Placeholder pages (will be implemented in subsequent phases)
-const PlaceholderPage = ({ title }: { title: string }) => (
-  <div className="flex flex-col items-center justify-center h-[60vh] text-slate-400">
-    <div className="h-16 w-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
-      <span className="text-2xl">🚧</span>
-    </div>
-    <h2 className="text-lg font-semibold text-slate-600">{title}</h2>
-    <p className="text-sm mt-1">em construção</p>
-  </div>
-);
+const SalesPage = lazy(() => import("@/pages/admin/SalesPage").then(m => ({ SalesPage: m.SalesPage })).then(m => ({ default: m.SalesPage })));
+const FinancePage = lazy(() => import("@/pages/admin/FinancePage").then(m => ({ FinancePage: m.FinancePage })).then(m => ({ default: m.FinancePage })));
+const AdminServicesPage = lazy(() => import("@/pages/admin/AdminServicesPage"));
+const AdminVoidClubPage = lazy(() => import("@/pages/admin/AdminVoidClubPage"));
+const AdminProductsPage = lazy(() => import("@/pages/admin/products/AdminProductsPage"));
 
 function App() {
   return (
     <CartProvider>
+      <EasterEgg />
       <Suspense
         fallback={
           <div className="flex items-center justify-center h-screen bg-slate-50">
@@ -52,21 +56,23 @@ function App() {
         }
       >
         <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/services" element={<PlaceholderPage title="Serviços" />} />
-          <Route path="/schedule" element={<PlaceholderPage title="Agendamento" />} />
-          <Route path="/club" element={<PlaceholderPage title="Void Club" />} />
-          <Route path="/about" element={<PlaceholderPage title="Sobre" />} />
+          {/* Public pages with Navbar + Footer */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/schedule" element={<PublicBookingPage />} />
+            <Route path="/club" element={<VoidClubPage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Route>
 
-          {/* Auth Routes */}
+          {/* Auth (own layout, no public nav) */}
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<ClientRegisterPage />} />
             <Route path="/admin/register" element={<AdminRegisterPage />} />
           </Route>
 
-          {/* Client App Routes (Protected) */}
+          {/* Client App (Protected) */}
           <Route
             path="/app"
             element={
@@ -77,12 +83,12 @@ function App() {
           >
             <Route index element={<ClientDashboard />} />
             <Route path="store" element={<StorePage />} />
-            <Route path="book" element={<PlaceholderPage title="Agendar Sessão" />} />
-            <Route path="history" element={<PlaceholderPage title="Histórico" />} />
-            <Route path="profile" element={<PlaceholderPage title="Meu Perfil" />} />
+            <Route path="book" element={<BookingPage />} />
+            <Route path="history" element={<HistoryPage />} />
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
 
-          {/* Admin Routes (Protected) */}
+          {/* Admin (Protected) */}
           <Route
             path="/admin"
             element={
@@ -92,13 +98,16 @@ function App() {
             }
           >
             <Route index element={<AdminDashboard />} />
+            <Route path="services" element={<AdminServicesPage />} />
+            <Route path="void-club" element={<AdminVoidClubPage />} />
             <Route path="mission" element={<MissionControl />} />
             <Route path="schedule" element={<SchedulePage />} />
             <Route path="crm" element={<CommunicationFlow />} />
             <Route path="clients" element={<ClientListPage />} />
             <Route path="clients/:clientId" element={<ClientProfile />} />
-            <Route path="sales" element={<PlaceholderPage title="Ponto de Venda" />} />
-            <Route path="finance" element={<PlaceholderPage title="Financeiro" />} />
+            <Route path="products" element={<AdminProductsPage />} />
+            <Route path="sales" element={<SalesPage />} />
+            <Route path="finance" element={<FinancePage />} />
             <Route path="system-map" element={<SystemMap />} />
           </Route>
 

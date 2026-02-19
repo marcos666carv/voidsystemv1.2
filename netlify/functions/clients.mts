@@ -47,7 +47,7 @@ export default async (req: Request, context: Context) => {
         }
 
         if (req.method === "POST") {
-            const auth = requireAuth(req);
+            const auth = await requireAuth(req);
             if (auth.role !== "admin" && auth.role !== "staff") {
                 return jsonError("Forbidden", 403);
             }

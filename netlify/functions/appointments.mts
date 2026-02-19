@@ -65,7 +65,7 @@ export default async (req: Request, context: Context) => {
         }
 
         if (req.method === "PUT") {
-            const auth = requireAuth(req);
+            const auth = await requireAuth(req);
             const body = await req.json();
             const { id, status, tankId, notes } = body;
 

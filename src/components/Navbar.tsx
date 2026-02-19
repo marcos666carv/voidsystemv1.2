@@ -1,137 +1,156 @@
-import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+import { Menu, X, User, LogIn } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-interface NavbarProps {
-    variant?: "public" | "app" | "admin";
-}
+const NAV_LINKS = [
+    { href: 'https://voidfloat.com.br', label: 'flutuação', external: true },
+    { href: '/services', label: 'massoterapia' },
+    { href: '/schedule', label: 'agendar' },
+    { href: '/club', label: 'void club' },
+    { href: '/about', label: 'sobre' },
+];
 
-export function Navbar({ variant = "public" }: NavbarProps) {
+export function Navbar() {
+    const { isAuthenticated, user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
 
-    const links = {
-        public: [
-            { href: "/", label: "Home" },
-            { href: "/void-club", label: "Void Club" },
-            { href: "/about", label: "About" },
-        ],
-        app: [
-            { href: "/app", label: "Dashboard" },
-            { href: "/app/schedule", label: "Schedule" },
-            { href: "/app/history", label: "History" },
-        ],
-        admin: [
-            { href: "/admin", label: "Dashboard" },
-            { href: "/admin/clients", label: "Clients" },
-            { href: "/admin/controls", label: "Controls" },
-        ],
-    };
+    useEffect(() => { setIsOpen(false); }, [location.pathname]);
 
-    const currentLinks = links[variant];
+    const profileHref = user?.role === 'admin' || user?.role === 'staff' ? '/admin' : '/app';
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-background/80 backdrop-blur-md">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
-                    <div className="flex items-center">
-                        <Link to="/" className="text-xl font-bold tracking-tighter text-foreground">
-                            VOID<span className="text-primary">.SYSTEM</span>
-                        </Link>
-                    </div>
+                    {/* Logo */}
+                    <Link to="/" className="flex items-center gap-1.5 group">
+                        <span className="text-xl font-bold tracking-tighter text-slate-900">
+                            void
+                        </span>
+                    </Link>
 
-                    <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline space-x-4">
-                            {currentLinks.map((link) => (
-                                <Link
+                    {/* Desktop Nav — center */}
+                    <div className="hidden md:flex items-center gap-1">
+                        {NAV_LINKS.map((link) =>
+                            'external' in link && link.external ? (
+                                <a
                                     key={link.href}
-                                    to={link.href}
-                                    className={cn(
-                                        "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-                                        location.pathname === link.href
-                                            ? "text-primary"
-                                            : "text-muted-foreground"
-                                    )}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                                 >
                                     {link.label}
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="hidden md:block">
-                        {variant === "public" ? (
-                            <div className="flex items-center space-x-4">
-                                <Link to="/login">
-                                    <Button variant="ghost">Sign In</Button>
-                                </Link>
-                                <Link to="/register">
-                                    <Button>Get Started</Button>
-                                </Link>
-                            </div>
-                        ) : variant === "app" ? (
-                            <div className="flex items-center space-x-4">
-                                <Button variant="ghost">Profile</Button>
-                                <Button variant="outline">Sign Out</Button>
-                            </div>
-                        ) : (
-                            <div className="flex items-center space-x-4">
-                                <span className="text-sm text-muted-foreground">Admin Mode</span>
-                                <Button variant="outline">Exit</Button>
-                            </div>
+                                </a>
+                            ) : (
+                                <NavLink
+                                    key={link.href}
+                                    to={link.href}
+                                    end={link.href === '/'}
+                                    className={({ isActive }) =>
+                                        `px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${isActive
+                                            ? 'text-slate-900 bg-slate-100'
+                                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                                        }`
+                                    }
+                                >
+                                    {link.label}
+                                </NavLink>
+                            )
                         )}
                     </div>
 
-                    <div className="-mr-2 flex md:hidden">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center"
-                        >
-                            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                        </Button>
+                    {/* Desktop Actions — right */}
+                    <div className="hidden md:flex items-center gap-2">
+                        {isAuthenticated ? (
+                            <Link
+                                to={profileHref}
+                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 bg-slate-900 text-white hover:bg-slate-800"
+                            >
+                                <User className="h-4 w-4" />
+                                meu perfil
+                            </Link>
+                        ) : (
+                            <>
+                                <Link
+                                    to="/login"
+                                    className="px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                                >
+                                    entrar
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 bg-slate-900 text-white hover:bg-slate-800"
+                                >
+                                    criar conta
+                                </Link>
+                            </>
+                        )}
                     </div>
+
+                    {/* Mobile hamburger */}
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="md:hidden p-2 rounded-lg transition-colors text-slate-700 hover:bg-slate-100"
+                    >
+                        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                    </button>
                 </div>
             </div>
 
-            {isOpen && (
-                <div className="md:hidden">
-                    <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                        {currentLinks.map((link) => (
-                            <Link
+            {/* Mobile menu */}
+            <div className={`md:hidden overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
+                }`}>
+                <div className="bg-white border-t border-slate-100 px-4 py-4 space-y-1 shadow-lg">
+                    {NAV_LINKS.map((link) =>
+                        'external' in link && link.external ? (
+                            <a
                                 key={link.href}
-                                to={link.href}
-                                onClick={() => setIsOpen(false)}
-                                className={cn(
-                                    "block rounded-md px-3 py-2 text-base font-medium",
-                                    location.pathname === link.href
-                                        ? "bg-primary/10 text-primary"
-                                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                                )}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                             >
                                 {link.label}
+                            </a>
+                        ) : (
+                            <NavLink
+                                key={link.href}
+                                to={link.href}
+                                end={link.href === '/'}
+                                className={({ isActive }) =>
+                                    `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                                    }`
+                                }
+                            >
+                                {link.label}
+                            </NavLink>
+                        )
+                    )}
+
+                    <div className="pt-3 mt-3 border-t border-slate-100 space-y-2">
+                        {isAuthenticated ? (
+                            <Link
+                                to={profileHref}
+                                className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-lg"
+                            >
+                                <User className="h-4 w-4" /> meu perfil
                             </Link>
-                        ))}
-                        <div className="pt-4 border-t border-border flex flex-col gap-2">
-                            {variant === "public" ? (
-                                <>
-                                    <Link to="/login" onClick={() => setIsOpen(false)}>
-                                        <Button variant="ghost" className="w-full justify-start">Sign In</Button>
-                                    </Link>
-                                    <Link to="/register" onClick={() => setIsOpen(false)}>
-                                        <Button className="w-full justify-start">Get Started</Button>
-                                    </Link>
-                                </>
-                            ) : (
-                                <Button variant="outline" className="w-full justify-start">Sign Out</Button>
-                            )}
-                        </div>
+                        ) : (
+                            <>
+                                <Link to="/login" className="block px-4 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50">
+                                    <span className="flex items-center gap-2"><LogIn className="h-4 w-4" /> entrar</span>
+                                </Link>
+                                <Link to="/register" className="block px-4 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-lg text-center">
+                                    criar conta
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
-            )}
+            </div>
         </nav>
     );
 }

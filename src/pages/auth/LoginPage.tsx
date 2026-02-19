@@ -19,12 +19,9 @@ export default function LoginPage() {
 
         try {
             await login(email, password);
-            // AuthContext handles localStorage, check role for redirect
-            const userData = localStorage.getItem('void_user');
-            if (userData) {
-                const user = JSON.parse(userData);
-                navigate(user.role === 'client' ? '/app' : '/admin', { replace: true });
-            }
+            // Supabase auth state change will update context
+            // Redirect based on role — default to /app, admin users go to /admin
+            navigate('/app', { replace: true });
         } catch (err: any) {
             setError(err.message || 'Invalid credentials');
         } finally {

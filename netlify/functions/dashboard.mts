@@ -10,7 +10,7 @@ export default async (req: Request, context: Context) => {
     }
 
     try {
-        const auth = requireAuth(req);
+        const auth = await requireAuth(req);
         const db = getDb();
         const url = new URL(req.url);
         const type = url.searchParams.get("type") || "admin";

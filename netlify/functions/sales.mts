@@ -6,7 +6,7 @@ import { eq, desc, gte, lte, and, sql, sum, count } from "drizzle-orm";
 
 export default async (req: Request, context: Context) => {
     try {
-        const auth = requireAuth(req);
+        const auth = await requireAuth(req);
         if (auth.role !== "admin" && auth.role !== "staff") {
             return jsonError("Forbidden", 403);
         }
