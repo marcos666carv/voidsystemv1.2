@@ -32,7 +32,6 @@ export function CategoryCard({ title, description, icon, href, startingPrice, co
             onMouseEnter={(e) => {
                 const el = e.currentTarget;
                 el.style.backgroundColor = color;
-                el.style.borderColor = color;
                 // el.style.boxShadow = `0 8px 30px -5px ${color}80, 0 20px 40px -10px ${color}60`; // Removed glow per request
                 if (titleRef.current) titleRef.current.style.color = titleColor;
                 if (iconSvgRef.current) iconSvgRef.current.style.color = titleColor;
@@ -40,8 +39,6 @@ export function CategoryCard({ title, description, icon, href, startingPrice, co
             onMouseLeave={(e) => {
                 const el = e.currentTarget;
                 el.style.backgroundColor = '';
-                el.style.borderColor = '';
-                el.style.borderColor = '';
                 // el.style.boxShadow = ''; // Removed glow per request
                 if (titleRef.current) titleRef.current.style.color = '';
                 if (iconSvgRef.current) iconSvgRef.current.style.color = '';
@@ -94,9 +91,8 @@ export function CategoryCard({ title, description, icon, href, startingPrice, co
                 />
 
                 {/* Hover: "comprar" CTA text */}
-                {/* Text slides in from RIGHT (translate-x-4) to CENTER (0) */}
                 <div
-                    className="absolute inset-0 flex items-center justify-center gap-2 text-sm font-semibold opacity-0 translate-x-4 transition-all duration-500 delay-100 ease-out group-hover:opacity-100 group-hover:translate-x-0"
+                    className="absolute inset-0 flex items-center justify-start px-6 gap-2 text-sm font-semibold opacity-0 translate-x-8 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:translate-x-0"
                     style={{ color: color }}
                 >
                     comprar
