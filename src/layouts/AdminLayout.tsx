@@ -15,11 +15,18 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const ADMIN_NAV = [
+const NAV_DASHBOARD = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+];
+
+const NAV_CATALOG = [
     { name: 'Serviços', href: '/admin/services', icon: Layers },
     { name: 'Produtos', href: '/admin/products', icon: ShoppingBag },
     { name: 'Void Club', href: '/admin/void-club', icon: Crown },
+];
+
+const NAV_OPERATIONS = [
+    { name: 'Tanques', href: '/admin/tanks', icon: Activity },
     { name: 'Mission Control', href: '/admin/mission', icon: Activity },
     { name: 'Schedule', href: '/admin/schedule', icon: CalendarClock },
     { name: 'Clients', href: '/admin/clients', icon: Users },
@@ -28,6 +35,25 @@ const ADMIN_NAV = [
     { name: 'Finance', href: '/admin/finance', icon: CreditCard },
     { name: 'System Map', href: '/admin/system-map', icon: Map },
 ];
+
+function NavItem({ item }: { item: any }) {
+    return (
+        <NavLink
+            to={item.href}
+            end={item.href === '/admin'}
+            className={({ isActive }) => `
+                flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
+                ${isActive
+                    ? 'bg-violet-600 text-white shadow-md shadow-violet-900/20'
+                    : 'hover:bg-slate-800 hover:text-white'
+                }
+            `}
+        >
+            <item.icon className="mr-3 h-5 w-5 opacity-70" />
+            {item.name}
+        </NavLink>
+    );
+}
 
 export function AdminLayout() {
     return (
@@ -47,22 +73,30 @@ export function AdminLayout() {
                             Overview
                         </h3>
                         <nav className="space-y-1">
-                            {ADMIN_NAV.map((item) => (
-                                <NavLink
-                                    key={item.name}
-                                    to={item.href}
-                                    end={item.href === '/admin'}
-                                    className={({ isActive }) => `
-                                        flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
-                                        ${isActive
-                                            ? 'bg-violet-600 text-white shadow-md shadow-violet-900/20'
-                                            : 'hover:bg-slate-800 hover:text-white'
-                                        }
-                                    `}
-                                >
-                                    <item.icon className="mr-3 h-5 w-5 opacity-70" />
-                                    {item.name}
-                                </NavLink>
+                            {NAV_DASHBOARD.map((item) => (
+                                <NavItem key={item.name} item={item} />
+                            ))}
+                        </nav>
+                    </div>
+
+                    <div>
+                        <h3 className="px-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                            Catálogo & Vendas
+                        </h3>
+                        <nav className="space-y-1">
+                            {NAV_CATALOG.map((item) => (
+                                <NavItem key={item.name} item={item} />
+                            ))}
+                        </nav>
+                    </div>
+
+                    <div>
+                        <h3 className="px-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                            Operação
+                        </h3>
+                        <nav className="space-y-1">
+                            {NAV_OPERATIONS.map((item) => (
+                                <NavItem key={item.name} item={item} />
                             ))}
                         </nav>
                     </div>

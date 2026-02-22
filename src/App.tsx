@@ -40,6 +40,7 @@ const FinancePage = lazy(() => import("@/pages/admin/FinancePage").then(m => ({ 
 const AdminServicesPage = lazy(() => import("@/pages/admin/AdminServicesPage"));
 const AdminVoidClubPage = lazy(() => import("@/pages/admin/AdminVoidClubPage"));
 const AdminProductsPage = lazy(() => import("@/pages/admin/products/AdminProductsPage"));
+const AdminTanksPage = lazy(() => import("@/pages/admin/tanks/AdminTanksPage").then(m => ({ default: m.AdminTanksPage })));
 
 function App() {
   return (
@@ -100,6 +101,7 @@ function App() {
             <Route index element={<AdminDashboard />} />
             <Route path="services" element={<AdminServicesPage />} />
             <Route path="void-club" element={<AdminVoidClubPage />} />
+            <Route path="tanks" element={<AdminTanksPage />} />
             <Route path="mission" element={<MissionControl />} />
             <Route path="schedule" element={<SchedulePage />} />
             <Route path="crm" element={<CommunicationFlow />} />
