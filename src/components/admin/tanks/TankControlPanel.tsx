@@ -43,10 +43,10 @@ interface TankControlPanelProps {
 export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEmergency }: TankControlPanelProps) {
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'available': return 'border-emerald-500/50 bg-emerald-50/20';
-            case 'occupied': return 'border-violet-500/50 bg-violet-50/20';
-            case 'cleaning': return 'border-amber-500/50 bg-amber-50/20';
-            case 'maintenance': return 'border-red-500/50 bg-red-50/20';
+            case 'available': return 'border-emerald-500/50';
+            case 'occupied': return 'border-violet-500/50';
+            case 'cleaning': return 'border-amber-500/50';
+            case 'maintenance': return 'border-red-500/50';
             default: return 'border-slate-200';
         }
     };
@@ -62,9 +62,9 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
     };
 
     return (
-        <Card className={`border-2 shadow-sm transition-all overflow-hidden ${getStatusColor(tank.status)}`}>
+        <Card className={`bg-white border-2 shadow-sm transition-all overflow-hidden ${getStatusColor(tank.status)}`}>
             {/* Header */}
-            <CardHeader className="pb-3 border-b border-slate-100/50 bg-white/40">
+            <CardHeader className="pb-3 border-b border-slate-100 bg-slate-50/50">
                 <div className="flex justify-between items-start">
                     <div>
                         <CardTitle className="text-xl font-bold text-slate-900">{tank.name}</CardTitle>
@@ -92,13 +92,13 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                     <div className="p-5 space-y-6">
                         {/* Telemetry Overview */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-white/60 p-3 rounded-xl border border-slate-100">
-                                <p className="text-xs font-medium text-slate-500 mb-1 flex items-center gap-1"><Thermometer className="h-3 w-3" /> Água</p>
-                                <p className="text-2xl font-mono font-bold text-slate-800">{tank.temp.toFixed(1)}°C</p>
+                            <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center">
+                                <p className="text-xs font-medium text-slate-500 mb-2 flex items-center gap-1"><Thermometer className="h-3 w-3" /> Água</p>
+                                <p className="text-3xl font-mono font-bold text-slate-800">{tank.temp.toFixed(1)}°C</p>
                             </div>
-                            <div className="bg-white/60 p-3 rounded-xl border border-slate-100">
-                                <p className="text-xs font-medium text-slate-500 mb-1 flex items-center gap-1"><Clock className="h-3 w-3" /> Tempo Restante</p>
-                                <p className="text-2xl font-mono font-bold text-slate-800">
+                            <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center">
+                                <p className="text-xs font-medium text-slate-500 mb-2 flex items-center gap-1"><Clock className="h-3 w-3" /> Tempo Restante</p>
+                                <p className="text-3xl font-mono font-bold text-slate-800 tracking-tight">
                                     {tank.timeRemaining !== null ? `${tank.timeRemaining}m` : '--:--'}
                                 </p>
                             </div>
@@ -106,16 +106,24 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
 
                         {/* Client Info */}
                         <div>
-                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Sessão Atual</p>
-                            <div className="flex items-center gap-3 p-3 bg-white/80 rounded-xl border border-slate-200">
-                                <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                                    <User className="h-5 w-5 text-slate-400" />
+                            {tank.status === 'occupied' ? (
+                                <>
+                                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Sessão Atual</p>
+                                    <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+                                        <div className="h-10 w-10 rounded-full bg-violet-100 flex items-center justify-center border border-violet-200">
+                                            <User className="h-5 w-5 text-violet-600" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-slate-800">{tank.client}</p>
+                                            <p className="text-xs text-slate-500">Sessão em andamento</p>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="flex items-center justify-center p-4 border border-dashed rounded-xl border-slate-200 bg-slate-50/50 text-slate-400">
+                                    <span className="text-sm font-medium">Nenhuma sessão ativa</span>
                                 </div>
-                                <div>
-                                    <p className="text-sm font-bold text-slate-800">{tank.client || 'Nenhum Cliente'}</p>
-                                    <p className="text-xs text-slate-500">{tank.status === 'occupied' ? 'Sessão em andamento' : 'Aguardando'}</p>
-                                </div>
-                            </div>
+                            )}
                         </div>
 
                         {/* Status Actions */}
@@ -138,7 +146,7 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                     </div>
 
                     {/* RIGHT COLUMN: Hardware Controls */}
-                    <div className="p-5 space-y-6 bg-slate-50/50">
+                    <div className="p-5 space-y-6 bg-slate-50/80 border-l border-slate-100">
                         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Controles Diretos</p>
 
                         <div className="space-y-4">
