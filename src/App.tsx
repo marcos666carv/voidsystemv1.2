@@ -16,9 +16,9 @@ const AdminRegisterPage = lazy(() => import("@/pages/auth/AdminRegisterPage"));
 // Public Pages
 const LandingPage = lazy(() => import("@/pages/public/LandingPage").then(m => ({ default: m.LandingPage })));
 const ServicesPage = lazy(() => import("@/pages/public/ServicesPage"));
-const PublicBookingPage = lazy(() => import("@/pages/public/PublicBookingPage"));
 const VoidClubPage = lazy(() => import("@/pages/public/VoidClubPage"));
 const AboutPage = lazy(() => import("@/pages/public/AboutPage"));
+const CheckoutFlow = lazy(() => import("@/pages/public/checkout/CheckoutFlow"));
 
 // Client App Pages
 const ClientDashboard = lazy(() => import("@/pages/app/ClientDashboard").then(m => ({ default: m.ClientDashboard })));
@@ -61,10 +61,12 @@ function App() {
           <Route element={<PublicLayout />}>
             <Route path="/" element={<LandingPage />} />
             <Route path="/services" element={<ServicesPage />} />
-            <Route path="/schedule" element={<PublicBookingPage />} />
             <Route path="/club" element={<VoidClubPage />} />
             <Route path="/about" element={<AboutPage />} />
           </Route>
+
+          {/* Checkout (Standalone / Distraction Free) */}
+          <Route path="/checkout" element={<CheckoutFlow />} />
 
           {/* Auth (own layout, no public nav) */}
           <Route element={<AuthLayout />}>

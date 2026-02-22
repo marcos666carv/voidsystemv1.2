@@ -6,32 +6,27 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Search, Filter, MoreHorizontal, Mail, Phone } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
-// Mock Clients
-const MOCK_CLIENTS = [
-    { id: '1', name: 'Alice Freeman', email: 'alice@example.com', phone: '+1 555-0101', lastVisit: '2024-02-10', totalSpent: 1250, status: 'VIP', nps: 10 },
-    { id: '2', name: 'Bob Smith', email: 'bob@example.com', phone: '+1 555-0102', lastVisit: '2023-11-15', totalSpent: 450, status: 'Risk', nps: 8 },
-    { id: '3', name: 'Charlie Brown', email: 'charlie@example.com', phone: '+1 555-0103', lastVisit: '2024-02-01', totalSpent: 200, status: 'Active', nps: 9 },
-    { id: '4', name: 'Diana Prince', email: 'diana@example.com', phone: '+1 555-0104', lastVisit: '2024-01-20', totalSpent: 3000, status: 'VIP', nps: 10 },
-    { id: '5', name: 'Evan Wright', email: 'evan@example.com', phone: '+1 555-0105', lastVisit: '2023-10-01', totalSpent: 150, status: 'Lost', nps: 6 },
-];
+import { MOCK_CLIENTS } from "@/lib/mockData";
 
 export function ClientListPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedClient, setSelectedClient] = useState<any | null>(null);
 
     const filteredClients = MOCK_CLIENTS.filter(c =>
-        c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.email.toLowerCase().includes(searchTerm.toLowerCase())
+        c.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        c.email?.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    const getStatusBadge = (status: string) => {
-        switch (status) {
-            case 'VIP': return <Badge className="bg-violet-100 text-violet-700 hover:bg-violet-200 border-violet-200">VIP</Badge>;
-            case 'Risk': return <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50">At Risk</Badge>;
-            case 'Lost': return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200 hover:bg-red-200">Lost</Badge>;
-            default: return <Badge variant="secondary" className="bg-slate-100 text-slate-700">Active</Badge>;
+    const getStatusBadge = (client: any) => {
+        if (client.churn_risk && client.total_spend < 500) {
+            return <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200 hover:bg-red-200">Lost</Badge>;
         }
+        if (client.total_spend > 1500) {
+            return <Badge className="bg-violet-100 text-violet-700 hover:bg-violet-200 border-violet-200">VIP</Badge>;
+        }
+        if (client.churn_risk) {
+            return <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50">At Risk</Badge>;
+        }
+        return <Badge variant="secondary" className="bg-slate-100 text-slate-700">Active</Badge>;
     };
 
     return (
@@ -76,17 +71,17 @@ export function ClientListPage() {
                                 <TableCell>
                                     <div className="flex items-center gap-3">
                                         <Avatar className="h-9 w-9 bg-slate-100 border border-slate-200">
-                                            <AvatarFallback className="text-slate-500 bg-slate-100">{client.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+                                            <AvatarFallback className="text-slate-500 bg-slate-100">{client.full_name?.substring(0, 2).toUpperCase()}</AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <div className="font-medium text-slate-900">{client.name}</div>
+                                            <div className="font-medium text-slate-900">{client.full_name}</div>
                                             <div className="text-xs text-slate-500">{client.email}</div>
                                         </div>
                                     </div>
                                 </TableCell>
-                                <TableCell>{getStatusBadge(client.status)}</TableCell>
-                                <TableCell className="text-slate-600 font-mono text-xs">{client.lastVisit}</TableCell>
-                                <TableCell className="text-right font-medium text-slate-900">${client.totalSpent}</TableCell>
+                                <TableCell>{getStatusBadge(client)}</TableCell>
+                                <TableCell className="text-slate-600 font-mono text-xs">{client.last_visit ? new Date(client.last_visit).toLocaleDateString() : '-'}</TableCell>
+                                <TableCell className="text-right font-medium text-slate-900">${client.total_spend}</TableCell>
                                 <TableCell>
                                     <Button variant="ghost" size="icon" className="h-8 w-8">
                                         <MoreHorizontal className="h-4 w-4" />
@@ -106,12 +101,12 @@ export function ClientListPage() {
                             <SheetHeader className="mb-6">
                                 <div className="flex items-center gap-4">
                                     <Avatar className="h-16 w-16 bg-slate-100 border border-slate-200">
-                                        <AvatarFallback className="text-xl text-slate-500 bg-slate-100">{selectedClient.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+                                        <AvatarFallback className="text-xl text-slate-500 bg-slate-100">{selectedClient.full_name?.substring(0, 2).toUpperCase()}</AvatarFallback>
                                     </Avatar>
                                     <div>
-                                        <SheetTitle className="text-2xl">{selectedClient.name}</SheetTitle>
+                                        <SheetTitle className="text-2xl">{selectedClient.full_name}</SheetTitle>
                                         <SheetDescription className="flex items-center gap-2 mt-1">
-                                            {getStatusBadge(selectedClient.status)}
+                                            {getStatusBadge(selectedClient)}
                                             <span className="text-xs text-slate-400">ID: {selectedClient.id}</span>
                                         </SheetDescription>
                                     </div>
@@ -138,11 +133,11 @@ export function ClientListPage() {
                                 <section className="grid grid-cols-2 gap-4">
                                     <div className="p-4 rounded-lg bg-slate-50 border border-slate-100">
                                         <div className="text-xs text-slate-500 mb-1">Lifetime Value</div>
-                                        <div className="text-xl font-bold text-slate-900">${selectedClient.totalSpent}</div>
+                                        <div className="text-xl font-bold text-slate-900">${selectedClient.total_spend}</div>
                                     </div>
                                     <div className="p-4 rounded-lg bg-slate-50 border border-slate-100">
                                         <div className="text-xs text-slate-500 mb-1">NPS Score</div>
-                                        <div className="text-xl font-bold text-violet-600">{selectedClient.nps}/10</div>
+                                        <div className="text-xl font-bold text-violet-600">{selectedClient.nps_score}/10</div>
                                     </div>
                                 </section>
 

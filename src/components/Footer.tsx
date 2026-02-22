@@ -3,7 +3,6 @@ import { MapPin, Phone, Mail, Lock } from 'lucide-react';
 
 const FOOTER_LINKS = [
     { href: '/services', label: 'serviços' },
-    { href: '/schedule', label: 'agendar' },
     { href: '/club', label: 'void club' },
     { href: '/about', label: 'sobre' },
 ];

@@ -4,6 +4,7 @@ import type { TankData } from "@/components/admin/tanks/TankControlPanel";
 import { toast } from "sonner";
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MOCK_CLIENTS } from "@/lib/mockData";
 
 const INITIAL_TANKS: TankData[] = [
     {
@@ -20,7 +21,7 @@ const INITIAL_TANKS: TankData[] = [
         name: 'Tank 2 (Void)',
         status: 'occupied',
         temp: 35.4,
-        client: 'Alice Freeman',
+        client: MOCK_CLIENTS[0] || null,
         timeRemaining: 24,
         hardware: { filtration: false, lightOn: false, lightColor: '#8b5cf6', musicPlaying: true, musicVolume: 50 }
     },
@@ -37,6 +38,11 @@ const INITIAL_TANKS: TankData[] = [
 
 export function AdminTanksPage() {
     const [tanks, setTanks] = useState<TankData[]>(INITIAL_TANKS);
+
+    // Force sync with INITIAL_TANKS on mount to clear any stale HMR state
+    useEffect(() => {
+        setTanks(INITIAL_TANKS);
+    }, []);
 
     // Mock Timer Logic
     useEffect(() => {

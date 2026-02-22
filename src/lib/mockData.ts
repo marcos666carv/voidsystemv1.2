@@ -1,6 +1,5 @@
-import type { Product, Service } from "@/types/database";
-
-// ─── Serviços reais da VOID ───────────────────────────────────
+import type { Product, Service, Profile } from "@/types/database";
+import { MOCK_CLIENTS as REAL_MOCK_CLIENTS } from "./realClientsData";
 
 export const MOCK_SERVICES: Service[] = [
     {
@@ -197,3 +196,7 @@ export const MOCK_PRODUCTS: Product[] = [
         ]
     }
 ];
+
+// ─── Clientes (Mock com Schema Real do Banco) ───────────────
+
+export const MOCK_CLIENTS: Profile[] = REAL_MOCK_CLIENTS;

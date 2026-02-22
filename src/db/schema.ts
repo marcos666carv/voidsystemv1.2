@@ -7,6 +7,8 @@ export const voidLevel = pgEnum("void_level", ['iniciado', 'explorador', 'habili
 export const tankStatus = pgEnum("tank_status", ['livre', 'em_sessao', 'limpeza', 'modo_noturno', 'manutencao', 'standby'])
 export const maintenanceSeverity = pgEnum("maintenance_severity", ['low', 'medium', 'high', 'critical'])
 export const maintenanceStatus = pgEnum("maintenance_status", ['open', 'in_progress', 'resolved'])
+export const paymentMethodEnum = pgEnum("payment_method", ['credit_card', 'pix', 'coupon'])
+export const orderStatusEnum = pgEnum("order_status", ['pending', 'paid', 'failed', 'refunded'])
 
 
 export const products = pgTable("products", {
@@ -33,6 +35,24 @@ export const services = pgTable("services", {
     createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().notNull(),
 });
+
+export const serviceVariants = pgTable("service_variants", {
+    id: text().primaryKey().notNull(),
+    serviceId: text("service_id").notNull(),
+    name: text().notNull(),
+    description: text(),
+    price: integer().notNull(),
+    duration: integer().notNull(),
+    active: boolean().default(true).notNull(),
+    createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+    foreignKey({
+        columns: [table.serviceId],
+        foreignColumns: [services.id],
+        name: "service_variants_service_id_services_id_fk"
+    }),
+]);
 
 export const clients = pgTable("clients", {
     id: text().primaryKey().notNull(),
@@ -92,6 +112,45 @@ export const sales = pgTable("sales", {
     createdBy: text("created_by"),
     createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
 });
+
+export const orders = pgTable("orders", {
+    id: text().primaryKey().notNull(),
+    clientId: text("client_id").notNull(),
+    totalAmount: integer("total_amount").notNull(),
+    paymentMethod: paymentMethodEnum("payment_method"),
+    status: orderStatusEnum("status").default('pending').notNull(),
+    checkoutData: jsonb("checkout_data"),
+    createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+    foreignKey({
+        columns: [table.clientId],
+        foreignColumns: [clients.id],
+        name: "orders_client_id_clients_id_fk"
+    }),
+]);
+
+export const clientCredits = pgTable("client_credits", {
+    id: text().primaryKey().notNull(),
+    clientId: text("client_id").notNull(),
+    serviceId: text("service_id").notNull(),
+    variantId: text("variant_id"),
+    amount: integer().notNull().default(1),
+    expiresAt: timestamp("expires_at", { mode: 'string' }),
+    createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+    foreignKey({
+        columns: [table.clientId],
+        foreignColumns: [clients.id],
+        name: "client_credits_client_id_clients_id_fk"
+    }),
+    foreignKey({
+        columns: [table.serviceId],
+        foreignColumns: [services.id],
+        name: "client_credits_service_id_services_id_fk"
+    }),
+]);
 
 export const clientTags = pgTable("client_tags", {
     id: text().primaryKey().notNull(),
@@ -205,12 +264,40 @@ export const maintenanceLogsRelations = relations(maintenanceLogs, ({ one }) => 
 
 export const servicesRelations = relations(services, ({ many }) => ({
     appointments: many(appointments),
+    variants: many(serviceVariants),
+}));
+
+export const serviceVariantsRelations = relations(serviceVariants, ({ one }) => ({
+    service: one(services, {
+        fields: [serviceVariants.serviceId],
+        references: [services.id],
+    }),
 }));
 
 export const clientsRelations = relations(clients, ({ many }) => ({
     appointments: many(appointments),
     sales: many(sales),
     tags: many(clientTags),
+    credits: many(clientCredits),
+    orders: many(orders),
+}));
+
+export const clientCreditsRelations = relations(clientCredits, ({ one }) => ({
+    client: one(clients, {
+        fields: [clientCredits.clientId],
+        references: [clients.id],
+    }),
+    service: one(services, {
+        fields: [clientCredits.serviceId],
+        references: [services.id],
+    }),
+}));
+
+export const ordersRelations = relations(orders, ({ one }) => ({
+    client: one(clients, {
+        fields: [orders.clientId],
+        references: [clients.id],
+    }),
 }));
 
 export const locationsRelations = relations(locations, ({ many }) => ({

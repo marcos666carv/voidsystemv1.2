@@ -1,28 +1,25 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
     Thermometer,
     Clock,
     User,
-    Play,
-    PenTool,
     Waves,
     Lightbulb,
     Music,
-    AlertOctagon,
     Power,
     Volume2
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import type { Profile } from "@/types/database";
 
 export interface TankData {
     id: string;
     name: string;
     status: 'available' | 'occupied' | 'cleaning' | 'maintenance';
     temp: number;
-    client: string | null;
+    client: Profile | null;
     timeRemaining: number | null;
     hardware: {
         filtration: boolean;
@@ -43,45 +40,74 @@ interface TankControlPanelProps {
 export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEmergency }: TankControlPanelProps) {
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'available': return 'border-emerald-500/50';
-            case 'occupied': return 'border-violet-500/50';
-            case 'cleaning': return 'border-amber-500/50';
-            case 'maintenance': return 'border-red-500/50';
-            default: return 'border-slate-200';
-        }
-    };
-
-    const getStatusBadge = (status: string) => {
-        switch (status) {
-            case 'available': return <Badge variant="outline" className="bg-emerald-100 text-emerald-700 border-emerald-200">Available</Badge>;
-            case 'occupied': return <Badge variant="outline" className="bg-violet-100 text-violet-700 border-violet-200 animate-pulse">In Session</Badge>;
-            case 'cleaning': return <Badge variant="outline" className="bg-amber-100 text-amber-700 border-amber-200">Cleaning</Badge>;
-            case 'maintenance': return <Badge variant="outline" className="bg-red-100 text-red-700 border-red-200">Maintenance</Badge>;
-            default: return <Badge variant="outline">Unknown</Badge>;
+            case 'occupied':
+                return 'bg-emerald-50 text-emerald-800 border-emerald-200';
+            case 'available':
+            case 'cleaning':
+            case 'maintenance':
+            default:
+                return 'bg-slate-50 text-slate-800 border-slate-200';
         }
     };
 
     return (
-        <Card className={`bg-white border-2 shadow-sm transition-all overflow-hidden ${getStatusColor(tank.status)}`}>
+        <Card className="bg-white border shadow-sm transition-all overflow-hidden border-slate-200">
             {/* Header */}
-            <CardHeader className="pb-3 border-b border-slate-100 bg-slate-50/50">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <CardTitle className="text-xl font-bold text-slate-900">{tank.name}</CardTitle>
-                        <div className="flex items-center gap-2 mt-1">
-                            {getStatusBadge(tank.status)}
+            <CardHeader className={`p-4 border-b transition-colors ${getStatusColor(tank.status)}`}>
+                <div className="flex justify-between items-center gap-4">
+                    <div className="flex-1">
+                        <div className="flex items-center gap-3">
+                            <CardTitle className="text-xl font-bold">{tank.name}</CardTitle>
                         </div>
                     </div>
-                    {/* Emergency Stop - Always Visible */}
-                    <Button
-                        variant="destructive"
-                        size="sm"
-                        className="h-8 shadow-sm hover:shadow-md transition-all font-bold gap-1 bg-red-600 hover:bg-red-700"
-                        onClick={() => onEmergency(tank.id)}
-                    >
-                        <AlertOctagon className="h-4 w-4" />
-                        <span className="hidden sm:inline">STOP</span>
-                    </Button>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                        {/* Status Actions as small top buttons */}
+                        <div className="flex bg-slate-900/5 rounded-md p-1 items-center gap-1">
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className={`h-7 px-2 text-xs font-semibold transition-colors ${tank.status === 'available' ? 'bg-white text-slate-900 shadow-sm hover:text-slate-900 hover:bg-white' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-900/10'}`}
+                                onClick={() => onStatusChange(tank.id, 'available')}
+                            >
+                                Livre
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className={`h-7 px-2 text-xs font-semibold transition-colors ${tank.status === 'occupied' ? 'bg-white text-slate-900 shadow-sm hover:text-slate-900 hover:bg-white' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-900/10'}`}
+                                onClick={() => onStatusChange(tank.id, 'occupied')}
+                            >
+                                Sessão
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className={`h-7 px-2 text-xs font-semibold transition-colors ${tank.status === 'cleaning' ? 'bg-white text-slate-900 shadow-sm hover:text-slate-900 hover:bg-white' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-900/10'}`}
+                                onClick={() => onStatusChange(tank.id, 'cleaning')}
+                            >
+                                Limpeza
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className={`h-7 px-2 text-xs font-semibold transition-colors ${tank.status === 'maintenance' ? 'bg-white text-slate-900 shadow-sm hover:text-slate-900 hover:bg-white' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-900/10'}`}
+                                onClick={() => onStatusChange(tank.id, 'maintenance')}
+                            >
+                                Manute.
+                            </Button>
+                        </div>
+
+                        {/* Emergency Stop - Always Visible */}
+                        <Button
+                            variant="destructive"
+                            size="sm"
+                            className="h-8 shadow-sm hover:shadow-md transition-all font-medium bg-red-100 hover:bg-red-200 text-red-700 border border-red-200 ml-2"
+                            onClick={() => onEmergency(tank.id)}
+                        >
+                            Parar
+                        </Button>
+                    </div>
                 </div>
             </CardHeader>
 
@@ -92,13 +118,13 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                     <div className="p-5 space-y-6">
                         {/* Telemetry Overview */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center">
-                                <p className="text-xs font-medium text-slate-500 mb-2 flex items-center gap-1"><Thermometer className="h-3 w-3" /> Água</p>
-                                <p className="text-3xl font-mono font-bold text-slate-800">{tank.temp.toFixed(1)}°C</p>
+                            <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-start justify-center">
+                                <p className="text-xs font-medium text-slate-500 mb-1 flex items-center gap-1"><Thermometer className="h-3 w-3" /> Água</p>
+                                <p className="text-xl font-mono font-bold text-slate-800 tracking-tight">{tank.temp.toFixed(1)}°C</p>
                             </div>
-                            <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center">
-                                <p className="text-xs font-medium text-slate-500 mb-2 flex items-center gap-1"><Clock className="h-3 w-3" /> Tempo Restante</p>
-                                <p className="text-3xl font-mono font-bold text-slate-800 tracking-tight">
+                            <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-start justify-center">
+                                <p className="text-xs font-medium text-slate-500 mb-1 flex items-center gap-1"><Clock className="h-3 w-3" /> Restante</p>
+                                <p className="text-xl font-mono font-bold text-slate-800 tracking-tight">
                                     {tank.timeRemaining !== null ? `${tank.timeRemaining}m` : '--:--'}
                                 </p>
                             </div>
@@ -106,16 +132,25 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
 
                         {/* Client Info */}
                         <div>
-                            {tank.status === 'occupied' ? (
+                            {tank.status === 'occupied' && tank.client ? (
                                 <>
                                     <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Sessão Atual</p>
-                                    <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-                                        <div className="h-10 w-10 rounded-full bg-violet-100 flex items-center justify-center border border-violet-200">
+                                    <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-left">
+                                        <div className="h-10 w-10 rounded-full bg-violet-100 flex items-center justify-center border border-violet-200 flex-shrink-0">
                                             <User className="h-5 w-5 text-violet-600" />
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-bold text-slate-800">{tank.client}</p>
-                                            <p className="text-xs text-slate-500">Sessão em andamento</p>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex justify-between items-center mb-1.5">
+                                                <p className="text-sm font-bold text-slate-800 truncate">{tank.client.full_name}</p>
+                                            </div>
+                                            <div className="flex items-center gap-2 mt-0.5">
+                                                <p className="text-xs text-slate-500 truncate">{tank.client.email}</p>
+                                            </div>
+                                            <div className="flex justify-start items-center mt-2 pt-2 border-t border-slate-100">
+                                                <span className="text-[10px] uppercase font-bold text-violet-700 bg-violet-100 px-1.5 py-0.5 rounded tracking-wider flex-shrink-0">
+                                                    {tank.client.acquisition_source || 'Novo'}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -126,34 +161,17 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                             )}
                         </div>
 
-                        {/* Status Actions */}
-                        <div className="flex flex-wrap gap-2 pt-2">
-                            {tank.status === 'occupied' || tank.status === 'cleaning' ? (
-                                <Button size="sm" variant="outline" className="flex-1 font-medium bg-white" onClick={() => onStatusChange(tank.id, 'available')}>
-                                    Finalizar Atual
-                                </Button>
-                            ) : (
-                                <>
-                                    <Button size="sm" variant="outline" className="flex-1 font-medium bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100 hover:text-amber-800" onClick={() => onStatusChange(tank.id, 'cleaning')}>
-                                        <Play className="h-3 w-3 mr-1" /> Iniciar Limpeza
-                                    </Button>
-                                    <Button size="sm" variant="outline" className="px-3 bg-white" onClick={() => onStatusChange(tank.id, 'maintenance')} title="Manutenção">
-                                        <PenTool className="h-4 w-4 text-slate-600" />
-                                    </Button>
-                                </>
-                            )}
-                        </div>
                     </div>
 
                     {/* RIGHT COLUMN: Hardware Controls */}
-                    <div className="p-5 space-y-6 bg-slate-50/80 border-l border-slate-100">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Controles Diretos</p>
+                    <div className="p-5 bg-slate-50/80 border-l border-slate-100">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-5">Controles Diretos</p>
 
                         <div className="space-y-4">
                             {/* Filtragem */}
                             <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
                                 <div className="flex items-center gap-3">
-                                    <div className={`p-2 rounded-lg ${tank.hardware.filtration ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-400'}`}>
+                                    <div className={`p-2 rounded-lg ${tank.hardware.filtration ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
                                         <Waves className="h-5 w-5" />
                                     </div>
                                     <div>
@@ -164,13 +182,14 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                                 <Switch
                                     checked={tank.hardware.filtration}
                                     onCheckedChange={(checked) => onHardwareChange(tank.id, { filtration: checked })}
+                                    className="data-[state=checked]:bg-emerald-500"
                                 />
                             </div>
 
                             {/* Luzes */}
                             <div className="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
                                 <div className="flex items-center gap-3">
-                                    <div className={`p-2 rounded-lg ${tank.hardware.lightOn ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'}`}>
+                                    <div className={`p-2 rounded-lg ${tank.hardware.lightOn ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
                                         <Lightbulb className="h-5 w-5" />
                                     </div>
                                     <div>
@@ -185,6 +204,7 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                                     <Switch
                                         checked={tank.hardware.lightOn}
                                         onCheckedChange={(checked) => onHardwareChange(tank.id, { lightOn: checked })}
+                                        className="data-[state=checked]:bg-emerald-500"
                                     />
                                 </div>
                             </div>
@@ -193,7 +213,7 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                             <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-3">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <div className={`p-2 rounded-lg ${tank.hardware.musicPlaying ? 'bg-violet-100 text-violet-600' : 'bg-slate-100 text-slate-400'}`}>
+                                        <div className={`p-2 rounded-lg ${tank.hardware.musicPlaying ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
                                             <Music className="h-5 w-5" />
                                         </div>
                                         <div>
@@ -204,10 +224,10 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="h-8 w-8"
+                                        className={`h-8 w-8 ${tank.hardware.musicPlaying ? 'bg-emerald-100 text-emerald-600 hover:bg-emerald-200 hover:text-emerald-700' : ''}`}
                                         onClick={() => onHardwareChange(tank.id, { musicPlaying: !tank.hardware.musicPlaying })}
                                     >
-                                        <Power className={`h-4 w-4 ${tank.hardware.musicPlaying ? 'text-violet-600' : 'text-slate-400'}`} />
+                                        <Power className={`h-4 w-4 ${tank.hardware.musicPlaying ? 'text-emerald-600' : 'text-slate-400'}`} />
                                     </Button>
                                 </div>
                                 <div className="flex items-center gap-3 px-1">
@@ -216,7 +236,7 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                                         defaultValue={[tank.hardware.musicVolume]}
                                         max={100}
                                         step={1}
-                                        className="flex-1"
+                                        className="flex-1 [&_[role=slider]]:bg-emerald-500 [&_.bg-slate-900]:bg-emerald-500"
                                         onValueChange={(vals) => onHardwareChange(tank.id, { musicVolume: vals[0] })}
                                     />
                                     <span className="text-xs font-mono w-8 text-right text-slate-500">{tank.hardware.musicVolume}%</span>
@@ -229,4 +249,4 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
             </CardContent>
         </Card>
     );
-}
+};

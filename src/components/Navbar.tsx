@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 const NAV_LINKS = [
     { href: 'https://voidfloat.com.br', label: 'flutuação', external: true },
     { href: '/services', label: 'massoterapia' },
-    { href: '/schedule', label: 'agendar' },
     { href: '/club', label: 'void club' },
     { href: '/about', label: 'sobre' },
 ];
