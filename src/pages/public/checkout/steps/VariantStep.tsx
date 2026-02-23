@@ -2,6 +2,23 @@ import { useMemo } from 'react';
 import { Check } from 'lucide-react';
 import { MOCK_SERVICES, MOCK_PACKAGES } from '@/lib/mockData';
 
+const formatPackageLabel = (name: string, count: number) => {
+    if (count === 1) return `1 ${name}`;
+
+    let pluralName = name;
+    if (name.toLowerCase().includes('flutuação')) {
+        pluralName = name.replace(/ção$/i, 'ções');
+    } else if (name.toLowerCase().includes('massoterapia')) {
+        pluralName = name + 's';
+    } else if (name.toLowerCase().includes('massagem')) {
+        pluralName = name.replace(/em$/i, 'ens');
+    } else {
+        pluralName = name + 's';
+    }
+
+    return `${count} ${pluralName}`;
+};
+
 interface VariantStepProps {
     flowType: string;
     selectedId?: string;
@@ -35,7 +52,7 @@ export function VariantStep({ flowType, selectedId, onSelect }: VariantStepProps
             if (singlePkg) {
                 results.push({
                     id: singlePkg.id,
-                    label: svc.name,
+                    label: formatPackageLabel(svc.name, 1),
                     description: svc.description,
                     price: singlePkg.totalPrice,
                     duration: `${svc.duration} minutos`,
@@ -44,7 +61,7 @@ export function VariantStep({ flowType, selectedId, onSelect }: VariantStepProps
             } else {
                 results.push({
                     id: svc.id,
-                    label: svc.name,
+                    label: formatPackageLabel(svc.name, 1),
                     description: svc.description,
                     price: svc.price,
                     duration: `${svc.duration} minutos`,
@@ -57,7 +74,7 @@ export function VariantStep({ flowType, selectedId, onSelect }: VariantStepProps
             for (const pkg of multiPkgs) {
                 results.push({
                     id: pkg.id,
-                    label: `${svc.name} - ${pkg.sessionCount} Sessões`,
+                    label: formatPackageLabel(svc.name, pkg.sessionCount),
                     description: `Pacote de ${pkg.sessionCount} sessões de ${svc.duration} minutos.`,
                     price: pkg.totalPrice,
                     duration: `${svc.duration} min x${pkg.sessionCount}`,
@@ -104,11 +121,11 @@ export function VariantStep({ flowType, selectedId, onSelect }: VariantStepProps
                                 </div>
 
                                 <div className="flex-1 min-w-0 pr-2">
-                                    <div className="flex flex-wrap flex-col 2xl:flex-row items-start 2xl:items-center gap-2 mb-1.5">
-                                        <h3 className="text-base font-bold text-slate-900 leading-tight">{opt.label}</h3>
+                                    <div className="flex items-center justify-between gap-2 mb-1.5 w-full">
+                                        <h3 className="text-base font-bold text-slate-900 leading-tight truncate">{opt.label}</h3>
                                         {/* Tags Section */}
                                         {opt.tag && (
-                                            <span className="bg-violet-600 text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap">
+                                            <span className="bg-violet-600 text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap shrink-0">
                                                 {opt.tag}
                                             </span>
                                         )}
