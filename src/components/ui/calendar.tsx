@@ -19,12 +19,19 @@ function Calendar({
             showOutsideDays={showOutsideDays}
             className={cn(defaultClassNames.root, "p-3", className)}
             classNames={{
+                root: cn(defaultClassNames.root, "p-3 w-full", className),
+                months: "w-full",
+                month: "w-full space-y-4",
+                month_grid: "w-full border-collapse space-y-1",
+                nav: "space-x-1 flex items-center justify-between absolute w-full top-3 px-2 left-0 pointer-events-none",
+                button_previous: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 pointer-events-auto",
+                button_next: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 pointer-events-auto",
+                month_caption: "flex justify-center pt-1 relative items-center font-medium text-sm text-slate-800",
+                caption_label: "font-medium",
                 today: "font-semibold text-violet-600",
                 selected: "bg-slate-900 text-white rounded-full",
-                root: cn(defaultClassNames.root, "p-3", className),
-                chevron: cn(defaultClassNames.chevron, "fill-slate-900"),
-                month_caption: "font-medium text-sm text-slate-800",
-                day: cn(defaultClassNames.day, "rounded-full transition-colors"),
+                chevron: cn(defaultClassNames.chevron, "fill-violet-600"),
+                day: cn(defaultClassNames.day, "rounded-full transition-colors w-9 h-9 flex items-center justify-center p-0 font-normal aria-selected:opacity-100"),
                 outside: cn(defaultClassNames.outside, "text-slate-300 opacity-50"),
                 disabled: cn(defaultClassNames.disabled, "text-slate-300 opacity-50"),
                 ...classNames,
