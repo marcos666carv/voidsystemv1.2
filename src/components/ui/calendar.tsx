@@ -19,8 +19,8 @@ function Calendar({
             showOutsideDays={showOutsideDays}
             className={cn(defaultClassNames.root, "p-3", className)}
             classNames={{
-                root: cn(defaultClassNames.root, "p-4 relative", className),
-                nav: "space-x-1 flex items-center justify-between absolute w-full px-3 left-0 pointer-events-none top-4",
+                root: cn(defaultClassNames.root, "p-3 relative", className),
+                nav: "space-x-1 flex items-center justify-between absolute w-full px-3 left-0 pointer-events-none top-3",
                 button_previous: "h-8 w-8 bg-transparent p-0 opacity-50 hover:opacity-100 pointer-events-auto flex justify-center items-center z-10",
                 button_next: "h-8 w-8 bg-transparent p-0 opacity-50 hover:opacity-100 pointer-events-auto flex justify-center items-center z-10",
                 month_caption: "flex justify-center h-8 relative items-center font-bold text-[15px] text-slate-800 w-full mb-2",
