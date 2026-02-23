@@ -19,7 +19,7 @@ function Calendar({
             showOutsideDays={showOutsideDays}
             className={cn(defaultClassNames.root, "p-3", className)}
             classNames={{
-                today: "border border-slate-300 rounded-full font-semibold",
+                today: "font-semibold text-violet-600",
                 selected: "bg-slate-900 text-white rounded-full",
                 root: cn(defaultClassNames.root, "p-3", className),
                 chevron: cn(defaultClassNames.chevron, "fill-slate-900"),
