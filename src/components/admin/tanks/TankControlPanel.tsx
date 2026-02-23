@@ -102,7 +102,7 @@ export function TankControlPanel({ tank, onStatusChange, onHardwareChange, onEme
                         <Button
                             variant="destructive"
                             size="sm"
-                            className="h-8 shadow-sm hover:shadow-md transition-all font-medium bg-red-100 hover:bg-red-200 text-red-700 border border-red-200 ml-2"
+                            className="h-8 shadow-sm hover:shadow-md transition-all font-medium bg-white hover:bg-red-50 text-red-700 border border-red-200 ml-2"
                             onClick={() => onEmergency(tank.id)}
                         >
                             Parar

@@ -109,13 +109,6 @@ export function LandingPage() {
                                 produtos para levar a experiência para casa.
                             </p>
                         </div>
-                        <Link
-                            to="/services"
-                            className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors"
-                        >
-                            ver todos
-                            <ArrowRight className="h-3.5 w-3.5" />
-                        </Link>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

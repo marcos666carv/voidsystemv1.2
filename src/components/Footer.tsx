@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Lock } from 'lucide-react';
 
 const FOOTER_LINKS = [
-    { href: '/services', label: 'serviços' },
+    { href: '/checkout?type=float', label: 'agendar flutuação' },
     { href: '/club', label: 'void club' },
     { href: '/about', label: 'sobre' },
 ];

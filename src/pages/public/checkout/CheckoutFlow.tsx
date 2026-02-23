@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { LocationStep } from './steps/LocationStep';
 import { VariantStep } from './steps/VariantStep';
 import { ScheduleStep } from './steps/ScheduleStep';
 import { AuthStep } from './steps/AuthStep';
@@ -15,22 +14,19 @@ type FlowType = 'float' | 'massage' | 'combo' | 'gift';
 const STEPS_BY_TYPE: Record<FlowType, { id: string, label: string }[]> = {
     float: [
         { id: 'variant', label: 'Detalhes do Serviço' },
-        { id: 'location', label: 'Unidade' },
-        { id: 'schedule', label: 'Agendamento' },
+        { id: 'schedule', label: 'Unidade e Agendamento' },
         { id: 'auth', label: 'Identificação' },
         { id: 'payment', label: 'Pagamento' }
     ],
     massage: [
         { id: 'variant', label: 'Detalhes do Serviço' },
-        { id: 'location', label: 'Unidade' },
-        { id: 'schedule', label: 'Agendamento' },
+        { id: 'schedule', label: 'Unidade e Agendamento' },
         { id: 'auth', label: 'Identificação' },
         { id: 'payment', label: 'Pagamento' }
     ],
     combo: [
         { id: 'variant', label: 'Detalhes do Serviço' },
-        { id: 'location', label: 'Unidade' },
-        { id: 'schedule', label: 'Agendar Sessões' },
+        { id: 'schedule', label: 'Unidade e Agendar Sessões' },
         { id: 'auth', label: 'Identificação' },
         { id: 'payment', label: 'Pagamento' }
     ],
@@ -87,8 +83,7 @@ export default function CheckoutFlow() {
     // Checks if the user can proceed from the current step
     const canProceed = () => {
         if (currentStep.id === 'variant') return !!checkoutData.variantId;
-        if (currentStep.id === 'location') return !!checkoutData.locationId;
-        if (currentStep.id === 'schedule') return !!(checkoutData.date && checkoutData.time);
+        if (currentStep.id === 'schedule') return !!(checkoutData.locationId && checkoutData.date && checkoutData.time);
         if (currentStep.id === 'recipient') return !!checkoutData.recipientComplete;
         if (currentStep.id === 'auth') return !!checkoutData.userId;
         if (currentStep.id === 'payment') return !!checkoutData.paymentReady;
@@ -213,19 +208,14 @@ export default function CheckoutFlow() {
                                 />
                             )}
 
-                            {currentStep.id === 'location' && (
-                                <LocationStep
-                                    selectedId={checkoutData.locationId}
-                                    onSelect={(id) => setCheckoutData(prev => ({ ...prev, locationId: id }))}
-                                />
-                            )}
-
                             {currentStep.id === 'schedule' && (
                                 <ScheduleStep
                                     flowType={flowType}
+                                    selectedLocationId={checkoutData.locationId}
                                     selectedDate={checkoutData.date}
                                     selectedTime={checkoutData.time}
-                                    onSelect={(date, time) => setCheckoutData(prev => ({ ...prev, date, time }))}
+                                    onLocationSelect={(id) => setCheckoutData(prev => ({ ...prev, locationId: id }))}
+                                    onScheduleSelect={(date, time) => setCheckoutData(prev => ({ ...prev, date, time }))}
                                 />
                             )}
 
@@ -251,7 +241,7 @@ export default function CheckoutFlow() {
                             )}
 
                             {/* Placeholders for unimplemented steps */}
-                            {currentStep.id !== 'variant' && currentStep.id !== 'location' && currentStep.id !== 'schedule' && currentStep.id !== 'auth' && currentStep.id !== 'payment' && currentStep.id !== 'recipient' && (
+                            {currentStep.id !== 'variant' && currentStep.id !== 'schedule' && currentStep.id !== 'auth' && currentStep.id !== 'payment' && currentStep.id !== 'recipient' && (
                                 <div className="text-center space-y-4">
                                     <h2 className="text-2xl font-bold text-slate-300">
                                         Conteúdo do Passo: {currentStep.id}

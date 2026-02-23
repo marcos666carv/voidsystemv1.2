@@ -89,7 +89,7 @@ export function VariantStep({ flowType, selectedId, onSelect }: VariantStepProps
                             key={opt.id}
                             onClick={() => onSelect(opt.id, opt.price)}
                             className={`
-                                relative w-full text-left p-5 rounded-2xl border-2 transition-all overflow-hidden flex items-center justify-between
+                                relative w-full text-left p-5 rounded-2xl border-2 transition-all flex items-center justify-between
                                 ${isSelected
                                     ? 'border-violet-600 bg-violet-50/10 shadow-md shadow-violet-100'
                                     : 'border-slate-200 bg-white hover:border-violet-300 hover:bg-slate-50 shadow-sm'
@@ -98,7 +98,7 @@ export function VariantStep({ flowType, selectedId, onSelect }: VariantStepProps
                         >
                             {/* Tags Section */}
                             {opt.tag && (
-                                <span className="absolute top-0 right-6 -translate-y-1/2 bg-violet-600 text-[10px] font-bold uppercase tracking-wider text-white px-3 py-1 rounded-full shadow-sm">
+                                <span className="absolute top-3 right-3 bg-violet-600 text-[10px] font-bold uppercase tracking-wider text-white px-3 py-1 rounded-full shadow-sm">
                                     {opt.tag}
                                 </span>
                             )}

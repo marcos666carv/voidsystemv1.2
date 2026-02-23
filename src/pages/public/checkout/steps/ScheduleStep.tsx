@@ -1,8 +1,23 @@
 import { useState } from 'react';
-import { Clock, CheckCircle2 } from 'lucide-react';
+import { Clock, CheckCircle2, MapPin } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+
+const LOCATIONS = [
+    {
+        id: 'cwb',
+        name: 'Curitiba',
+        address: 'R. Fernando Simas, 395 · Bigorrilho',
+        mapPreview: 'bg-slate-100' // Mock for a subtle map background or image
+    },
+    {
+        id: 'cl',
+        name: 'Campo Largo',
+        address: 'R. Oswaldo Cruz, 123 · Centro',
+        mapPreview: 'bg-slate-100'
+    }
+];
 
 const MOCK_TIMES = [
     '09:00', '10:30', '14:00', '15:30', '18:00', '19:30'
@@ -10,12 +25,14 @@ const MOCK_TIMES = [
 
 interface ScheduleStepProps {
     flowType: string;
+    selectedLocationId?: string;
     selectedDate?: string;
     selectedTime?: string;
-    onSelect: (date: string, time: string) => void;
+    onLocationSelect: (id: string) => void;
+    onScheduleSelect: (date: string, time: string) => void;
 }
 
-export function ScheduleStep({ flowType, selectedDate, selectedTime, onSelect }: ScheduleStepProps) {
+export function ScheduleStep({ flowType, selectedLocationId, selectedDate, selectedTime, onLocationSelect, onScheduleSelect }: ScheduleStepProps) {
     const [tempDate, setTempDate] = useState<Date | undefined>(
         selectedDate ? new Date(`${selectedDate}T12:00:00`) : new Date()
     );
@@ -30,7 +47,7 @@ export function ScheduleStep({ flowType, selectedDate, selectedTime, onSelect }:
     const handleTimeSelect = (t: string) => {
         if (!tempDate) return;
         setTempTime(t);
-        onSelect(format(tempDate, 'yyyy-MM-dd'), t); // Commit selection
+        onScheduleSelect(format(tempDate, 'yyyy-MM-dd'), t); // Commit selection
     };
 
     return (
@@ -38,16 +55,58 @@ export function ScheduleStep({ flowType, selectedDate, selectedTime, onSelect }:
             <div className="text-center mb-8">
                 {flowType === 'combo' ? (
                     <p className="text-slate-500 text-lg">
-                        Escolha quando deseja realizar a sua primeira sessão do combo.
+                        Escolha a unidade e quando deseja realizar a sua primeira sessão do combo.
                     </p>
                 ) : (
                     <p className="text-slate-500 text-lg">
-                        Escolha a data e o horário para a sua sessão.
+                        Escolha a unidade, data e o horário para a sua sessão.
                     </p>
                 )}
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-10">
+                {/* Location Selection */}
+                <div>
+                    <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">
+                        Unidade
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border border-slate-100 p-2 rounded-3xl bg-slate-50/50">
+                        {LOCATIONS.map((loc) => {
+                            const isSelected = selectedLocationId === loc.id;
+                            return (
+                                <button
+                                    key={loc.id}
+                                    onClick={() => onLocationSelect(loc.id)}
+                                    className={`
+                                        relative text-left p-6 rounded-2xl border-2 transition-all
+                                        ${isSelected
+                                            ? 'border-violet-600 bg-white shadow-md shadow-violet-100'
+                                            : 'border-transparent bg-white hover:bg-slate-50 hover:border-slate-200 shadow-sm'
+                                        }
+                                    `}
+                                >
+                                    {/* Selected Indicator */}
+                                    {isSelected && (
+                                        <div className="absolute top-4 right-4 h-3 w-3 rounded-full bg-violet-600" />
+                                    )}
+
+                                    <div className="flex items-start gap-4">
+                                        <div className={`p-3 rounded-xl shrink-0 ${isSelected ? 'bg-violet-100 text-violet-600' : 'bg-slate-100 text-slate-500'}`}>
+                                            <MapPin className="h-6 w-6" />
+                                        </div>
+                                        <div className="pr-4">
+                                            <h3 className="text-lg font-bold text-slate-900">{loc.name}</h3>
+                                            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
+                                                {loc.address}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </button>
+                            )
+                        })}
+                    </div>
+                </div>
+
                 {/* Date and Time Selection grid wrapper */}
                 <div className="flex flex-col md:flex-row gap-8">
                     {/* Date Selection */}
@@ -96,11 +155,11 @@ export function ScheduleStep({ flowType, selectedDate, selectedTime, onSelect }:
                     </div>
                 </div>
 
-                {tempDate && tempTime && (
+                {tempDate && tempTime && selectedLocationId && (
                     <div className="mt-8 p-4 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center gap-3 text-emerald-800 animate-in fade-in duration-300">
                         <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
                         <span className="text-sm font-medium">
-                            Sessão reservada para <strong>{format(tempDate, "EEEE, d 'de' MMMM", { locale: ptBR })} às {tempTime}</strong>.
+                            Sessão na unidade <strong>{LOCATIONS.find(l => l.id === selectedLocationId)?.name}</strong> para <strong>{format(tempDate, "EEEE, d 'de' MMMM", { locale: ptBR })} às {tempTime}</strong>.
                         </span>
                     </div>
                 )}
@@ -108,4 +167,3 @@ export function ScheduleStep({ flowType, selectedDate, selectedTime, onSelect }:
         </div>
     );
 }
-
