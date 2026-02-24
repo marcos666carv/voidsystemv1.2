@@ -74,7 +74,7 @@ export function Navbar() {
 
                                 {/* Inner dark button */}
                                 <Link
-                                    to="/checkout?type=gift"
+                                    to="/checkout?type=redeem"
                                     className="relative flex items-center justify-center gap-2 px-6 py-2 text-[13px] font-medium tracking-wide rounded-full bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
                                 >
                                     <Gift className="h-4 w-4 text-fuchsia-400 group-hover:text-cyan-400 transition-colors" />
@@ -153,7 +153,7 @@ export function Navbar() {
 
                                 {/* Inner dark button */}
                                 <Link
-                                    to="/checkout?type=gift"
+                                    to="/checkout?type=redeem"
                                     className="relative flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
                                 >
                                     <Gift className="h-4 w-4 text-fuchsia-400 group-hover:text-cyan-400 transition-colors" />

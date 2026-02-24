@@ -10,7 +10,7 @@ import { RecipientStep } from './steps/RecipientStep';
 import { GiftCardStep } from './steps/GiftCardStep';
 
 // Mock types
-type FlowType = 'float' | 'massage' | 'combo' | 'gift';
+type FlowType = 'float' | 'massage' | 'combo' | 'gift' | 'redeem';
 
 const STEPS_BY_TYPE: Record<FlowType, { id: string, label: string }[]> = {
     float: [
@@ -32,10 +32,15 @@ const STEPS_BY_TYPE: Record<FlowType, { id: string, label: string }[]> = {
         { id: 'payment', label: 'Pagamento' }
     ],
     gift: [
-        { id: 'gift_card', label: 'Resgatar' },
+        { id: 'variant', label: 'Qual Presente?' },
         { id: 'recipient', label: 'Para Quem?' },
         { id: 'auth', label: 'Identificação' },
         { id: 'payment', label: 'Pagamento' }
+    ],
+    redeem: [
+        { id: 'gift_card', label: 'Resgatar' },
+        { id: 'schedule', label: 'Agendamento e Unidade' },
+        { id: 'auth', label: 'Identificação' },
     ]
 };
 
@@ -215,12 +220,7 @@ export default function CheckoutFlow() {
                                 <GiftCardStep
                                     onValidCode={(code, amount) => {
                                         setCheckoutData(prev => ({ ...prev, giftCode: code, price: amount }));
-                                        // Auto advance on success validation
-                                        setTimeout(() => {
-                                            if (currentStepIdx < steps.length - 1) {
-                                                setCurrentStepIdx(prev => prev + 1);
-                                            }
-                                        }, 800);
+                                        // Auto advance removed: user must click "Continuar" below
                                     }}
                                 />
                             )}
