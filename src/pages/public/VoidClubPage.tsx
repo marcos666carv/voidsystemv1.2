@@ -313,12 +313,12 @@ export default function VoidClubPage() {
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-5 items-start">
+                    <div className="grid md:grid-cols-3 gap-5 items-stretch">
                         {PLANS.map((plan) => (
                             <div
                                 key={plan.id}
-                                className={`relative flex flex-col rounded-2xl border p-7 transition-all duration-500 ${plan.highlight
-                                    ? 'bg-gradient-to-b from-lilac-500/10 via-lilac-500/5 to-transparent border-lilac-500/30 shadow-[0_0_60px_-20px_rgba(168,128,208,0.15)] md:scale-105'
+                                className={`relative flex flex-col h-full rounded-2xl border p-7 transition-all duration-500 ${plan.highlight
+                                    ? 'bg-gradient-to-b from-lilac-500/10 via-lilac-500/5 to-transparent border-lilac-500/30 shadow-[0_0_60px_-20px_rgba(168,128,208,0.15)]'
                                     : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/10'
                                     }`}
                             >
