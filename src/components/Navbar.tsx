@@ -149,7 +149,7 @@ export function Navbar() {
                             {/* Container for the button and spinning border */}
                             <div className="relative rounded-lg overflow-hidden p-[2px]">
                                 {/* Animated spinning background */}
-                                <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                                 {/* Inner dark button */}
                                 <Link

@@ -73,7 +73,7 @@ export default {
                 sm: "calc(var(--radius) - 4px)",
             },
             animation: {
-                "spin-slow": "spin 4s linear infinite",
+                "spin-slow": "spin 8s linear infinite",
             },
         },
     },
