@@ -86,7 +86,7 @@ export function Footer() {
                         © {new Date().getFullYear()} void float · curitiba, brasil
                     </p>
                     <Link
-                        to="/admin/register"
+                        to="/admin"
                         className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-400 transition-colors"
                     >
                         <Lock className="h-3 w-3" />
