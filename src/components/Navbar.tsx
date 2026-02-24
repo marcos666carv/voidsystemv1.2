@@ -63,12 +63,15 @@ export function Navbar() {
 
                     {/* Desktop Actions — right */}
                     <div className="hidden md:flex items-center gap-3">
-                        <Link
-                            to="/checkout?type=gift"
-                            className="px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 text-white hover:scale-105 hover:shadow-lg shadow-md shadow-violet-500/30"
-                        >
-                            tenho um vale presente
-                        </Link>
+                        <div className="relative group">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                            <Link
+                                to="/checkout?type=gift"
+                                className="relative flex items-center justify-center px-6 py-2 text-[13px] font-bold uppercase tracking-wider text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-full transition-all duration-300 hover:scale-[1.02]"
+                            >
+                                tenho um vale presente
+                            </Link>
+                        </div>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
@@ -129,12 +132,15 @@ export function Navbar() {
                     )}
 
                     <div className="pt-3 mt-3 border-t border-slate-100 space-y-2">
-                        <Link
-                            to="/checkout?type=gift"
-                            className="flex justify-center px-4 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 text-white shadow-md shadow-violet-500/30"
-                        >
-                            tenho um vale presente
-                        </Link>
+                        <div className="relative group">
+                            <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                            <Link
+                                to="/checkout?type=gift"
+                                className="relative flex justify-center px-4 py-3 text-[13px] font-bold uppercase tracking-wider text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-lg transition-all duration-300 hover:scale-[1.02]"
+                            >
+                                tenho um vale presente
+                            </Link>
+                        </div>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
