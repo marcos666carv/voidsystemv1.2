@@ -327,15 +327,6 @@ export default function VoidClubPage() {
                                         mais popular
                                     </span>
                                 )}
-                                {plan.promo && (
-                                    <span className={`text-[11px] font-medium px-3 py-1.5 rounded-lg mb-4 inline-block w-fit ${plan.highlight
-                                        ? 'bg-lilac-500/20 text-lilac-300'
-                                        : 'bg-red-500/10 text-red-400 border border-red-500/20'
-                                        }`}>
-                                        {plan.promo}
-                                    </span>
-                                )}
-
                                 <h3 className={`text-xl font-bold ${plan.highlight ? 'text-lilac-400' : 'text-white'}`}>
                                     {plan.name}
                                 </h3>
@@ -343,7 +334,7 @@ export default function VoidClubPage() {
                                     {plan.sessions} sessões de flutuação por mês
                                 </p>
 
-                                <div className="mt-6 mb-6">
+                                <div className="mt-6 mb-4">
                                     <div className="flex items-baseline gap-1">
                                         <span className="text-4xl font-bold text-white">
                                             {formatBRL(plan.monthlyPrice)}
@@ -354,6 +345,15 @@ export default function VoidClubPage() {
                                         {formatBRL(plan.perSession)} por sessão
                                     </p>
                                 </div>
+
+                                {plan.promo && (
+                                    <span className={`text-[11px] font-medium px-3 py-1.5 rounded-lg mb-6 inline-block w-fit ${plan.highlight
+                                        ? 'bg-lilac-500/20 text-lilac-300'
+                                        : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                                        }`}>
+                                        {plan.promo}
+                                    </span>
+                                )}
 
                                 <div className={`h-px mb-6 ${plan.highlight ? 'bg-lilac-500/20' : 'bg-white/[0.06]'}`} />
 
