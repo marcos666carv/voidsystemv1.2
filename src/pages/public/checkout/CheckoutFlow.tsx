@@ -7,6 +7,7 @@ import { ScheduleStep } from './steps/ScheduleStep';
 import { AuthStep } from './steps/AuthStep';
 import { PaymentStep } from './steps/PaymentStep';
 import { RecipientStep } from './steps/RecipientStep';
+import { GiftCardStep } from './steps/GiftCardStep';
 
 // Mock types
 type FlowType = 'float' | 'massage' | 'combo' | 'gift';
@@ -31,7 +32,7 @@ const STEPS_BY_TYPE: Record<FlowType, { id: string, label: string }[]> = {
         { id: 'payment', label: 'Pagamento' }
     ],
     gift: [
-        { id: 'variant', label: 'Qual Presente?' },
+        { id: 'gift_card', label: 'Resgatar' },
         { id: 'recipient', label: 'Para Quem?' },
         { id: 'auth', label: 'Identificação' },
         { id: 'payment', label: 'Pagamento' }
@@ -64,6 +65,7 @@ export default function CheckoutFlow() {
             message: string;
         };
         recipientComplete?: boolean;
+        giftCode?: string;
     }>({});
 
     const [status, setStatus] = useState<'idle' | 'processing' | 'success'>('idle');
@@ -83,6 +85,7 @@ export default function CheckoutFlow() {
     // Checks if the user can proceed from the current step
     const canProceed = () => {
         if (currentStep.id === 'variant') return !!checkoutData.variantId;
+        if (currentStep.id === 'gift_card') return !!checkoutData.giftCode;
         if (currentStep.id === 'schedule') return !!(checkoutData.locationId && checkoutData.date && checkoutData.time);
         if (currentStep.id === 'recipient') return !!checkoutData.recipientComplete;
         if (currentStep.id === 'auth') return !!checkoutData.userId;
@@ -164,7 +167,7 @@ export default function CheckoutFlow() {
 
             {/* Main Content */}
             <main className="flex-1 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-7xl mx-auto">
 
                     {/* Stepper Header */}
                     <div className="mb-12">
@@ -208,6 +211,20 @@ export default function CheckoutFlow() {
                                 />
                             )}
 
+                            {currentStep.id === 'gift_card' && (
+                                <GiftCardStep
+                                    onValidCode={(code, amount) => {
+                                        setCheckoutData(prev => ({ ...prev, giftCode: code, price: amount }));
+                                        // Auto advance on success validation
+                                        setTimeout(() => {
+                                            if (currentStepIdx < steps.length - 1) {
+                                                setCurrentStepIdx(prev => prev + 1);
+                                            }
+                                        }, 800);
+                                    }}
+                                />
+                            )}
+
                             {currentStep.id === 'schedule' && (
                                 <ScheduleStep
                                     flowType={flowType}
@@ -241,7 +258,7 @@ export default function CheckoutFlow() {
                             )}
 
                             {/* Placeholders for unimplemented steps */}
-                            {currentStep.id !== 'variant' && currentStep.id !== 'schedule' && currentStep.id !== 'auth' && currentStep.id !== 'payment' && currentStep.id !== 'recipient' && (
+                            {currentStep.id !== 'variant' && currentStep.id !== 'gift_card' && currentStep.id !== 'schedule' && currentStep.id !== 'auth' && currentStep.id !== 'payment' && currentStep.id !== 'recipient' && (
                                 <div className="text-center space-y-4">
                                     <h2 className="text-2xl font-bold text-slate-300">
                                         Conteúdo do Passo: {currentStep.id}
