@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { Menu, X, User, LogIn } from 'lucide-react';
+import { Menu, X, User, LogIn, Gift } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const NAV_LINKS = [
@@ -63,15 +63,13 @@ export function Navbar() {
 
                     {/* Desktop Actions — right */}
                     <div className="hidden md:flex items-center gap-3">
-                        <div className="relative group">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
-                            <Link
-                                to="/checkout?type=gift"
-                                className="relative flex items-center justify-center px-6 py-2 text-[13px] font-bold uppercase tracking-wider text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-full transition-all duration-300 hover:scale-[1.02]"
-                            >
-                                tenho um vale presente
-                            </Link>
-                        </div>
+                        <Link
+                            to="/checkout?type=gift"
+                            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 bg-slate-900 text-white hover:bg-slate-800"
+                        >
+                            <Gift className="h-4 w-4" />
+                            tenho um vale presente
+                        </Link>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
@@ -132,15 +130,13 @@ export function Navbar() {
                     )}
 
                     <div className="pt-3 mt-3 border-t border-slate-100 space-y-2">
-                        <div className="relative group">
-                            <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
-                            <Link
-                                to="/checkout?type=gift"
-                                className="relative flex justify-center px-4 py-3 text-[13px] font-bold uppercase tracking-wider text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400 rounded-lg transition-all duration-300 hover:scale-[1.02]"
-                            >
-                                tenho um vale presente
-                            </Link>
-                        </div>
+                        <Link
+                            to="/checkout?type=gift"
+                            className="flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 bg-slate-900 text-white hover:bg-slate-800"
+                        >
+                            <Gift className="h-4 w-4" />
+                            tenho um vale presente
+                        </Link>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
