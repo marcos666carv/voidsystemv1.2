@@ -327,6 +327,12 @@ export default function VoidClubPage() {
                                         mais popular
                                     </span>
                                 )}
+                                {plan.promo && !plan.highlight && (
+                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-red-500/80 text-white border border-red-500/20 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg shadow-red-500/20 whitespace-nowrap">
+                                        {plan.promo}
+                                    </span>
+                                )}
+
                                 <h3 className={`text-xl font-bold ${plan.highlight ? 'text-lilac-400' : 'text-white'}`}>
                                     {plan.name}
                                 </h3>
@@ -345,15 +351,6 @@ export default function VoidClubPage() {
                                         {formatBRL(plan.perSession)} por sessão
                                     </p>
                                 </div>
-
-                                {plan.promo && (
-                                    <span className={`text-[11px] font-medium px-3 py-1.5 rounded-lg mb-6 inline-block w-fit ${plan.highlight
-                                        ? 'bg-lilac-500/20 text-lilac-300'
-                                        : 'bg-red-500/10 text-red-400 border border-red-500/20'
-                                        }`}>
-                                        {plan.promo}
-                                    </span>
-                                )}
 
                                 <div className={`h-px mb-6 ${plan.highlight ? 'bg-lilac-500/20' : 'bg-white/[0.06]'}`} />
 
