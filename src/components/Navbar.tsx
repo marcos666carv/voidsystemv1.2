@@ -62,7 +62,13 @@ export function Navbar() {
                     </div>
 
                     {/* Desktop Actions — right */}
-                    <div className="hidden md:flex items-center gap-2">
+                    <div className="hidden md:flex items-center gap-3">
+                        <Link
+                            to="/checkout?type=gift"
+                            className="px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 text-white hover:scale-105 hover:shadow-lg shadow-md shadow-violet-500/30"
+                        >
+                            tenho um vale presente
+                        </Link>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
@@ -72,20 +78,13 @@ export function Navbar() {
                                 meu perfil
                             </Link>
                         ) : (
-                            <>
-                                <Link
-                                    to="/login"
-                                    className="px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
-                                >
-                                    entrar
-                                </Link>
-                                <Link
-                                    to="/register"
-                                    className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 bg-slate-900 text-white hover:bg-slate-800"
-                                >
-                                    criar conta
-                                </Link>
-                            </>
+                            <Link
+                                to="/login"
+                                className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 bg-slate-100 text-slate-900 hover:bg-slate-200"
+                            >
+                                <LogIn className="h-4 w-4" />
+                                entrar / cadastrar
+                            </Link>
                         )}
                     </div>
 
@@ -130,22 +129,23 @@ export function Navbar() {
                     )}
 
                     <div className="pt-3 mt-3 border-t border-slate-100 space-y-2">
+                        <Link
+                            to="/checkout?type=gift"
+                            className="flex justify-center px-4 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 text-white shadow-md shadow-violet-500/30"
+                        >
+                            tenho um vale presente
+                        </Link>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
-                                className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-lg"
+                                className="flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-lg"
                             >
                                 <User className="h-4 w-4" /> meu perfil
                             </Link>
                         ) : (
-                            <>
-                                <Link to="/login" className="block px-4 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50">
-                                    <span className="flex items-center gap-2"><LogIn className="h-4 w-4" /> entrar</span>
-                                </Link>
-                                <Link to="/register" className="block px-4 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-lg text-center">
-                                    criar conta
-                                </Link>
-                            </>
+                            <Link to="/login" className="flex justify-center px-4 py-2.5 text-sm font-medium text-slate-900 bg-slate-100 rounded-lg hover:bg-slate-200">
+                                <span className="flex items-center gap-2"><LogIn className="h-4 w-4" /> entrar / cadastrar</span>
+                            </Link>
                         )}
                     </div>
                 </div>
