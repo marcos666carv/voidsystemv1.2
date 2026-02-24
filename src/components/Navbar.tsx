@@ -63,23 +63,29 @@ export function Navbar() {
 
                     {/* Desktop Actions — right */}
                     <div className="hidden md:flex items-center gap-3">
-                        <div className="relative group rounded-full overflow-hidden p-[2px]">
-                            {/* Animated spinning background */}
-                            <div className="absolute inset-[-1000%] animate-spin-slow bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="relative group rounded-full overflow-visible">
+                            {/* Subtle continuous glow behind the button */}
+                            <div className="absolute -inset-[3px] bg-gradient-to-r from-fuchsia-500/30 to-cyan-400/30 rounded-full blur-md opacity-70 group-hover:opacity-100 group-hover:from-fuchsia-500/60 group-hover:to-cyan-400/60 transition-all duration-500"></div>
 
-                            {/* Inner dark button */}
-                            <Link
-                                to="/checkout?type=gift"
-                                className="relative flex items-center justify-center gap-2 px-6 py-2 text-[13px] font-medium tracking-wide rounded-full bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
-                            >
-                                <Gift className="h-4 w-4 text-fuchsia-400 group-hover:text-cyan-400 transition-colors" />
-                                tenho um vale presente
-                            </Link>
+                            {/* Container for the button and spinning border */}
+                            <div className="relative rounded-full overflow-hidden p-[2px]">
+                                {/* Animated spinning background */}
+                                <div className="absolute inset-[-1000%] animate-spin-slow bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                                {/* Inner dark button */}
+                                <Link
+                                    to="/checkout?type=gift"
+                                    className="relative flex items-center justify-center gap-2 px-6 py-2 text-[13px] font-medium tracking-wide rounded-full bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
+                                >
+                                    <Gift className="h-4 w-4 text-fuchsia-400 group-hover:text-cyan-400 transition-colors" />
+                                    tenho um vale presente
+                                </Link>
+                            </div>
                         </div>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 bg-slate-900 text-white hover:bg-slate-800"
+                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50 transition-all duration-200"
                             >
                                 <User className="h-4 w-4" />
                                 meu perfil
@@ -87,10 +93,10 @@ export function Navbar() {
                         ) : (
                             <Link
                                 to="/login"
-                                className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 bg-slate-100 text-slate-900 hover:bg-slate-200"
+                                className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full border border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50 transition-all duration-200"
                             >
                                 <LogIn className="h-4 w-4" />
-                                entrar / cadastrar
+                                entrar
                             </Link>
                         )}
                     </div>
@@ -136,29 +142,35 @@ export function Navbar() {
                     )}
 
                     <div className="pt-3 mt-3 border-t border-slate-100 space-y-2">
-                        <div className="relative group rounded-lg overflow-hidden p-[2px]">
-                            {/* Animated spinning background */}
-                            <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="relative group rounded-lg overflow-visible mt-2">
+                            {/* Subtle continuous glow behind the button */}
+                            <div className="absolute -inset-[3px] bg-gradient-to-r from-fuchsia-500/30 to-cyan-400/30 rounded-lg blur-md opacity-70 group-hover:opacity-100 group-hover:from-fuchsia-500/60 group-hover:to-cyan-400/60 transition-all duration-500"></div>
 
-                            {/* Inner dark button */}
-                            <Link
-                                to="/checkout?type=gift"
-                                className="relative flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
-                            >
-                                <Gift className="h-4 w-4 text-fuchsia-400 group-hover:text-cyan-400 transition-colors" />
-                                tenho um vale presente
-                            </Link>
+                            {/* Container for the button and spinning border */}
+                            <div className="relative rounded-lg overflow-hidden p-[2px]">
+                                {/* Animated spinning background */}
+                                <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                                {/* Inner dark button */}
+                                <Link
+                                    to="/checkout?type=gift"
+                                    className="relative flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
+                                >
+                                    <Gift className="h-4 w-4 text-fuchsia-400 group-hover:text-cyan-400 transition-colors" />
+                                    tenho um vale presente
+                                </Link>
+                            </div>
                         </div>
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
-                                className="flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-lg"
+                                className="flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium border border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50 rounded-lg transition-all"
                             >
                                 <User className="h-4 w-4" /> meu perfil
                             </Link>
                         ) : (
-                            <Link to="/login" className="flex justify-center px-4 py-2.5 text-sm font-medium text-slate-900 bg-slate-100 rounded-lg hover:bg-slate-200">
-                                <span className="flex items-center gap-2"><LogIn className="h-4 w-4" /> entrar / cadastrar</span>
+                            <Link to="/login" className="flex justify-center px-4 py-2.5 text-sm font-medium border border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50 rounded-lg transition-all">
+                                <span className="flex items-center gap-2"><LogIn className="h-4 w-4" /> entrar</span>
                             </Link>
                         )}
                     </div>
