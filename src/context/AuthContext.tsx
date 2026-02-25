@@ -8,10 +8,10 @@ import type { User as SupabaseUser, Session } from '@supabase/supabase-js';
 const DEV_MOCK_AUTH = true;
 
 const MOCK_ADMIN_USER: User = {
-    id: 'dev-admin-001',
-    email: 'admin@void.dev',
-    fullName: 'Admin Dev',
-    role: 'admin',
+    id: 'dev-client-001',
+    email: 'client@void.dev',
+    fullName: 'Client Dev',
+    role: 'client',
 };
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

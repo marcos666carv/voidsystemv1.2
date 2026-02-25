@@ -9,6 +9,7 @@ const NAVIGATION = [
     { name: 'Store & Booking', href: '/app/store', icon: ShoppingBag },
     { name: 'My Schedule', href: '/app/book', icon: Calendar },
     { name: 'History', href: '/app/history', icon: History },
+    { name: 'Meu Perfil', href: '/app/profile', icon: User },
 ];
 
 export function AppLayout() {
