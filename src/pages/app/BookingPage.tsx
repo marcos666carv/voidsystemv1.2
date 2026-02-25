@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
 import { Calendar, Clock, ChevronLeft, ChevronRight, Droplets, Heart, Sparkles, ArrowRight, Check, MapPin } from 'lucide-react';
 
 const SERVICES = [
@@ -16,7 +15,6 @@ function getDaysInMonth(y: number, m: number) { return new Date(y, m + 1, 0).get
 function getFirstDayOfWeek(y: number, m: number) { return new Date(y, m, 1).getDay(); }
 
 export default function BookingPage() {
-    const { user } = useAuth();
     const today = new Date();
     const [step, setStep] = useState(1);
     const [selectedService, setSelectedService] = useState('');
@@ -62,12 +60,7 @@ export default function BookingPage() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto space-y-6">
-            <div>
-                <h1 className="text-2xl font-bold text-slate-900">agendar sessão</h1>
-                <p className="text-sm text-slate-500">olá {user?.fullName?.split(' ')[0]}, escolha sua próxima experiência</p>
-            </div>
-
+        <div className="max-w-2xl mx-auto space-y-6 pt-4">
             {/* Step 1 */}
             {step === 1 && (
                 <div className="grid sm:grid-cols-2 gap-3">
