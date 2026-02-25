@@ -25,8 +25,12 @@ export function ProtectedRoute({ children, role, allowedRoles }: ProtectedRouteP
 
     // Role check
     if (role && user?.role !== role) {
-        // Allow admin to access staff routes and vice versa
-        if (role === 'admin' && (user?.role === 'admin' || user?.role === 'staff')) {
+        // Admins can access everything
+        if (user?.role === 'admin') {
+            return <>{children}</>;
+        }
+        // Staff can access admin routes
+        if (role === 'admin' && user?.role === 'staff') {
             return <>{children}</>;
         }
         return <Navigate to="/" replace />;

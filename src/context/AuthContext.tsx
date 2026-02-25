@@ -10,8 +10,8 @@ const DEV_MOCK_AUTH = true;
 const MOCK_ADMIN_USER: User = {
     id: 'dev-client-001',
     email: 'client@void.dev',
-    fullName: 'Client Dev',
-    role: 'client',
+    fullName: 'Admin Dev',
+    role: 'admin',
 };
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
