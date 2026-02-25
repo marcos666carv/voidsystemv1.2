@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Calendar, Clock, MapPin, Droplets, CreditCard, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, Droplets, CreditCard, ChevronRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 export function ClientDashboard() {
     const [mockCredits] = useState([
         { id: 1, name: 'Flutuação 60 min', count: 1, icon: Droplets, color: 'text-sky-500', bg: 'bg-sky-50' },
-        { id: 2, name: 'Vale Presente', count: 0, icon: CreditCard, color: 'text-violet-500', bg: 'bg-violet-50' }
+        { id: 2, name: 'Massagem', count: 0, icon: Sparkles, color: 'text-amber-500', bg: 'bg-amber-50' },
+        { id: 3, name: 'Vale Presente', count: 0, icon: CreditCard, color: 'text-violet-500', bg: 'bg-violet-50' }
     ]);
 
     return (
