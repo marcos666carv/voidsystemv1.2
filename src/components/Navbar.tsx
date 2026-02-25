@@ -11,12 +11,12 @@ const NAV_LINKS = [
 ];
 
 export function Navbar() {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
 
     useEffect(() => { setIsOpen(false); }, [location.pathname]);
-    const profileHref = user?.role === 'admin' || user?.role === 'staff' ? '/admin' : '/app/profile';
+    const profileHref = '/app'; // Sempre vai pro dashboard de cliente, mesmo se for admin
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
