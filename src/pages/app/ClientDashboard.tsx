@@ -100,18 +100,20 @@ export function ClientDashboard() {
                         </div>
                     </div>
 
-                    <div className="bg-slate-900 rounded-3xl p-6 text-white overflow-hidden relative group cursor-pointer">
-                        <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-transparent" />
-                        <div className="relative z-10 flex flex-col items-start gap-4">
-                            <div className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase mb-2">
-                                Void Club
+                    <Link to="/club" target="_blank" rel="noopener noreferrer" className="block">
+                        <div className="bg-slate-900 rounded-3xl p-6 text-white overflow-hidden relative group cursor-pointer">
+                            <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-transparent" />
+                            <div className="relative z-10 flex flex-col items-start gap-4">
+                                <div className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase mb-2">
+                                    Void Club
+                                </div>
+                                <h3 className="text-xl font-bold leading-tight">Faça parte do clube e libere vantagens.</h3>
+                                <span className="text-sm font-semibold text-violet-300 flex items-center gap-1 group-hover:text-white transition-colors">
+                                    Conhecer benefícios <ChevronRight className="h-4 w-4" />
+                                </span>
                             </div>
-                            <h3 className="text-xl font-bold leading-tight">Faça parte do clube e libere vantagens.</h3>
-                            <span className="text-sm font-semibold text-violet-300 flex items-center gap-1 group-hover:text-white transition-colors">
-                                Conhecer benefícios <ChevronRight className="h-4 w-4" />
-                            </span>
                         </div>
-                    </div>
+                    </Link>
                 </div>
 
             </div>
