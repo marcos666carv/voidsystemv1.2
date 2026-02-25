@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { Calendar, Clock, MapPin, Droplets, CreditCard, ChevronRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { GiftModal } from '@/components/dashboard/GiftModal';
+import { BookingModal } from '@/components/dashboard/BookingModal';
 
 export function ClientDashboard() {
+    const [isGiftModalOpen, setIsGiftModalOpen] = useState(false);
+    const [selectedCredit, setSelectedCredit] = useState<any | null>(null);
     const [mockCredits] = useState([
         { id: 1, name: 'Flutuação 60 min', count: 1, icon: Droplets, color: 'text-sky-500', bg: 'bg-sky-50' },
         { id: 2, name: 'Massagem', count: 0, icon: Sparkles, color: 'text-amber-500', bg: 'bg-amber-50' },
@@ -63,12 +67,13 @@ export function ClientDashboard() {
                                 <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                             </button>
                         </Link>
-                        <Link to="/app/checkout?type=gift" className="flex-1">
-                            <button className="w-full bg-white border border-slate-200 hover:border-violet-300 text-slate-700 rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group">
-                                <span>Comprar Presente</span>
-                                <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                            </button>
-                        </Link>
+                        <button
+                            onClick={() => setIsGiftModalOpen(true)}
+                            className="flex-1 bg-white border border-slate-200 hover:border-violet-300 text-slate-700 rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group"
+                        >
+                            <span>Comprar Presente</span>
+                            <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                        </button>
                     </div>
                 </div>
 
@@ -80,17 +85,30 @@ export function ClientDashboard() {
 
                     <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col gap-4">
                         {mockCredits.map(credit => (
-                            <div key={credit.id} className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                <div className="flex items-center gap-3">
-                                    <div className={`w-10 h-10 rounded-xl ${credit.bg} ${credit.color} flex items-center justify-center`}>
-                                        <credit.icon className="h-5 w-5" />
+                            <button
+                                key={credit.id}
+                                onClick={() => credit.count > 0 ? setSelectedCredit(credit) : null}
+                                className={`flex flex-col items-center justify-between p-4 rounded-2xl border transition-all w-full text-left
+                                    ${credit.count > 0 ? 'bg-white border-slate-200 hover:border-violet-300 hover:shadow-md cursor-pointer' : 'bg-slate-50 opacity-60 border-transparent cursor-not-allowed'}
+                                `}
+                            >
+                                <div className="flex w-full items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`w-10 h-10 rounded-xl ${credit.bg} ${credit.color} flex items-center justify-center`}>
+                                            <credit.icon className="h-5 w-5" />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="font-semibold text-slate-700 text-sm">{credit.name}</span>
+                                            {credit.count > 0 && (
+                                                <span className="text-xs text-violet-600 font-bold mt-0.5 group-hover:underline">Usar crédito</span>
+                                            )}
+                                        </div>
                                     </div>
-                                    <span className="font-semibold text-slate-700 text-sm">{credit.name}</span>
+                                    <div className="text-xl font-black text-slate-900">
+                                        {credit.count}
+                                    </div>
                                 </div>
-                                <div className="text-xl font-black text-slate-900">
-                                    {credit.count}
-                                </div>
-                            </div>
+                            </button>
                         ))}
 
                         <div className="pt-4 mt-2 border-t border-slate-100">
@@ -117,6 +135,17 @@ export function ClientDashboard() {
                 </div>
 
             </div>
+
+            <GiftModal
+                isOpen={isGiftModalOpen}
+                onOpenChange={setIsGiftModalOpen}
+            />
+
+            <BookingModal
+                isOpen={!!selectedCredit}
+                onOpenChange={(open) => !open && setSelectedCredit(null)}
+                credit={selectedCredit}
+            />
         </div>
     );
 }
