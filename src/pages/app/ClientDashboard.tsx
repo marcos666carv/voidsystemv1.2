@@ -57,9 +57,9 @@ export function ClientDashboard() {
                     </div>
 
                     <div className="pt-4 flex items-center gap-4">
-                        <Link to="/app/book" className="flex-1">
+                        <Link to="/app/store" className="flex-1">
                             <button className="w-full bg-slate-900 hover:bg-slate-800 text-white rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group">
-                                <span>Agendar Nova Sessão</span>
+                                <span>comprar mais créditos</span>
                                 <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                             </button>
                         </Link>
