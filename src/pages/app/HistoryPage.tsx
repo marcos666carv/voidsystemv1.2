@@ -1,6 +1,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { Calendar, Droplets, Heart, Sparkles, Star, Filter } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const MOCK_HISTORY = [
     { id: '1', service: 'Flutuação 90min', date: '2026-02-15', time: '14:00', status: 'completed', xpEarned: 35, icon: Droplets },
@@ -44,17 +45,17 @@ export default function HistoryPage() {
                     <p className="text-2xl font-bold text-slate-900">{totalSessions}</p>
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">sessões</p>
                 </div>
-                <div className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl border border-cyan-200 p-4 text-center">
+                <Link to="/club" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl border border-cyan-200 p-4 text-center hover:opacity-90 transition-opacity block cursor-pointer">
                     <p className="text-2xl font-bold text-cyan-900">{totalXp}</p>
                     <p className="text-[10px] text-cyan-600 uppercase tracking-wider mt-1">xp total</p>
-                </div>
-                <div className="bg-white rounded-xl border border-slate-200 p-4 text-center">
+                </Link>
+                <Link to="/club" target="_blank" rel="noopener noreferrer" className="bg-white rounded-xl border border-slate-200 p-4 text-center hover:bg-slate-50 transition-colors block cursor-pointer">
                     <div className="flex items-center justify-center gap-1">
                         <Star className="h-4 w-4 text-amber-500" />
                         <p className="text-2xl font-bold text-slate-900">{user?.level || 'iniciado'}</p>
                     </div>
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">nível</p>
-                </div>
+                </Link>
             </div>
 
             {/* Filter */}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { User, Mail, Phone, MapPin, Briefcase, Crown, Edit3, Save, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function ProfilePage() {
     const { user, logout } = useAuth();
@@ -41,7 +42,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Level card */}
-            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl border border-cyan-200 p-5">
+            <Link to="/club" target="_blank" rel="noopener noreferrer" className="block bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl border border-cyan-200 p-5 hover:opacity-90 transition-opacity">
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                         <Crown className="h-5 w-5 text-cyan-700" />
@@ -55,7 +56,7 @@ export default function ProfilePage() {
                     <div className="h-full bg-cyan-600 rounded-full" style={{ width: `${Math.min(((user?.xp || 0) / 500) * 100, 100)}%` }} />
                 </div>
                 <p className="text-xs text-cyan-600 mt-2">próximo nível: explorador (500 xp)</p>
-            </div>
+            </Link>
 
             {/* Profile form */}
             <div className="bg-white rounded-xl border border-slate-200 p-6">

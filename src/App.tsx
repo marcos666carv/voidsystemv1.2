@@ -87,6 +87,7 @@ function App() {
             <Route path="book" element={<BookingPage />} />
             <Route path="history" element={<HistoryPage />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="checkout" element={<CheckoutFlow />} />
           </Route>
 
           {/* Admin (Protected) */}

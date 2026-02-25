@@ -68,20 +68,6 @@ export default function BookingPage() {
                 <p className="text-sm text-slate-500">olá {user?.fullName?.split(' ')[0]}, escolha sua próxima experiência</p>
             </div>
 
-            {/* Progress */}
-            <div className="flex items-center gap-3">
-                {['serviço', 'data', 'horário', 'confirmar'].map((label, i) => (
-                    <div key={label} className="flex items-center gap-2 flex-1">
-                        <div className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-medium shrink-0 ${i + 1 === step ? 'bg-slate-900 text-white' : i + 1 < step ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'
-                            }`}>
-                            {i + 1 < step ? <Check className="h-3.5 w-3.5" /> : i + 1}
-                        </div>
-                        <span className="text-[10px] text-slate-500 hidden sm:block">{label}</span>
-                        {i < 3 && <div className={`flex-1 h-px ${i + 1 < step ? 'bg-emerald-200' : 'bg-slate-200'}`} />}
-                    </div>
-                ))}
-            </div>
-
             {/* Step 1 */}
             {step === 1 && (
                 <div className="grid sm:grid-cols-2 gap-3">
@@ -123,7 +109,7 @@ export default function BookingPage() {
                             return (
                                 <button key={day} disabled={past || isSun} onClick={() => { setSelectedDay(day); setStep(3); }}
                                     className={`py-2 rounded-lg text-sm transition-all ${selectedDay === day ? 'bg-slate-900 text-white font-semibold' : isToday(day) ? 'bg-cyan-50 text-cyan-700 font-medium border border-cyan-200' :
-                                            past || isSun ? 'text-slate-300 cursor-not-allowed' : 'text-slate-700 hover:bg-slate-100'}`}>
+                                        past || isSun ? 'text-slate-300 cursor-not-allowed' : 'text-slate-700 hover:bg-slate-100'}`}>
                                     {day}
                                 </button>
                             );

@@ -57,13 +57,13 @@ export function ClientDashboard() {
                     </div>
 
                     <div className="pt-4 flex items-center gap-4">
-                        <Link to="/services" className="flex-1">
+                        <Link to="/app/book" className="flex-1">
                             <button className="w-full bg-slate-900 hover:bg-slate-800 text-white rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group">
                                 <span>Agendar Nova Sessão</span>
                                 <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                             </button>
                         </Link>
-                        <Link to="/services?type=gift" className="flex-1">
+                        <Link to="/app/checkout?type=gift" className="flex-1">
                             <button className="w-full bg-white border border-slate-200 hover:border-violet-300 text-slate-700 rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group">
                                 <span>Comprar Presente</span>
                                 <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
