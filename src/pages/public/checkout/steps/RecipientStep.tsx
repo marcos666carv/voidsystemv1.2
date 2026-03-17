@@ -24,11 +24,11 @@ export function RecipientStep({ data, onSelect }: RecipientStepProps) {
     });
 
     useEffect(() => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isComplete =
             formData.senderName.trim().length > 1 &&
             formData.recipientName.trim().length > 1 &&
-            formData.recipientEmail.includes('@') &&
-            formData.recipientEmail.includes('.');
+            emailRegex.test(formData.recipientEmail);
 
         onSelect(formData, isComplete);
     }, [formData, onSelect]);

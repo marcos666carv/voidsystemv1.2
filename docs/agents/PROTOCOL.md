@@ -82,9 +82,16 @@ netlify/
     lib/              # auth.mts, db.mts, supabase.mts (helpers compartilhados)
 docs/
   agents/             # Este diretório — protocolo e personas
+    PROTOCOL.md       # Governança global
+    frontend-dev.md   # Persona de desenvolvimento
+    opensquad.md      # Orquestração multi-agente (squads, skills, CLI)
   tech/               # Referência técnica (arquitetura, banco, stack, integrações)
   stories/            # Domínio de negócio em linguagem plana
   SEARCH_GUIDE.md     # Navegação rápida — onde encontrar cada informação
+
+_opensquad/           # Framework OpenSquad (após npx opensquad init)
+squads/               # Squads criados (CRM, conteúdo, features)
+skills/               # Skills instaladas via opensquad skills install
 ```
 
 ---

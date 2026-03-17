@@ -39,8 +39,9 @@ export function VariantStep({ flowType, selectedId, onSelect }: VariantStepProps
 
         if (targetCategory === 'gift') {
             return [
-                { id: 'g_f60', label: 'Flutuação 60 minutos', description: 'Sessão individual de 60 minutos.', price: 189, duration: '-' },
-                { id: 'g_combo', label: 'Combo Mágico', description: 'Flutuação + Massagem 60 minutos.', price: 329, duration: '-' }
+                { id: 'pkg-gift-flut', label: 'Flutuação 60 minutos', description: 'Vale presente para 1 sessão de flutuação sensorial.', price: 250, duration: '-' },
+                { id: 'pkg-gift-masso', label: 'Massoterapia 60 minutos', description: 'Vale presente para 1 sessão de massoterapia.', price: 200, duration: '-' },
+                { id: 'pkg-gift-combo', label: 'Combo Float + Massagem', description: 'Vale presente para flutuação + massagem — o reset completo.', price: 390, duration: '-' },
             ];
         }
 

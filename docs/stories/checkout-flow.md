@@ -1,48 +1,69 @@
-# checkout-flow — Fluxo de checkout
+# checkout-flow — Fluxo de checkout e pagamento
 
 ## Entrypoints
 
-- **Público:** `/checkout` — acessível sem login (para gift cards e compras avulsas)
-- **Cliente logado:** `/app/checkout` — mesmo componente com contexto de usuário
-- **Carrinho:** `CartDrawer` → botão "Finalizar compra" → `/checkout`
+| Forma de acesso | URL / Componente | Contexto |
+|---|---|---|
+| Público direto | `/checkout?type=float` | sem login, fluxo completo com AuthStep |
+| Embutido (iframe) | `<CheckoutIframe type="float" />` | qualquer página, mesmo login |
+| App (página dedicada) | `/app/checkout` | dentro do AppLayout, sem AuthStep |
 
-## Componentes
+> Para embutir o checkout em qualquer lugar → veja `docs/stories/embed-checkout.md`
 
-- `src/pages/public/checkout/CheckoutFlow.tsx` — orquestrador do fluxo em steps
-- `src/pages/public/checkout/steps/VariantStep.tsx` — seleção de variante/quantidade
-- `src/components/checkout/PaymentForm.tsx` — formulário de pagamento
+## Orquestrador
 
-## Fluxo
+`src/pages/public/checkout/CheckoutFlow.tsx`
+
+- Detecta se está rodando dentro de um iframe (`window.parent !== window`)
+- Em iframe: ao finalizar, envia `postMessage('void:checkout:success')` em vez de navegar
+- Standalone: ao finalizar, navega para `/app` após 2.5s
+
+## Steps disponíveis
+
+| Step id | Componente | Propósito |
+|---|---|---|
+| `variant` | `VariantStep.tsx` | Seleção de serviço, duração e pacote |
+| `schedule` | `ScheduleStep.tsx` | Unidade e data/horário |
+| `recipient` | `RecipientStep.tsx` | Destinatário do gift card |
+| `gift_card` | `GiftCardStep.tsx` | Resgate de código de presente |
+| `auth` | `AuthStep.tsx` | Login/identificação (auto-skip se logado) |
+| `payment` | `PaymentStep.tsx` | Cartão, PIX ou cupom |
+
+## Composição de steps por tipo
 
 ```
-1. Usuário chega ao checkout (via carrinho ou link direto)
-2. VariantStep — seleciona o que está comprando (serviço/variante/quantidade)
-3. Dados do comprador (se não logado)
-4. PaymentForm — método de pagamento (cartão, PIX, cupom)
-5. POST /api/checkout/session → cria order "pending"
-6. Processamento do pagamento (Pagarme)
-7. POST /api/checkout/confirm → order "paid"
-8. Créditos aplicados ao cliente (client_credits)
-9. Confirmação exibida
+float / massage / combo:
+  variant → schedule → auth → payment
+
+gift:
+  variant → recipient → auth → payment
+
+redeem:
+  gift_card → schedule → auth
 ```
 
-## Gift card
+## API calls
 
-- Comprador configura destinatário e mensagem
-- Gift card é comprado como qualquer produto
-- Destinatário recebe crédito de sessão vinculado ao `service_id`
+```
+POST /api/checkout/session   → cria order "pending", retorna { id: orderId }
+POST /api/checkout/confirm   → confirma pagamento, aplica créditos → order "paid"
+```
+
+> Arquivo: `src/lib/api.ts` → `checkoutApi.createSession()` / `checkoutApi.confirm()`
+
+## PIX (pagamento assíncrono)
+
+- Order fica `pending` — confirmação chega via webhook
+- Erro na API é ignorado: fluxo avança para tela de sucesso mesmo assim
+- Cartão/cupom: exigem confirmação imediata; erro é exibido inline
 
 ## Regras
 
-- `totalAmount` sempre em **centavos**
-- Order expira se não confirmada (lógica a implementar no backend)
-- Métodos: `credit_card`, `pix`, `coupon`
-- Crédito de sessão: inserido em `client_credits` após `order=paid`
-
-## Endpoints usados
-
-- `POST /api/checkout/session` — cria order pending
-- `POST /api/checkout/confirm` — confirma pagamento e aplica créditos
+- `totalAmount` sempre em **centavos** (`Math.round(price * 100)`)
+- Se usuário logado, `AuthStep` auto-chama `onAuthSuccess(user.id)` via `useEffect`
+- Crédito de sessão: inserido em `client_credits` após `order = paid`
+- Preços vêm de `MOCK_PACKAGES` + `MOCK_SERVICES` em `src/lib/mockData.ts` (fase mock)
 
 ## Última atualização
-2026-03-17 — fluxo documentado
+
+2026-03-17 — entrypoints atualizados, iframe, postMessage documentados

@@ -8,8 +8,10 @@ import { AuthStep } from './steps/AuthStep';
 import { PaymentStep } from './steps/PaymentStep';
 import { RecipientStep } from './steps/RecipientStep';
 import { GiftCardStep } from './steps/GiftCardStep';
+import { useAuth } from '@/context/AuthContext';
+import { checkoutApi } from '@/lib/api';
+import { MOCK_PACKAGES } from '@/lib/mockData';
 
-// Mock types
 type FlowType = 'float' | 'massage' | 'combo' | 'gift' | 'redeem';
 
 const STEPS_BY_TYPE: Record<FlowType, { id: string, label: string }[]> = {
@@ -44,15 +46,21 @@ const STEPS_BY_TYPE: Record<FlowType, { id: string, label: string }[]> = {
     ]
 };
 
+/** Resolve serviceId a partir do variantId (package id) */
+function resolveServiceId(variantId?: string): string {
+    if (!variantId) return 'srv-flut';
+    const pkg = MOCK_PACKAGES.find(p => p.id === variantId);
+    return pkg?.serviceId ?? variantId;
+}
+
 export default function CheckoutFlow() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const { user, isAuthenticated } = useAuth();
 
-    // Determine flow type from URL, default to float if missing or invalid
     const rawType = searchParams.get('type') as FlowType;
     const flowType: FlowType = STEPS_BY_TYPE[rawType] ? rawType : 'float';
 
-    // State
     const [currentStepIdx, setCurrentStepIdx] = useState(0);
     const [checkoutData, setCheckoutData] = useState<{
         variantId?: string;
@@ -73,21 +81,27 @@ export default function CheckoutFlow() {
         giftCode?: string;
     }>({});
 
-    const [status, setStatus] = useState<'idle' | 'processing' | 'success'>('idle');
+    const [status, setStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
+    const [errorMsg, setErrorMsg] = useState('');
+
+    // Pré-preenche userId se o usuário já está logado
+    useEffect(() => {
+        if (isAuthenticated && user?.id) {
+            setCheckoutData(prev => ({ ...prev, userId: user.id }));
+        }
+    }, [isAuthenticated, user?.id]);
 
     const steps = STEPS_BY_TYPE[flowType];
     const currentStep = steps[currentStepIdx];
 
-    // Check if valid, if not, wait or redirect. Ideally we stay here.
     useEffect(() => {
         if (!STEPS_BY_TYPE[rawType]) {
-            navigate('/services', { replace: true });
+            navigate('/', { replace: true });
         }
     }, [rawType, navigate]);
 
     if (!STEPS_BY_TYPE[rawType]) return null;
 
-    // Checks if the user can proceed from the current step
     const canProceed = () => {
         if (currentStep.id === 'variant') return !!checkoutData.variantId;
         if (currentStep.id === 'gift_card') return !!checkoutData.giftCode;
@@ -95,7 +109,60 @@ export default function CheckoutFlow() {
         if (currentStep.id === 'recipient') return !!checkoutData.recipientComplete;
         if (currentStep.id === 'auth') return !!checkoutData.userId;
         if (currentStep.id === 'payment') return !!checkoutData.paymentReady;
-        return true; // For unimplemented steps
+        return true;
+    };
+
+    const handleFinish = async () => {
+        if (!checkoutData.userId || !checkoutData.price) return;
+
+        setStatus('processing');
+        setErrorMsg('');
+
+        const isPix = checkoutData.paymentMethod === 'pix';
+        const serviceId = resolveServiceId(checkoutData.variantId);
+
+        try {
+            const { id: orderId } = await checkoutApi.createSession({
+                clientId: checkoutData.userId,
+                totalAmount: Math.round(checkoutData.price * 100),
+                paymentMethod: checkoutData.paymentMethod || 'credit_card',
+                checkoutData: {
+                    flowType,
+                    variantId: checkoutData.variantId,
+                    serviceId,
+                    date: checkoutData.date,
+                    time: checkoutData.time,
+                    locationId: checkoutData.locationId,
+                    recipient: checkoutData.recipient,
+                },
+            });
+
+            // PIX é pagamento assíncrono — order fica pending até webhook confirmar
+            // Cartão/cupom confirmam imediatamente
+            if (!isPix) {
+                await checkoutApi.confirm(orderId);
+            }
+        } catch (err: any) {
+            console.error('Checkout API error:', err);
+            // Em dev (sem Netlify Functions rodando) ou falha de rede:
+            // PIX prossegue sempre (pagamento assíncrono), outros mostram erro
+            if (!isPix) {
+                setErrorMsg(err.message || 'Erro ao processar. Tente novamente.');
+                setStatus('error');
+                return;
+            }
+        }
+
+        setStatus('success');
+
+        // Se rodando dentro de um iframe, notifica o pai em vez de navegar
+        if (window.parent !== window) {
+            setTimeout(() => {
+                window.parent.postMessage({ type: 'void:checkout:success' }, window.location.origin);
+            }, 2500);
+        } else {
+            setTimeout(() => navigate('/app'), 2500);
+        }
     };
 
     const handleNext = () => {
@@ -104,22 +171,18 @@ export default function CheckoutFlow() {
         if (currentStepIdx < steps.length - 1) {
             setCurrentStepIdx(prev => prev + 1);
         } else {
-            // Finish flow -> simulate processing, then success, and redirect to /app
-            setStatus('processing');
-            setTimeout(() => {
-                setStatus('success');
-                setTimeout(() => {
-                    navigate('/app');
-                }, 2500);
-            }, 1500);
+            handleFinish();
         }
     };
 
     const handleBack = () => {
         if (currentStepIdx > 0) {
             setCurrentStepIdx(prev => prev - 1);
+        } else if (window.parent !== window) {
+            // Dentro de iframe: notifica o pai para fechar
+            window.parent.postMessage({ type: 'void:checkout:close' }, window.location.origin);
         } else {
-            navigate('/services');
+            navigate(-1);
         }
     };
 
@@ -134,7 +197,7 @@ export default function CheckoutFlow() {
                     Aguarde enquanto processamos seu pagamento.
                 </p>
             </div>
-        )
+        );
     }
 
     if (status === 'success') {
@@ -148,7 +211,7 @@ export default function CheckoutFlow() {
                     Sua experiência no Void está garantida. Te redirecionando para o painel...
                 </p>
             </div>
-        )
+        );
     }
 
     return (
@@ -166,7 +229,7 @@ export default function CheckoutFlow() {
                     <div className="text-xl font-bold tracking-tighter text-slate-900">
                         void
                     </div>
-                    <div className="w-[60px]"></div> {/* spacer for centering */}
+                    <div className="w-[60px]" />
                 </div>
             </header>
 
@@ -180,7 +243,6 @@ export default function CheckoutFlow() {
                             {currentStep.label}
                         </h1>
 
-                        {/* Progress Bar (Visual Stepper) */}
                         <div className="flex items-center justify-center gap-2 max-w-xl mx-auto">
                             {steps.map((step, idx) => {
                                 const isPast = idx < currentStepIdx;
@@ -220,7 +282,6 @@ export default function CheckoutFlow() {
                                 <GiftCardStep
                                     onValidCode={(code, amount) => {
                                         setCheckoutData(prev => ({ ...prev, giftCode: code, price: amount }));
-                                        // Auto advance removed: user must click "Continuar" below
                                     }}
                                 />
                             )}
@@ -256,26 +317,20 @@ export default function CheckoutFlow() {
                                     onPaymentReady={(isReady, method) => setCheckoutData(prev => ({ ...prev, paymentReady: isReady, paymentMethod: method }))}
                                 />
                             )}
-
-                            {/* Placeholders for unimplemented steps */}
-                            {currentStep.id !== 'variant' && currentStep.id !== 'gift_card' && currentStep.id !== 'schedule' && currentStep.id !== 'auth' && currentStep.id !== 'payment' && currentStep.id !== 'recipient' && (
-                                <div className="text-center space-y-4">
-                                    <h2 className="text-2xl font-bold text-slate-300">
-                                        Conteúdo do Passo: {currentStep.id}
-                                    </h2>
-                                    <p className="text-slate-500">
-                                        Componente específico será injetado aqui.
-                                    </p>
-                                </div>
-                            )}
                         </div>
+
+                        {/* Error */}
+                        {status === 'error' && errorMsg && (
+                            <div className="mt-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 text-center">
+                                {errorMsg}
+                            </div>
+                        )}
 
                         {/* Navigation Actions */}
                         <div className="pt-8 mt-8 border-t border-slate-100 flex items-center justify-between">
                             <div className="text-slate-500">
-                                {/* Only show price if a variant is selected and we are past the variant step or on it */}
                                 {checkoutData.price ? (
-                                    <span>Total Previsto: <strong className="text-slate-900">R$ {checkoutData.price.toFixed(2)}</strong></span>
+                                    <span>Total: <strong className="text-slate-900">R$ {checkoutData.price.toFixed(2)}</strong></span>
                                 ) : (
                                     <span className="text-sm">Selecione para calcular</span>
                                 )}
@@ -284,7 +339,7 @@ export default function CheckoutFlow() {
                                 size="lg"
                                 className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl px-10"
                                 onClick={handleNext}
-                                disabled={!canProceed()}
+                                disabled={!canProceed() || status === 'processing'}
                             >
                                 {currentStepIdx === steps.length - 1 ? 'Finalizar Compra' : 'Continuar'}
                             </Button>

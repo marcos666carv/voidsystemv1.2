@@ -9,6 +9,8 @@ Use esta tabela para encontrar qualquer informação sem precisar buscar no cód
 | O que é este projeto? | `docs/stories/DOMAIN_OVERVIEW.md` |
 | Quais são as regras de desenvolvimento? | `docs/agents/PROTOCOL.md` |
 | Quais são minhas responsabilidades como agente? | `docs/agents/frontend-dev.md` |
+| Como usar o OpenSquad neste projeto? | `docs/agents/opensquad.md` |
+| Como criar um squad de CRM, conteúdo ou dev? | `docs/agents/opensquad.md` |
 | Quais endpoints existem no backend? | `docs/tech/api-maps/netlify.endpoints.md` |
 | Houve breaking changes recentes na API? | `docs/tech/api-maps/README.md` |
 | Schema do banco de dados? | `docs/tech/DATABASE.md` |
@@ -17,6 +19,8 @@ Use esta tabela para encontrar qualquer informação sem precisar buscar no cód
 | Arquitetura do sistema? | `docs/tech/ARCHITECTURE.md` |
 | Como funciona o agendamento? | `docs/stories/booking-flow.md` |
 | Como funciona o checkout e pagamento? | `docs/stories/checkout-flow.md` |
+| Como embutir o checkout em qualquer página? | `docs/stories/embed-checkout.md` |
+| Como usar o `CheckoutIframe`? | `docs/stories/embed-checkout.md` |
 | O que faz um diretório específico? | `CONTEXT.md` dentro daquele diretório |
 | Repositório GitHub? | https://github.com/marcos666carv/voidsystemv1.2 |
 
@@ -35,7 +39,8 @@ docs/
 ├── SEARCH_GUIDE.md              ← você está aqui
 ├── agents/
 │   ├── PROTOCOL.md              ← governança global — leia sempre primeiro
-│   └── frontend-dev.md          ← persona única deste projeto
+│   ├── frontend-dev.md          ← persona única deste projeto
+│   └── opensquad.md             ← orquestração multi-agente (squads, skills, CLI)
 ├── tech/
 │   ├── ARCHITECTURE.md          ← fluxos e decisões arquiteturais
 │   ├── DATABASE.md              ← schema PostgreSQL, enums, regras
@@ -47,5 +52,6 @@ docs/
 └── stories/
     ├── DOMAIN_OVERVIEW.md       ← o que é o void system
     ├── booking-flow.md          ← fluxo de agendamento
-    └── checkout-flow.md         ← fluxo de checkout e pagamento
+    ├── checkout-flow.md         ← fluxo de checkout e pagamento
+    └── embed-checkout.md        ← como embutir o checkout em qualquer página (CheckoutIframe)
 ```

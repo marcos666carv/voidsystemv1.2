@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { Calendar, Clock, MapPin, Droplets, CreditCard, ChevronRight, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { GiftModal } from '@/components/dashboard/GiftModal';
+import { Button } from '@/components/ui/button';
+import { CheckoutIframe, type CheckoutFlowType } from '@/components/checkout/CheckoutIframe';
 import { BookingModal } from '@/components/dashboard/BookingModal';
 
 export function ClientDashboard() {
-    const [isGiftModalOpen, setIsGiftModalOpen] = useState(false);
+    const [checkoutOpen, setCheckoutOpen] = useState(false);
+    const [checkoutType, setCheckoutType] = useState<CheckoutFlowType>('float');
     const [selectedCredit, setSelectedCredit] = useState<any | null>(null);
+
+    const openCheckout = (type: CheckoutFlowType) => {
+        setCheckoutType(type);
+        setCheckoutOpen(true);
+    };
     const [mockCredits] = useState([
         { id: 1, name: 'Flutuação 60 min', count: 1, icon: Droplets, color: 'text-sky-500', bg: 'bg-sky-50' },
         { id: 2, name: 'Massagem', count: 0, icon: Sparkles, color: 'text-amber-500', bg: 'bg-amber-50' },
@@ -61,14 +67,15 @@ export function ClientDashboard() {
                     </div>
 
                     <div className="pt-4 flex items-center gap-4">
-                        <Link to="/app/store" className="flex-1">
-                            <button className="w-full bg-slate-900 hover:bg-slate-800 text-white rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group">
-                                <span>comprar mais créditos</span>
-                                <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                            </button>
-                        </Link>
                         <button
-                            onClick={() => setIsGiftModalOpen(true)}
+                            onClick={() => openCheckout('float')}
+                            className="flex-1 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group"
+                        >
+                            <span>comprar mais créditos</span>
+                            <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                        </button>
+                        <button
+                            onClick={() => openCheckout('gift')}
                             className="flex-1 bg-white border border-slate-200 hover:border-violet-300 text-slate-700 rounded-2xl p-4 font-bold text-sm transition-all flex items-center justify-between group"
                         >
                             <span>Comprar Presente</span>
@@ -136,9 +143,10 @@ export function ClientDashboard() {
 
             </div>
 
-            <GiftModal
-                isOpen={isGiftModalOpen}
-                onOpenChange={setIsGiftModalOpen}
+            <CheckoutIframe
+                type={checkoutType}
+                isOpen={checkoutOpen}
+                onClose={() => setCheckoutOpen(false)}
             />
 
             <BookingModal

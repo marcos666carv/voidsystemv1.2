@@ -79,6 +79,11 @@ export const MOCK_PACKAGES: ServicePackage[] = [
     // Combo
     { id: "pkg-combo-1", serviceId: "srv-combo", sessionCount: 1, totalPrice: 390, pricePerSession: 390, savingsPercent: 0 },
     { id: "pkg-combo-3", serviceId: "srv-combo", sessionCount: 3, totalPrice: 1080, pricePerSession: 360, savingsPercent: 8 },
+
+    // Gift Cards (vale presente — 1 sessão, sem agendamento incluso)
+    { id: "pkg-gift-flut", serviceId: "srv-flut", sessionCount: 1, totalPrice: 250, pricePerSession: 250, savingsPercent: 0 },
+    { id: "pkg-gift-masso", serviceId: "srv-masso", sessionCount: 1, totalPrice: 200, pricePerSession: 200, savingsPercent: 0 },
+    { id: "pkg-gift-combo", serviceId: "srv-combo", sessionCount: 1, totalPrice: 390, pricePerSession: 390, savingsPercent: 0 },
 ];
 
 // ─── Categorias para a home ───────────────────────────────────

@@ -23,6 +23,7 @@ const CheckoutFlow = lazy(() => import("@/pages/public/checkout/CheckoutFlow"));
 const ClientDashboard = lazy(() => import("@/pages/app/ClientDashboard").then(m => ({ default: m.ClientDashboard })));
 const StorePage = lazy(() => import("@/pages/app/StorePage").then(m => ({ default: m.StorePage })));
 const BookingPage = lazy(() => import("@/pages/app/BookingPage"));
+const AppCheckoutPage = lazy(() => import("@/pages/app/AppCheckoutPage").then(m => ({ default: m.AppCheckoutPage })));
 const HistoryPage = lazy(() => import("@/pages/app/HistoryPage"));
 const ProfilePage = lazy(() => import("@/pages/app/ProfilePage"));
 
@@ -85,9 +86,9 @@ function App() {
             <Route index element={<ClientDashboard />} />
             <Route path="store" element={<StorePage />} />
             <Route path="book" element={<BookingPage />} />
+            <Route path="checkout" element={<AppCheckoutPage />} />
             <Route path="history" element={<HistoryPage />} />
             <Route path="profile" element={<ProfilePage />} />
-            <Route path="checkout" element={<CheckoutFlow />} />
           </Route>
 
           {/* Admin (Protected) */}

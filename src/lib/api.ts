@@ -103,3 +103,23 @@ export const dashboardApi = {
     admin: () => request<any>('/dashboard?type=admin'),
     client: () => request<any>('/dashboard?type=client'),
 };
+
+// Checkout
+export const checkoutApi = {
+    createSession: (data: {
+        clientId: string;
+        totalAmount: number;
+        paymentMethod: string;
+        checkoutData: object;
+    }) =>
+        request<{ id: string }>('/checkout/session', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        }),
+
+    confirm: (orderId: string) =>
+        request<{ success: boolean; message: string }>('/checkout/confirm', {
+            method: 'POST',
+            body: JSON.stringify({ orderId }),
+        }),
+};

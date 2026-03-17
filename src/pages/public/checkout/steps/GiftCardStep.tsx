@@ -29,10 +29,24 @@ export function GiftCardStep({ onValidCode }: GiftCardStepProps) {
             if (checkCode === 'INVALIDO') {
                 setError('Código inválido ou já utilizado.');
             } else {
-                // Mock success
-                const serviceWon = checkCode.includes('MAS') ? 'Massoterapia' : 'Flutuação de 60 minutos';
+                // Mock: prefixo do código determina o serviço resgatado
+                // MAS = massoterapia, COMBO = combo, demais = flutuação
+                let serviceWon: string;
+                let amount: number;
+
+                if (checkCode.startsWith('COMBO') || checkCode.includes('COMBO')) {
+                    serviceWon = 'Combo Float + Massagem';
+                    amount = 390;
+                } else if (checkCode.startsWith('MAS') || checkCode.includes('MAS')) {
+                    serviceWon = 'Massoterapia 60 minutos';
+                    amount = 200;
+                } else {
+                    serviceWon = 'Flutuação 60 minutos';
+                    amount = 250;
+                }
+
                 setSuccess({ code: checkCode, service: serviceWon });
-                onValidCode(checkCode, 0);
+                onValidCode(checkCode, amount);
             }
         }, 1200);
     };
