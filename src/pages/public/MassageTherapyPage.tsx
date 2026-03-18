@@ -64,8 +64,8 @@ function HeroSection() {
             />
             <div className="absolute inset-0 bg-[#082b3b]/40 -z-10" />
 
-            <div className="site-container flex flex-col h-full">
-                <div className="flex flex-col h-96 md:h-auto gap-14 justify-between md:max-w-[560px] pt-[88px] 2xl:pt-40 text-[#e3e3d9]">
+            <div className="site-container flex flex-col h-full justify-end pb-16 md:pb-24">
+                <div className="flex flex-col gap-8 md:max-w-[560px] text-[#e3e3d9]">
                     <div className="flex flex-col gap-6">
                         <h2
                             className="font-sf-pro text-[32px] md:text-5xl md:leading-[60px] lowercase text-[#e3e3d9]"
@@ -76,7 +76,7 @@ function HeroSection() {
                             dangerouslySetInnerHTML={{ __html: 'cuide do seu bem-estar com <br />técnicas especializadas de massagem.' }}
                         />
                     </div>
-                    <div className="mb-20">
+                    <div>
                         <a
                             href={SCHEDULE_URL}
                             target="_blank"
