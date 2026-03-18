@@ -10,21 +10,40 @@ const NAV_LINKS = [
     { href: '/about', label: 'sobre' },
 ];
 
+// Pages that start with a dark full-screen hero — nav begins transparent
+const DARK_HERO_PAGES = ['/', '/flutuacao', '/massoterapia', '/club', '/about'];
+
 export function Navbar() {
     const { isAuthenticated } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
 
+    const hasDarkHero = DARK_HERO_PAGES.includes(location.pathname);
+    const transparent = hasDarkHero && !scrolled && !isOpen;
+
     useEffect(() => { setIsOpen(false); }, [location.pathname]);
-    const profileHref = '/app'; // Sempre vai pro dashboard de cliente, mesmo se for admin
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 40);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    const profileHref = '/app';
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            transparent
+                ? 'bg-transparent border-b border-transparent shadow-none'
+                : 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100'
+        }`}>
             <div className="site-container">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-1.5 group">
-                        <span className="text-xl font-bold tracking-tighter text-slate-900">
+                        <span className={`text-xl font-bold tracking-tighter transition-colors duration-300 ${transparent ? 'text-white' : 'text-slate-900'}`}>
                             void
                         </span>
                     </Link>
@@ -38,7 +57,11 @@ export function Navbar() {
                                     href={link.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                                    className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
+                                        transparent
+                                            ? 'text-white/80 hover:text-white hover:bg-white/10'
+                                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                                    }`}
                                 >
                                     {link.label}
                                 </a>
@@ -48,9 +71,14 @@ export function Navbar() {
                                     to={link.href}
                                     end={link.href === '/'}
                                     className={({ isActive }) =>
-                                        `px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${isActive
-                                            ? 'text-slate-900 bg-slate-100'
-                                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                                        `px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
+                                            transparent
+                                                ? isActive
+                                                    ? 'text-white bg-white/15 font-semibold'
+                                                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                                                : isActive
+                                                    ? 'text-slate-900 bg-slate-100'
+                                                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                                         }`
                                     }
                                 >
@@ -63,15 +91,9 @@ export function Navbar() {
                     {/* Desktop Actions — right */}
                     <div className="hidden md:flex items-center gap-3">
                         <div className="relative group rounded-full overflow-visible">
-                            {/* Subtle continuous glow behind the button */}
                             <div className="absolute -inset-[3px] bg-gradient-to-r from-fuchsia-500/30 to-cyan-400/30 rounded-full blur-md opacity-70 group-hover:opacity-100 group-hover:from-fuchsia-500/60 group-hover:to-cyan-400/60 transition-all duration-500"></div>
-
-                            {/* Container for the button and spinning border */}
                             <div className="relative rounded-full overflow-hidden p-[2px]">
-                                {/* Animated spinning background */}
                                 <div className="absolute inset-[-1000%] animate-spin-slow bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                                {/* Inner dark button */}
                                 <Link
                                     to="/checkout?type=redeem"
                                     className="relative flex items-center justify-center gap-2 px-6 py-2 text-[13px] font-medium tracking-wide rounded-full bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
@@ -84,7 +106,11 @@ export function Navbar() {
                         {isAuthenticated ? (
                             <Link
                                 to={profileHref}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50 transition-all duration-200"
+                                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 ${
+                                    transparent
+                                        ? 'border-white/50 text-white hover:bg-white/10'
+                                        : 'border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50'
+                                }`}
                             >
                                 <User className="h-4 w-4" />
                                 meu perfil
@@ -92,7 +118,11 @@ export function Navbar() {
                         ) : (
                             <Link
                                 to="/login"
-                                className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full border border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50 transition-all duration-200"
+                                className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 ${
+                                    transparent
+                                        ? 'border-white/50 text-white hover:bg-white/10'
+                                        : 'border-slate-900 text-slate-900 bg-transparent hover:bg-slate-50'
+                                }`}
                             >
                                 <LogIn className="h-4 w-4" />
                                 entrar
@@ -103,7 +133,11 @@ export function Navbar() {
                     {/* Mobile hamburger */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="md:hidden p-2 rounded-lg transition-colors text-slate-700 hover:bg-slate-100"
+                        className={`md:hidden p-2 rounded-lg transition-colors ${
+                            transparent
+                                ? 'text-white hover:bg-white/10'
+                                : 'text-slate-700 hover:bg-slate-100'
+                        }`}
                     >
                         {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                     </button>
@@ -111,8 +145,7 @@ export function Navbar() {
             </div>
 
             {/* Mobile menu */}
-            <div className={`md:hidden overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
-                }`}>
+            <div className={`md:hidden overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 <div className="bg-white border-t border-slate-100 px-4 py-4 space-y-1 shadow-lg">
                     {NAV_LINKS.map((link) =>
                         'external' in link && link.external ? (
@@ -131,8 +164,7 @@ export function Navbar() {
                                 to={link.href}
                                 end={link.href === '/'}
                                 className={({ isActive }) =>
-                                    `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                                    }`
+                                    `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`
                                 }
                             >
                                 {link.label}
@@ -142,15 +174,9 @@ export function Navbar() {
 
                     <div className="pt-3 mt-3 border-t border-slate-100 space-y-2">
                         <div className="relative group rounded-lg overflow-visible mt-2">
-                            {/* Subtle continuous glow behind the button */}
                             <div className="absolute -inset-[3px] bg-gradient-to-r from-fuchsia-500/30 to-cyan-400/30 rounded-lg blur-md opacity-70 group-hover:opacity-100 group-hover:from-fuchsia-500/60 group-hover:to-cyan-400/60 transition-all duration-500"></div>
-
-                            {/* Container for the button and spinning border */}
                             <div className="relative rounded-lg overflow-hidden p-[2px]">
-                                {/* Animated spinning background */}
                                 <div className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#08283B_0%,#c084fc_50%,#22d3ee_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                                {/* Inner dark button */}
                                 <Link
                                     to="/checkout?type=redeem"
                                     className="relative flex justify-center items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg bg-slate-900/90 text-white backdrop-blur-sm transition-all duration-300 hover:bg-slate-900 hover:text-white"
