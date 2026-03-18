@@ -3,6 +3,25 @@ import { useAuth } from '@/context/AuthContext';
 import { Menu, X, User, LogIn, Gift } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
+function VoidLogo({ className }: { className?: string }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="82"
+            height="21"
+            viewBox="0 0 164 42"
+            fill="currentColor"
+            className={className}
+            aria-label="VOID"
+        >
+            <path d="M149.18 11.3899H135.3V41.0099H149.18C157.34 41.0099 163.99 34.3699 163.99 26.1999C163.99 18.0299 157.35 11.3899 149.18 11.3899ZM149.18 36.4299H139.87V15.9699H149.18C154.82 15.9699 159.41 20.5599 159.41 26.1999C159.41 31.8399 154.82 36.4299 149.18 36.4299Z" />
+            <path d="M112.37 11.3899H107.79V41.0099H112.37V11.3899Z" />
+            <path d="M22.46 35.1599C21.82 36.5299 20.53 37.3499 19.02 37.3499C17.51 37.3499 16.22 36.5299 15.58 35.1599L4.1 10.5299L0 12.4399L11.48 37.0699C12.86 40.0399 15.75 41.8799 19.03 41.8799C22.31 41.8799 25.19 40.0399 26.58 37.0699L38.05 12.4299L33.95 10.5199L22.48 35.1499L22.46 35.1599Z" />
+            <path d="M69.18 -0.000106812C60.53 -0.000106812 53.5 7.02989 53.5 15.6799C53.5 24.3299 60.53 31.3599 69.18 31.3599C77.83 31.3599 84.86 24.3299 84.86 15.6799C84.86 7.02989 77.83 -0.000106812 69.18 -0.000106812ZM69.18 26.7099C63.1 26.7099 58.14 21.7599 58.14 15.6699C58.14 9.57989 63.09 4.62989 69.18 4.62989C75.27 4.62989 80.22 9.57989 80.22 15.6699C80.22 21.7599 75.27 26.7099 69.18 26.7099Z" />
+        </svg>
+    );
+}
+
 const NAV_LINKS = [
     { href: '/flutuacao', label: 'flutuação' },
     { href: '/massoterapia', label: 'massoterapia' },
@@ -42,10 +61,8 @@ export function Navbar() {
             <div className="site-container">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
-                    <Link to="/" className="flex items-center gap-1.5 group">
-                        <span className={`text-xl font-bold tracking-tighter transition-colors duration-300 ${transparent ? 'text-white' : 'text-slate-900'}`}>
-                            void
-                        </span>
+                    <Link to="/" className={`flex items-center transition-colors duration-300 ${transparent ? 'text-white' : 'text-slate-900'}`}>
+                        <VoidLogo />
                     </Link>
 
                     {/* Desktop Nav — center */}
