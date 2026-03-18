@@ -34,10 +34,10 @@ export function Navbar() {
     const profileHref = '/app';
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        <nav className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
             transparent
-                ? 'bg-transparent border-b border-transparent shadow-none'
-                : 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100'
+                ? 'top-24 bg-transparent border-b border-transparent shadow-none'
+                : 'top-0 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100'
         }`}>
             <div className="site-container">
                 <div className="flex h-16 items-center justify-between">
