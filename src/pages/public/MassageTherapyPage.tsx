@@ -62,17 +62,17 @@ function HeroSection() {
                 alt="Massoterapia VOID"
                 className="absolute h-full w-full object-cover -z-10"
             />
-            <div className="absolute inset-0 bg-[--color-gunmetal]/40 -z-10" />
+            <div className="absolute inset-0 bg-[#082b3b]/40 -z-10" />
 
             <div className="site-container flex flex-col h-full justify-end pb-16 md:pb-24">
-                <div className="flex flex-col gap-8 md:max-w-[560px] text-[--color-alabaster]">
+                <div className="flex flex-col gap-8 md:max-w-[560px] text-[#e3e3d9]">
                     <div className="flex flex-col gap-6">
                         <h2
-                            className="font-sf-pro text-[32px] md:text-5xl md:leading-[60px] lowercase text-[--color-alabaster]"
+                            className="font-sf-pro text-[32px] md:text-5xl md:leading-[60px] lowercase text-[#e3e3d9]"
                             dangerouslySetInnerHTML={{ __html: 'relaxe corpo e mente <br />com a nossa<br />massoterapia.' }}
                         />
                         <p
-                            className="font-sf-pro text-xl leading-8 font-light text-[--color-alabaster]"
+                            className="font-sf-pro text-xl leading-8 font-light text-[#e3e3d9]"
                             dangerouslySetInnerHTML={{ __html: 'cuide do seu bem-estar com <br />técnicas especializadas de massagem.' }}
                         />
                     </div>
@@ -81,7 +81,7 @@ function HeroSection() {
                             href={SCHEDULE_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center w-full md:w-fit px-8 py-3 rounded-full bg-[--color-alabaster] text-[--color-gunmetal] font-sf-pro font-semibold lowercase hover:opacity-90 transition-opacity"
+                            className="inline-flex items-center justify-center w-full md:w-fit px-8 py-3 rounded-full bg-[#e3e3d9] text-[#082b3b] font-sf-pro font-semibold lowercase hover:opacity-90 transition-opacity"
                         >
                             Agendar
                         </a>
@@ -98,10 +98,10 @@ function ReasonsSection() {
     const { ref } = useDragScroll<HTMLUListElement>();
 
     return (
-        <section id="massoterapia" className="bg-[--color-alabaster] py-30">
+        <section id="massoterapia" className="bg-[#e3e3d9] py-30">
             <div className="flex flex-col gap-18 md:gap-20">
                 <div className="site-container">
-                    <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[--color-gunmetal]">
+                    <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#082b3b]">
                         massoterapia para reconectar
                     </h2>
                 </div>
@@ -134,10 +134,10 @@ function ReasonsSection() {
                                 </div>
                             </div>
                             <div className="w-full flex flex-col gap-1 py-4 px-8">
-                                <h3 className="font-sf-pro text-[20px] md:text-[2rem] leading-6 lowercase text-[--color-gunmetal]">
+                                <h3 className="font-sf-pro text-[20px] md:text-[2rem] leading-6 lowercase text-[#082b3b]">
                                     {reason.title}
                                 </h3>
-                                <p className="font-sf-pro text-xl leading-8 text-[--color-gunmetal]">
+                                <p className="font-sf-pro text-xl leading-8 text-[#082b3b]">
                                     {reason.description}
                                 </p>
                             </div>
@@ -156,10 +156,10 @@ function PricingSection() {
         <section id="valores-massagem" className="bg-slate-50 pt-20 pb-4">
             <div className="relative site-container pb-20">
                 <div className="max-w-2xl">
-                    <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[--color-gunmetal] leading-[1.1]">
+                    <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#082b3b] leading-[1.1]">
                         escolha o seu <span style={{ color: '#008CFF' }}>reset.</span>
                     </h2>
-                    <p className="font-sf-pro mt-4 text-xl leading-8 text-[--color-gunmetal]/70">
+                    <p className="font-sf-pro mt-4 text-xl leading-8 text-[#082b3b]/70">
                         selecione uma categoria abaixo para começar sua jornada de alta performance.
                     </p>
                 </div>
@@ -234,13 +234,13 @@ function PricingSection() {
 
 function ScheduleCTASection() {
     return (
-        <section className="w-full bg-[--color-tiffany]" id="agendar-massagem">
+        <section className="w-full bg-[#b0d6cf]" id="agendar-massagem">
             <div className="site-container flex justify-center">
                 <div className="flex flex-col gap-20 md:gap-30 py-20 md:py-40 w-full max-w-[1246px]">
-                    <div className="w-15 h-15 rounded-full bg-[--color-rust] mx-auto" />
+                    <div className="w-15 h-15 rounded-full bg-[#ab542b] mx-auto" />
 
                     <div className="md:flex justify-between gap-8">
-                        <div className="flex flex-col gap-10 w-full md:max-w-[434px] text-[--color-rust]">
+                        <div className="flex flex-col gap-10 w-full md:max-w-[434px] text-[#ab542b]">
                             <h2
                                 className="font-sf-pro text-[32px] md:text-5xl leading-[3rem] md:leading-[4rem] lowercase"
                                 dangerouslySetInnerHTML={{ __html: 'cuide do seu <br />bem-estar' }}
@@ -252,7 +252,7 @@ function ScheduleCTASection() {
                                 href={SCHEDULE_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-full md:w-fit px-8 py-3 rounded-full border-2 border-[--color-rust] text-[--color-rust] font-sf-pro font-semibold lowercase hover:bg-[--color-rust] hover:text-[--color-alabaster] transition-colors text-center"
+                                className="w-full md:w-fit px-8 py-3 rounded-full border-2 border-[#ab542b] text-[#ab542b] font-sf-pro font-semibold lowercase hover:bg-[#ab542b] hover:text-[#e3e3d9] transition-colors text-center"
                             >
                                 Agendar massagem
                             </a>
@@ -285,9 +285,9 @@ function ScheduleCTASection() {
 
 function HighlightsSection() {
     return (
-        <section id="aproveite" className="w-full bg-[--color-alabaster] py-20 md:py-40">
+        <section id="aproveite" className="w-full bg-[#e3e3d9] py-20 md:py-40">
             <div className="site-container">
-                <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[--color-gunmetal] mb-10 md:mb-16">
+                <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#082b3b] mb-10 md:mb-16">
                     aproveite também
                 </h2>
                 <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
@@ -299,7 +299,7 @@ function HighlightsSection() {
                             className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#350A6C] to-transparent">
-                            <div className="absolute bottom-0 flex flex-col p-8 lg:p-20 gap-4 text-[--color-alabaster]">
+                            <div className="absolute bottom-0 flex flex-col p-8 lg:p-20 gap-4 text-[#e3e3d9]">
                                 <h3 className="font-sf-pro text-[2rem] lg:text-5xl leading-none lowercase">void clube</h3>
                                 <p className="font-sf-pro text-2xl lg:text-[1.75rem] leading-8">
                                     Assine o VOID Clube e tenha acesso a sessões de massoterapia com valores exclusivos.
@@ -315,7 +315,7 @@ function HighlightsSection() {
                             className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#008CFF] to-transparent">
-                            <div className="absolute bottom-0 flex flex-col p-8 lg:p-20 gap-4 text-[--color-alabaster]">
+                            <div className="absolute bottom-0 flex flex-col p-8 lg:p-20 gap-4 text-[#e3e3d9]">
                                 <h3 className="font-sf-pro text-[2rem] lg:text-5xl leading-none lowercase">flutuação</h3>
                                 <p className="font-sf-pro text-2xl lg:text-[1.75rem] leading-8">
                                     uma abordagem inovadora para o cuidado do bem-estar, integrando técnicas que visam aliviar tensões e reduzir o estresse.
@@ -340,7 +340,7 @@ function AboutSection() {
     ];
 
     return (
-        <section id="sobre" className="relative bg-[--color-alabaster] py-20 md:py-40 overflow-hidden">
+        <section id="sobre" className="relative bg-[#e3e3d9] py-20 md:py-40 overflow-hidden">
             <img
                 src="/assets/svgs/wave-float-rotation.svg"
                 alt=""
@@ -351,8 +351,8 @@ function AboutSection() {
             {/* mobile text */}
             <div className="md:hidden site-container relative z-10">
                 <div className="mb-10">
-                    <h2 className="font-sf-pro text-[--color-gunmetal] text-[32px] leading-10 lowercase mb-4">essa é a VOID</h2>
-                    <p className="font-sf-pro text-[--color-gunmetal] text-xl leading-8">
+                    <h2 className="font-sf-pro text-[#082b3b] text-[32px] leading-10 lowercase mb-4">essa é a VOID</h2>
+                    <p className="font-sf-pro text-[#082b3b] text-xl leading-8">
                         {paragraphs[0]}<br /><br />{paragraphs[1]}
                     </p>
                 </div>
@@ -366,8 +366,8 @@ function AboutSection() {
                 >
                     <li className="hidden md:flex items-center min-w-[400px] lg:min-w-[500px] pl-8 xl:pl-30 flex-shrink-0">
                         <div className="flex flex-col gap-6">
-                            <h2 className="font-sf-pro text-[--color-gunmetal] text-5xl leading-[60px] lowercase">essa é a VOID</h2>
-                            <p className="font-sf-pro text-[--color-gunmetal] text-xl md:text-2xl leading-8">
+                            <h2 className="font-sf-pro text-[#082b3b] text-5xl leading-[60px] lowercase">essa é a VOID</h2>
+                            <p className="font-sf-pro text-[#082b3b] text-xl md:text-2xl leading-8">
                                 {paragraphs[0]}<br /><br />{paragraphs[1]}
                             </p>
                         </div>
@@ -397,9 +397,9 @@ function AboutSection() {
 
 function FAQSection() {
     return (
-        <section id="perguntas-frequentes" className="relative z-10 w-full bg-[--color-mauve] py-20 md:py-40">
+        <section id="perguntas-frequentes" className="relative z-10 w-full bg-[#ccb0f0] py-20 md:py-40">
             <div className="site-container">
-                <h2 className="font-sf-pro text-[32px] md:text-5xl leading-[3rem] md:leading-[3.75rem] lowercase text-[--color-gunmetal] mb-20">
+                <h2 className="font-sf-pro text-[32px] md:text-5xl leading-[3rem] md:leading-[3.75rem] lowercase text-[#082b3b] mb-20">
                     dúvidas frequentes
                 </h2>
 
@@ -409,12 +409,12 @@ function FAQSection() {
                             <SiteAccordionItem
                                 key={item.question}
                                 value={`faq-l-${i}`}
-                                className="flex flex-col items-center rounded-3xl bg-[--color-eletric-violet] border-none transition-colors duration-500 data-[state=open]:bg-white"
+                                className="flex flex-col items-center rounded-3xl bg-[#896dad] border-none transition-colors duration-500 data-[state=open]:bg-white"
                             >
-                                <SiteAccordionTrigger className="w-full p-6 md:p-8 rounded-3xl lowercase hover:no-underline text-[--color-alabaster] data-[state=open]:text-[--color-eletric-violet]">
+                                <SiteAccordionTrigger className="w-full p-6 md:p-8 rounded-3xl lowercase hover:no-underline text-[#e3e3d9] data-[state=open]:text-[#896dad]">
                                     <span className="font-sf-pro text-2xl leading-10 text-left">{item.question}</span>
                                 </SiteAccordionTrigger>
-                                <SiteAccordionContent className="px-6 md:px-8 pb-6 md:pb-8 text-[--color-gunmetal]">
+                                <SiteAccordionContent className="px-6 md:px-8 pb-6 md:pb-8 text-[#082b3b]">
                                     <p className="font-sf-pro text-base pt-6">{item.answer}</p>
                                 </SiteAccordionContent>
                             </SiteAccordionItem>
@@ -426,12 +426,12 @@ function FAQSection() {
                             <SiteAccordionItem
                                 key={item.question}
                                 value={`faq-r-${i}`}
-                                className="flex flex-col items-center rounded-3xl bg-[--color-eletric-violet] border-none transition-colors duration-500 data-[state=open]:bg-white"
+                                className="flex flex-col items-center rounded-3xl bg-[#896dad] border-none transition-colors duration-500 data-[state=open]:bg-white"
                             >
-                                <SiteAccordionTrigger className="w-full p-6 md:p-8 rounded-3xl lowercase hover:no-underline text-[--color-alabaster] data-[state=open]:text-[--color-eletric-violet]">
+                                <SiteAccordionTrigger className="w-full p-6 md:p-8 rounded-3xl lowercase hover:no-underline text-[#e3e3d9] data-[state=open]:text-[#896dad]">
                                     <span className="font-sf-pro text-2xl leading-10 text-left">{item.question}</span>
                                 </SiteAccordionTrigger>
-                                <SiteAccordionContent className="px-6 md:px-8 pb-6 md:pb-8 text-[--color-gunmetal]">
+                                <SiteAccordionContent className="px-6 md:px-8 pb-6 md:pb-8 text-[#082b3b]">
                                     <p className="font-sf-pro text-base pt-6">{item.answer}</p>
                                 </SiteAccordionContent>
                             </SiteAccordionItem>
@@ -447,7 +447,7 @@ function FAQSection() {
 
 export default function MassageTherapyPage() {
     return (
-        <main className="bg-[--color-alabaster]">
+        <main className="bg-[#e3e3d9]">
             <HeroSection />
             <ReasonsSection />
             <PricingSection />
