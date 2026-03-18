@@ -65,25 +65,21 @@ function HeroSection() {
             <div className="absolute inset-0 bg-[#082b3b]/40 -z-10" />
 
             <div className="site-container flex flex-col h-full justify-end pb-16 md:pb-24">
-                <div className="flex flex-col gap-8 md:max-w-[560px] text-[#e3e3d9]">
-                    <div className="flex flex-col gap-6">
-                        <h2
-                            className="font-sf-pro text-[32px] md:text-5xl md:leading-[60px] lowercase text-[#e3e3d9]"
-                            dangerouslySetInnerHTML={{ __html: 'relaxe corpo e mente <br />com a nossa<br />massoterapia.' }}
-                        />
-                        <p
-                            className="font-sf-pro text-xl leading-8 font-light text-[#e3e3d9]"
-                            dangerouslySetInnerHTML={{ __html: 'cuide do seu bem-estar com <br />técnicas especializadas de massagem.' }}
-                        />
-                    </div>
+                <div className="flex flex-col gap-8 max-w-[560px]">
+                    <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.95] lowercase">
+                        relaxe corpo<br />e mente.
+                    </h2>
+                    <p className="text-lg text-white/70 leading-relaxed">
+                        cuide do seu bem-estar com técnicas especializadas de massagem.
+                    </p>
                     <div>
                         <a
                             href={SCHEDULE_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center w-full md:w-fit px-8 py-3 rounded-full bg-[#e3e3d9] text-[#082b3b] font-sf-pro font-semibold lowercase hover:opacity-90 transition-opacity"
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#e3e3d9] text-[#082b3b] font-semibold rounded-full hover:opacity-90 transition-opacity lowercase text-sm"
                         >
-                            Agendar
+                            agendar massagem
                         </a>
                     </div>
                 </div>

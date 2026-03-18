@@ -19,15 +19,22 @@ export default function AboutPage() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
             {/* Hero */}
-            <section className="py-20 px-4">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
-                        sobre a void
-                    </h1>
-                    <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                        nascemos com uma missão: criar o espaço mais avançado de desconexão sensorial em curitiba.
-                        um laboratório onde ciência, tecnologia e bem-estar se encontram.
-                    </p>
+            <section className="relative w-full h-screen">
+                <img
+                    src="/assets/images/about/about-1.webp"
+                    alt="Sobre a VOID"
+                    className="absolute inset-0 w-full h-full object-cover -z-10"
+                />
+                <div className="absolute inset-0 bg-[#082b3b]/60 -z-10" />
+                <div className="site-container flex flex-col h-full justify-end pb-16 md:pb-24">
+                    <div className="flex flex-col gap-8 max-w-[560px]">
+                        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.95] lowercase">
+                            essa é<br />a void.
+                        </h1>
+                        <p className="text-lg text-white/70 leading-relaxed">
+                            nascemos com uma missão: criar o espaço mais avançado de desconexão sensorial em Curitiba.
+                        </p>
+                    </div>
                 </div>
             </section>
 
