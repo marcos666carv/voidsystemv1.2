@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Crown } from 'lucide-react';
+import { useDragScroll } from '@/hooks/useDragScroll';
 import { ReasonsCarousel } from '@/components/site/ReasonsCarousel';
 import {
     SiteAccordion,
