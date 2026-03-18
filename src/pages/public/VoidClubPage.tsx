@@ -159,30 +159,33 @@ export default function VoidClubPage() {
 
     return (
         <div className="min-h-screen bg-[#0c1117]">
-            {/* ─── Hero — Split layout with photo right ──── */}
-            <section className="relative overflow-hidden bg-[#0c1117]" style={{ paddingTop: '64px' }}>
-                <div className="grid lg:grid-cols-2 min-h-[80vh]">
-                    {/* Left — Content */}
-                    <div className="flex flex-col justify-center px-4 sm:px-6 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pr-12 py-16 lg:py-0">
-                        <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-lilac-500/15 text-lilac-400 text-xs font-semibold rounded-full border border-lilac-500/25 w-fit mb-6">
+            {/* ─── Hero ──── */}
+            <section className="relative w-full h-screen">
+                <img
+                    src="/assets/images/void-club-hero.jpg"
+                    alt="Void Club — experiência de flutuação"
+                    className="absolute inset-0 w-full h-full object-cover -z-10"
+                />
+                {/* overlay */}
+                <div className="absolute inset-0 bg-[#0c1117]/60 -z-10" />
+
+                <div className="site-container flex flex-col h-full justify-end pb-16 md:pb-24">
+                    <div className="flex flex-col gap-8 md:max-w-[560px] text-white">
+                        <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-lilac-500/20 text-lilac-300 text-xs font-semibold rounded-full border border-lilac-500/30 w-fit">
                             <Crown className="h-3.5 w-3.5" />
                             clube de vantagens — lista de espera aberta
                         </span>
 
-                        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.95]">
-                            void
-                            <br />
-                            <span className="bg-gradient-to-r from-lilac-400 via-lilac-300 to-lilac-500 bg-clip-text text-transparent">
-                                club
-                            </span>
+                        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.95] lowercase">
+                            void <span className="bg-gradient-to-r from-lilac-400 via-lilac-300 to-lilac-500 bg-clip-text text-transparent">club</span>
                         </h1>
 
-                        <p className="mt-6 text-lg text-slate-400 leading-relaxed max-w-md">
+                        <p className="text-lg text-white/70 leading-relaxed max-w-md">
                             assinatura mensal para quem busca consistência absoluta.
                             sessões de flutuação, massoterapia, preços especiais e prioridade total.
                         </p>
 
-                        <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                        <div className="flex flex-col sm:flex-row gap-3">
                             <a
                                 href="#planos"
                                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-lilac-500 text-white font-semibold rounded-full hover:bg-lilac-400 transition-all duration-300 text-sm hover:gap-3 shadow-lg shadow-lilac-500/20"
@@ -192,32 +195,11 @@ export default function VoidClubPage() {
                             </a>
                             <button
                                 onClick={() => openWaitlist()}
-                                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-white/15 text-white/90 font-medium rounded-full hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-sm"
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-white/30 text-white font-medium rounded-full hover:bg-white/10 transition-all duration-300 text-sm"
                             >
                                 entrar na lista de espera
                             </button>
                         </div>
-                    </div>
-
-                    {/* Right — Photo */}
-                    <div className="relative hidden lg:block">
-                        <img
-                            src="/assets/images/void-club-hero.jpg"
-                            alt="Void Club — experiência de flutuação"
-                            className="absolute inset-0 w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#0c1117] via-[#0c1117]/30 to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c1117] via-transparent to-[#0c1117]/20" />
-                    </div>
-
-                    {/* Mobile image fallback */}
-                    <div className="lg:hidden relative h-64">
-                        <img
-                            src="/assets/images/void-club-hero.jpg"
-                            alt="Void Club — experiência de flutuação"
-                            className="absolute inset-0 w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c1117] via-[#0c1117]/50 to-transparent" />
                     </div>
                 </div>
             </section>
