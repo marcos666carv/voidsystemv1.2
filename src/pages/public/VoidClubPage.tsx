@@ -163,38 +163,38 @@ export default function VoidClubPage() {
             <section className="relative overflow-hidden bg-[#0c1117] h-screen">
                 <div className="grid lg:grid-cols-2 h-full">
                     {/* Left — Content */}
-                    <div className="flex flex-col justify-end pb-16 md:pb-24 px-8 xl:px-30">
-                        <div className="flex flex-col gap-8 max-w-[480px]">
+                    <div className="site-container flex flex-col justify-end pb-16 md:pb-24">
+                        <div className="flex flex-col gap-6 max-w-[560px]">
                             <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-lilac-500/15 text-lilac-400 text-xs font-semibold rounded-full border border-lilac-500/25 w-fit">
                                 <Crown className="h-3.5 w-3.5" />
                                 clube de vantagens — lista de espera aberta
                             </span>
 
-                            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.95] lowercase">
-                                void<br />
+                            <h1 className="font-sf-pro text-[32px] md:text-5xl md:leading-[60px] lowercase text-white">
+                                void{' '}
                                 <span className="bg-gradient-to-r from-lilac-400 via-lilac-300 to-lilac-500 bg-clip-text text-transparent">
                                     club
                                 </span>
                             </h1>
 
-                            <p className="text-lg text-slate-400 leading-relaxed">
+                            <p className="font-sf-pro text-xl leading-8 font-light text-white/80">
                                 assinatura mensal para quem busca consistência absoluta.
                                 sessões de flutuação, massoterapia, preços especiais e prioridade total.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-3">
+                            <div className="flex flex-col sm:flex-row gap-3 pt-2">
                                 <a
                                     href="#planos"
-                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-lilac-500 text-white font-semibold rounded-full hover:bg-lilac-400 transition-all duration-300 text-sm hover:gap-3 shadow-lg shadow-lilac-500/20"
+                                    className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-lilac-500 text-white font-sf-pro font-semibold lowercase hover:bg-lilac-400 transition-all duration-300 hover:gap-3 shadow-lg shadow-lilac-500/20"
                                 >
                                     ver planos
                                     <ArrowRight className="h-4 w-4" />
                                 </a>
                                 <button
                                     onClick={() => openWaitlist()}
-                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-white/15 text-white/90 font-medium rounded-full hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-sm"
+                                    className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full border border-white/30 text-white font-sf-pro font-semibold lowercase hover:bg-white/10 transition-all duration-300"
                                 >
-                                    entrar na lista de espera
+                                    lista de espera
                                 </button>
                             </div>
                         </div>
