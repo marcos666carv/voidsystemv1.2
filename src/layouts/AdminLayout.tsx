@@ -12,6 +12,7 @@ import {
     ShoppingBag,
     Layers,
     Crown,
+    Palette,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -34,6 +35,7 @@ const NAV_OPERATIONS = [
     { name: 'Sales (POS)', href: '/admin/sales', icon: ShoppingCart },
     { name: 'Finance', href: '/admin/finance', icon: CreditCard },
     { name: 'System Map', href: '/admin/system-map', icon: Map },
+    { name: 'Design System', href: '/admin/design-system', icon: Palette },
 ];
 
 function NavItem({ item }: { item: any }) {

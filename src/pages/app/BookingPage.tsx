@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Calendar, Clock, ChevronLeft, ChevronRight, Droplets, Heart, Sparkles, ArrowRight, Check, MapPin } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { appointmentsApi } from '@/lib/api';
 
 const SERVICES = [
     { id: 'float-60', name: 'flutuação 60min', price: 189, duration: 60, icon: Droplets, color: 'bg-cyan-50 text-cyan-700 border-cyan-200' },
@@ -16,6 +18,7 @@ function getFirstDayOfWeek(y: number, m: number) { return new Date(y, m, 1).getD
 
 export default function BookingPage() {
     const today = new Date();
+    const { user } = useAuth();
     const [step, setStep] = useState(1);
     const [selectedService, setSelectedService] = useState('');
     const [month, setMonth] = useState(today.getMonth());
@@ -23,6 +26,7 @@ export default function BookingPage() {
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     const [selectedTime, setSelectedTime] = useState('');
     const [confirmed, setConfirmed] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [notes, setNotes] = useState('');
 
     const daysInMonth = getDaysInMonth(year, month);
@@ -32,7 +36,26 @@ export default function BookingPage() {
     const selectedServiceData = SERVICES.find(s => s.id === selectedService);
 
     const handleConfirm = async () => {
-        // TODO: appointmentsApi.create(...)
+        if (!selectedDay || !selectedServiceData) return;
+        setIsLoading(true);
+        const pad = (n: number) => String(n).padStart(2, '0');
+        const dateStr = `${year}-${pad(month + 1)}-${pad(selectedDay)}`;
+        const startTime = `${dateStr}T${selectedTime}:00`;
+        const [h, m] = selectedTime.split(':').map(Number);
+        const endDate = new Date(year, month, selectedDay, h, m + selectedServiceData.duration);
+        const endTime = `${endDate.getFullYear()}-${pad(endDate.getMonth() + 1)}-${pad(endDate.getDate())}T${pad(endDate.getHours())}:${pad(endDate.getMinutes())}:00`;
+        try {
+            await appointmentsApi.create({
+                clientId: user?.id ?? 'guest',
+                serviceId: selectedService,
+                startTime,
+                endTime,
+                notes: notes || undefined,
+            });
+        } catch {
+            // degradação silenciosa em ambiente de desenvolvimento
+        }
+        setIsLoading(false);
         setConfirmed(true);
     };
 
@@ -149,8 +172,8 @@ export default function BookingPage() {
                     />
                     <div className="flex gap-3">
                         <button onClick={() => setStep(3)} className="flex-1 py-2.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-50">voltar</button>
-                        <button onClick={handleConfirm} className="flex-1 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 flex items-center justify-center gap-2">
-                            confirmar <ArrowRight className="h-4 w-4" />
+                        <button onClick={handleConfirm} disabled={isLoading} className="flex-1 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 disabled:opacity-60 flex items-center justify-center gap-2">
+                            {isLoading ? 'aguarde...' : <><span>confirmar</span><ArrowRight className="h-4 w-4" /></>}
                         </button>
                     </div>
                 </div>

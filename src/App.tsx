@@ -17,6 +17,8 @@ const AdminRegisterPage = lazy(() => import("@/pages/auth/AdminRegisterPage"));
 const LandingPage = lazy(() => import("@/pages/public/LandingPage").then(m => ({ default: m.LandingPage })));
 const VoidClubPage = lazy(() => import("@/pages/public/VoidClubPage"));
 const AboutPage = lazy(() => import("@/pages/public/AboutPage"));
+const FloatPage = lazy(() => import("@/pages/public/FloatPage"));
+const MassageTherapyPage = lazy(() => import("@/pages/public/MassageTherapyPage"));
 const CheckoutFlow = lazy(() => import("@/pages/public/checkout/CheckoutFlow"));
 
 // Client App Pages
@@ -41,6 +43,7 @@ const AdminServicesPage = lazy(() => import("@/pages/admin/AdminServicesPage"));
 const AdminVoidClubPage = lazy(() => import("@/pages/admin/AdminVoidClubPage"));
 const AdminProductsPage = lazy(() => import("@/pages/admin/products/AdminProductsPage"));
 const AdminTanksPage = lazy(() => import("@/pages/admin/tanks/AdminTanksPage").then(m => ({ default: m.AdminTanksPage })));
+const DesignSystemPage = lazy(() => import("@/pages/admin/design-system/DesignSystemPage").then(m => ({ default: m.DesignSystemPage })));
 
 function App() {
   return (
@@ -62,6 +65,8 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/club" element={<VoidClubPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/flutuacao" element={<FloatPage />} />
+            <Route path="/massoterapia" element={<MassageTherapyPage />} />
           </Route>
 
           {/* Checkout (Standalone / Distraction Free) */}
@@ -113,6 +118,7 @@ function App() {
             <Route path="sales" element={<SalesPage />} />
             <Route path="finance" element={<FinancePage />} />
             <Route path="system-map" element={<SystemMap />} />
+            <Route path="design-system" element={<DesignSystemPage />} />
           </Route>
 
           {/* Catch-all */}

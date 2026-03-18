@@ -3,9 +3,11 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function CartDrawer() {
     const { state, toggleCart, updateQuantity, removeItem, subtotal } = useCart();
+    const navigate = useNavigate();
 
     return (
         <Sheet open={state.isOpen} onOpenChange={toggleCart}>
@@ -96,8 +98,12 @@ export function CartDrawer() {
                         <span>Subtotal</span>
                         <span>${subtotal.toFixed(2)}</span>
                     </div>
-                    <Button className="w-full bg-violet-600 hover:bg-violet-700 h-12 text-base font-semibold" disabled={state.items.length === 0}>
-                        Checkout Now
+                    <Button
+                        className="w-full bg-violet-600 hover:bg-violet-700 h-12 text-base font-semibold"
+                        disabled={state.items.length === 0}
+                        onClick={() => { toggleCart(); navigate('/app/checkout'); }}
+                    >
+                        Finalizar Compra
                     </Button>
                 </div>
             </SheetContent>
