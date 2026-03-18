@@ -84,7 +84,7 @@ export function ComponentsSection() {
                                 <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl px-8">
                                     app-style (rounded-xl)
                                 </Button>
-                                <Button className="rounded-full bg-[#e3e3d9] text-[#082b3b] hover:opacity-90 font-jakob lowercase">
+                                <Button className="rounded-full bg-[#e3e3d9] text-[#082b3b] hover:opacity-90 font-sf-pro lowercase">
                                     site-style (rounded-full)
                                 </Button>
                             </div>
@@ -189,7 +189,7 @@ export function ComponentsSection() {
                                     className="flex flex-col items-center rounded-3xl bg-[#896dad] border-none transition-colors duration-500 data-[state=open]:bg-white"
                                 >
                                     <SiteAccordionTrigger className="w-full p-6 rounded-3xl lowercase hover:no-underline text-[#e3e3d9] data-[state=open]:text-[#896dad]">
-                                        <span className="font-jakob text-xl leading-8 text-left">{item.q}</span>
+                                        <span className="font-sf-pro text-xl leading-8 text-left">{item.q}</span>
                                     </SiteAccordionTrigger>
                                     <SiteAccordionContent className="px-6 pb-6 text-[#082b3b]">
                                         <p className="font-sf-pro text-base pt-4">{item.a}</p>

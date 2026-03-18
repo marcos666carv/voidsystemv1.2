@@ -83,7 +83,7 @@ function HeroSection() {
                 <div className="flex flex-col h-96 md:h-auto gap-14 justify-between md:max-w-[560px] pt-[88px] 2xl:pt-40 text-[#e3e3d9]">
                     <div className="flex flex-col gap-6">
                         <h2
-                            className="font-jakob text-[32px] md:text-5xl md:leading-[60px] lowercase text-[#e3e3d9]"
+                            className="font-sf-pro text-[32px] md:text-5xl md:leading-[60px] lowercase text-[#e3e3d9]"
                             dangerouslySetInnerHTML={{ __html: 'o que a mente pensa, <br />o corpo sente.<br />cuide dos dois.' }}
                         />
                         <p
@@ -96,7 +96,7 @@ function HeroSection() {
                             href={SCHEDULE_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center w-full md:w-fit px-8 py-3 rounded-full bg-[#e3e3d9] text-[#082b3b] font-jakob font-semibold lowercase hover:opacity-90 transition-opacity"
+                            className="inline-flex items-center justify-center w-full md:w-fit px-8 py-3 rounded-full bg-[#e3e3d9] text-[#082b3b] font-sf-pro font-semibold lowercase hover:opacity-90 transition-opacity"
                         >
                             Agendar
                         </a>
@@ -116,7 +116,7 @@ function ReasonsSection() {
         <section id="flutuacao" className="bg-[#e3e3d9] py-30">
             <div className="flex flex-col gap-18 md:gap-20">
                 <div className="site-container">
-                    <h2 className="font-jakob text-[32px] md:text-5xl lowercase text-[#082b3b]">
+                    <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#082b3b]">
                         motivos para flutuar
                     </h2>
                 </div>
@@ -149,7 +149,7 @@ function ReasonsSection() {
                                 </div>
                             </div>
                             <div className="w-full flex flex-col gap-1 py-4 px-8">
-                                <h3 className="font-jakob text-[20px] md:text-[2rem] leading-6 lowercase text-[#082b3b]">
+                                <h3 className="font-sf-pro text-[20px] md:text-[2rem] leading-6 lowercase text-[#082b3b]">
                                     {reason.title}
                                 </h3>
                                 <p className="font-sf-pro text-xl leading-8 text-[#082b3b]">
@@ -172,7 +172,7 @@ function PricingSection() {
             {/* Header */}
             <div className="relative site-container pb-20">
                 <div className="max-w-2xl">
-                    <h2 className="font-jakob text-[32px] md:text-5xl lowercase text-[#082b3b] leading-[1.1]">
+                    <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#082b3b] leading-[1.1]">
                         escolha o seu <span style={{ color: '#008CFF' }}>reset.</span>
                     </h2>
                     <p className="font-sf-pro mt-4 text-xl leading-8 text-[#082b3b]/70">
@@ -261,7 +261,7 @@ function ScheduleCTASection() {
                     <div className="md:flex justify-between gap-8">
                         <div className="flex flex-col gap-10 w-full md:max-w-[434px] text-[#ab542b]">
                             <h2
-                                className="font-jakob text-[32px] md:text-5xl leading-[3rem] md:leading-[4rem] lowercase"
+                                className="font-sf-pro text-[32px] md:text-5xl leading-[3rem] md:leading-[4rem] lowercase"
                                 dangerouslySetInnerHTML={{ __html: 'crie uma pausa <br />para respirar' }}
                             />
                             <p className="font-sf-pro text-2xl md:text-[28px] leading-8 md:max-w-80">
@@ -271,7 +271,7 @@ function ScheduleCTASection() {
                                 href={SCHEDULE_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-full md:w-fit px-8 py-3 rounded-full border-2 border-[#ab542b] text-[#ab542b] font-jakob font-semibold lowercase hover:bg-[#ab542b] hover:text-[#e3e3d9] transition-colors text-center"
+                                className="w-full md:w-fit px-8 py-3 rounded-full border-2 border-[#ab542b] text-[#ab542b] font-sf-pro font-semibold lowercase hover:bg-[#ab542b] hover:text-[#e3e3d9] transition-colors text-center"
                             >
                                 Agendar flutuação
                             </a>
@@ -315,7 +315,7 @@ function VoidZeroSection() {
             <div className="site-container">
                 <div className="flex flex-col lg:flex-row md:gap-10 md:pb-30">
                     <div className="flex flex-col justify-center gap-6 md:gap-10 lg:max-w-lg">
-                        <h2 className="font-jakob text-[32px] md:text-5xl lowercase text-[#e3e3d9]">
+                        <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#e3e3d9]">
                             flutue no primeiro tanque de flutuação feito no Brasil
                         </h2>
                         <p className="font-sf-pro text-xl md:text-[28px] leading-8 md:leading-10 text-[#e3e3d9]">
@@ -350,7 +350,7 @@ function VoidZeroSection() {
                             />
                         </div>
                         <div className="p-6 md:p-10">
-                            <h3 className="font-jakob text-2xl leading-9 lowercase text-[#e3e3d9] font-semibold mb-2">
+                            <h3 className="font-sf-pro text-2xl leading-9 lowercase text-[#e3e3d9] font-semibold mb-2">
                                 {feature.title}
                             </h3>
                             <p className="font-sf-pro text-xl leading-8 text-[#e3e3d9]">
@@ -370,7 +370,7 @@ function HighlightsSection() {
     return (
         <section id="highlights" className="w-full bg-[#e3e3d9] py-20 md:py-40">
             <div className="site-container">
-                <h2 className="font-jakob text-[32px] md:text-5xl lowercase text-[#082b3b] mb-10 md:mb-16">
+                <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#082b3b] mb-10 md:mb-16">
                     aproveite também
                 </h2>
                 <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
@@ -383,7 +383,7 @@ function HighlightsSection() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#AB542B] to-transparent">
                             <div className="absolute bottom-0 flex flex-col p-8 lg:p-20 gap-4 text-[#e3e3d9]">
-                                <h3 className="font-jakob text-[2rem] lg:text-5xl leading-none lowercase">massoterapia</h3>
+                                <h3 className="font-sf-pro text-[2rem] lg:text-5xl leading-none lowercase">massoterapia</h3>
                                 <p className="font-sf-pro text-2xl lg:text-[1.75rem] leading-8">
                                     Combine sua flutuação com uma sessão de massoterapia para potencializar o relaxamento.
                                 </p>
@@ -399,7 +399,7 @@ function HighlightsSection() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#350A6C] to-transparent">
                             <div className="absolute bottom-0 flex flex-col p-8 lg:p-20 gap-4 text-[#e3e3d9]">
-                                <h3 className="font-jakob text-[2rem] lg:text-5xl leading-none lowercase">void clube</h3>
+                                <h3 className="font-sf-pro text-[2rem] lg:text-5xl leading-none lowercase">void clube</h3>
                                 <p className="font-sf-pro text-2xl lg:text-[1.75rem] leading-8">
                                     Assine o VOID Clube e tenha acesso a sessões de flutuação com valores exclusivos.
                                 </p>
@@ -434,7 +434,7 @@ function AboutSection() {
             {/* mobile text */}
             <div className="md:hidden site-container relative z-10">
                 <div className="mb-10">
-                    <h2 className="font-jakob text-[#082b3b] text-[32px] leading-10 lowercase mb-4">essa é a VOID</h2>
+                    <h2 className="font-sf-pro text-[#082b3b] text-[32px] leading-10 lowercase mb-4">essa é a VOID</h2>
                     <p className="font-sf-pro text-[#082b3b] text-xl leading-8">
                         {paragraphs[0]}<br /><br />{paragraphs[1]}
                     </p>
@@ -450,7 +450,7 @@ function AboutSection() {
                     {/* desktop text block inside carousel */}
                     <li className="hidden md:flex items-center min-w-[400px] lg:min-w-[500px] pl-8 xl:pl-30 flex-shrink-0">
                         <div className="flex flex-col gap-6">
-                            <h2 className="font-jakob text-[#082b3b] text-5xl leading-[60px] lowercase">essa é a VOID</h2>
+                            <h2 className="font-sf-pro text-[#082b3b] text-5xl leading-[60px] lowercase">essa é a VOID</h2>
                             <p className="font-sf-pro text-[#082b3b] text-xl md:text-2xl leading-8">
                                 {paragraphs[0]}<br /><br />{paragraphs[1]}
                             </p>
@@ -483,7 +483,7 @@ function FAQSection() {
     return (
         <section id="perguntas-frequentes" className="relative z-10 w-full bg-[#ccb0f0] py-20 md:py-40">
             <div className="site-container">
-                <h2 className="font-jakob text-[32px] md:text-5xl leading-[3rem] md:leading-[3.75rem] lowercase text-[#082b3b] mb-20">
+                <h2 className="font-sf-pro text-[32px] md:text-5xl leading-[3rem] md:leading-[3.75rem] lowercase text-[#082b3b] mb-20">
                     dúvidas frequentes
                 </h2>
 
@@ -497,7 +497,7 @@ function FAQSection() {
                                 className="flex flex-col items-center rounded-3xl bg-[#896dad] border-none transition-colors duration-500 data-[state=open]:bg-white"
                             >
                                 <SiteAccordionTrigger className="w-full p-6 md:p-8 rounded-3xl lowercase hover:no-underline text-[#e3e3d9] data-[state=open]:text-[#896dad]">
-                                    <span className="font-jakob text-2xl leading-10 text-left">{item.question}</span>
+                                    <span className="font-sf-pro text-2xl leading-10 text-left">{item.question}</span>
                                 </SiteAccordionTrigger>
                                 <SiteAccordionContent className="px-6 md:px-8 pb-6 md:pb-8 text-[#082b3b]">
                                     <p className="font-sf-pro text-base pt-6">{item.answer}</p>
@@ -515,7 +515,7 @@ function FAQSection() {
                                 className="flex flex-col items-center rounded-3xl bg-[#896dad] border-none transition-colors duration-500 data-[state=open]:bg-white"
                             >
                                 <SiteAccordionTrigger className="w-full p-6 md:p-8 rounded-3xl lowercase hover:no-underline text-[#e3e3d9] data-[state=open]:text-[#896dad]">
-                                    <span className="font-jakob text-2xl leading-10 text-left">{item.question}</span>
+                                    <span className="font-sf-pro text-2xl leading-10 text-left">{item.question}</span>
                                 </SiteAccordionTrigger>
                                 <SiteAccordionContent className="px-6 md:px-8 pb-6 md:pb-8 text-[#082b3b]">
                                     <p className="font-sf-pro text-base pt-6">{item.answer}</p>

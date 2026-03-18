@@ -79,11 +79,11 @@ export function SitePricingCard({
             {/* Preço */}
             <div className="flex flex-wrap items-center justify-center gap-1 px-4 py-6">
                 {pricePrefix && (
-                    <Typography as="span" variant="body" className="font-jakob text-[--color-gunmetal] text-center text-[clamp(12px,2vw,16px)]">
+                    <Typography as="span" variant="body" className="font-sf-pro text-[--color-gunmetal] text-center text-[clamp(12px,2vw,16px)]">
                         {pricePrefix}
                     </Typography>
                 )}
-                <Typography as="span" variant="body" weight="bold" className="font-jakob text-[--color-gunmetal] text-center text-[clamp(12px,2vw,16px)]">
+                <Typography as="span" variant="body" weight="bold" className="font-sf-pro text-[--color-gunmetal] text-center text-[clamp(12px,2vw,16px)]">
                     {finalPrice}
                 </Typography>
             </div>
@@ -95,27 +95,27 @@ export function SitePricingCard({
                         href={buttonHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center w-full h-10 m-2 rounded-full bg-[--color-mauve] text-[--color-gunmetal] font-jakob font-semibold hover:opacity-90 transition-opacity"
+                        className="flex items-center justify-center w-full h-10 m-2 rounded-full bg-[--color-mauve] text-[--color-gunmetal] font-sf-pro font-semibold hover:opacity-90 transition-opacity"
                     >
-                        <Typography as="span" variant="body" weight="semibold" className="font-jakob normal-case text-[clamp(11px,1.8vw,13px)]">
+                        <Typography as="span" variant="body" weight="semibold" className="font-sf-pro normal-case text-[clamp(11px,1.8vw,13px)]">
                             {buttonLabel}
                         </Typography>
                     </a>
                 ) : (
                     <Link
                         to={buttonHref}
-                        className="flex items-center justify-center w-full h-10 m-2 rounded-full bg-[--color-mauve] text-[--color-gunmetal] font-jakob font-semibold hover:opacity-90 transition-opacity"
+                        className="flex items-center justify-center w-full h-10 m-2 rounded-full bg-[--color-mauve] text-[--color-gunmetal] font-sf-pro font-semibold hover:opacity-90 transition-opacity"
                     >
-                        <Typography as="span" variant="body" weight="semibold" className="font-jakob normal-case text-[clamp(11px,1.8vw,13px)]">
+                        <Typography as="span" variant="body" weight="semibold" className="font-sf-pro normal-case text-[clamp(11px,1.8vw,13px)]">
                             {buttonLabel}
                         </Typography>
                     </Link>
                 )}
 
-                <Typography as="p" variant="bodySm" className="font-jakob text-center tracking-tight leading-snug text-[clamp(10px,1.5vw,12px)]">
+                <Typography as="p" variant="bodySm" className="font-sf-pro text-center tracking-tight leading-snug text-[clamp(10px,1.5vw,12px)]">
                     {validityText}
                     {installmentsText && (
-                        <Typography as="span" variant="bodySm" weight="bold" className="font-jakob font-bold text-[clamp(10px,1.5vw,12px)]">
+                        <Typography as="span" variant="bodySm" weight="bold" className="font-sf-pro font-bold text-[clamp(10px,1.5vw,12px)]">
                             {installmentsText}
                         </Typography>
                     )}

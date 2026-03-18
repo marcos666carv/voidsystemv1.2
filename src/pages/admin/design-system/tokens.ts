@@ -5,7 +5,7 @@
 
 export type FontSample = {
     label: string;
-    fontClass: string;          // 'font-jakob' | 'font-sf-pro' | ''
+    fontClass: string;          // 'font-sf-pro' | ''
     sizeToken: string;          // descrição do token Tailwind original
     defaultSize: string;        // valor CSS editável ex: '48px', '2rem'
     defaultWeight: string;      // '400'
@@ -18,7 +18,7 @@ export type FontSample = {
 export const JAKOB_SAMPLES: FontSample[] = [
     {
         label: 'display',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-5xl (48px)',
         defaultSize: '48px',
         defaultWeight: '400',
@@ -29,7 +29,7 @@ export const JAKOB_SAMPLES: FontSample[] = [
     },
     {
         label: 'heading-1',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-[32px] → md:text-5xl',
         defaultSize: '32px',
         defaultWeight: '400',
@@ -40,7 +40,7 @@ export const JAKOB_SAMPLES: FontSample[] = [
     },
     {
         label: 'heading-2',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-[32px] → md:text-5xl',
         defaultSize: '32px',
         defaultWeight: '400',
@@ -51,7 +51,7 @@ export const JAKOB_SAMPLES: FontSample[] = [
     },
     {
         label: 'cta-heading',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-[32px] → md:text-5xl',
         defaultSize: '32px',
         defaultWeight: '600',
@@ -62,7 +62,7 @@ export const JAKOB_SAMPLES: FontSample[] = [
     },
     {
         label: 'card-title',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-[20px] → md:text-[2rem]',
         defaultSize: '20px',
         defaultWeight: '400',
@@ -73,7 +73,7 @@ export const JAKOB_SAMPLES: FontSample[] = [
     },
     {
         label: 'feature-title',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-2xl (24px)',
         defaultSize: '24px',
         defaultWeight: '600',
@@ -84,7 +84,7 @@ export const JAKOB_SAMPLES: FontSample[] = [
     },
     {
         label: 'faq-question',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-2xl (24px)',
         defaultSize: '24px',
         defaultWeight: '400',
@@ -95,7 +95,7 @@ export const JAKOB_SAMPLES: FontSample[] = [
     },
     {
         label: 'highlight-card',
-        fontClass: 'font-jakob',
+        fontClass: 'font-sf-pro',
         sizeToken: 'text-[2rem] → lg:text-5xl',
         defaultSize: '32px',
         defaultWeight: '400',
@@ -367,18 +367,11 @@ export const CUSTOM_SPACING: SpacingToken[] = [
 
 export const FONT_VARS = [
     {
-        cssVar: '--font-jakob',
-        label: 'font-jakob',
-        usage: 'Headings e títulos das páginas públicas',
-        default: "'dT_Jakob', Georgia, serif",
-        source: 'src/index.css:104',
-    },
-    {
         cssVar: '--font-sf-pro',
         label: 'font-sf-pro',
-        usage: 'Corpo de texto das páginas públicas',
+        usage: 'Fonte única do projeto — headings e corpo de texto',
         default: "'Inter', system-ui, sans-serif",
-        source: 'src/index.css:105',
+        source: 'src/index.css:104',
     },
 ] as const;
 

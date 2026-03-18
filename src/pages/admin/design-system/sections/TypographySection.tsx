@@ -3,26 +3,18 @@ import { CopyTokenButton } from '../shared/CopyTokenButton';
 import { JAKOB_SAMPLES, SF_PRO_SAMPLES, INTER_SAMPLES, type FontSample } from '../tokens';
 import type { EditorProps } from '../DesignSystemPage';
 
-// Tokens de font-family que vivem em index.css :root
+// Token de font-family que vive em index.css :root
 const FONT_VARS = [
-    {
-        cssVar: '--font-jakob',
-        label: 'font-jakob',
-        usage: 'Headings e títulos das páginas públicas',
-        default: "'dT_Jakob', Georgia, serif",
-        source: 'src/index.css:104',
-    },
     {
         cssVar: '--font-sf-pro',
         label: 'font-sf-pro',
-        usage: 'Corpo de texto das páginas públicas',
+        usage: 'Fonte única do projeto — headings e corpo de texto',
         default: "'Inter', system-ui, sans-serif",
-        source: 'src/index.css:105',
+        source: 'src/index.css:104',
     },
 ];
 
 const FONT_CLASS_TO_VAR: Record<string, string> = {
-    'font-jakob': '--font-jakob',
     'font-sf-pro': '--font-sf-pro',
 };
 
@@ -256,8 +248,8 @@ export function TypographySection({ editorProps }: Props) {
 
             {/* ── Font samples ──────────────────────────────────────── */}
             <FontGroup
-                title="dT Jakob"
-                subtitle="font-jakob — headings das páginas públicas"
+                title="Inter — Headings"
+                subtitle="font-sf-pro — headings das páginas públicas"
                 source="index.css:94"
                 samples={JAKOB_SAMPLES}
                 editorProps={editorProps}

@@ -7,10 +7,10 @@ import { cn } from '@/lib/utils';
 const typographyVariants = cva('', {
     variants: {
         variant: {
-            display:  'font-jakob text-5xl lowercase',
-            heading1: 'font-jakob text-[32px] md:text-5xl md:leading-[60px] lowercase',
-            heading2: 'font-jakob text-3xl lowercase',
-            heading3: 'font-jakob text-2xl leading-9 lowercase',
+            display:  'font-sf-pro text-5xl lowercase',
+            heading1: 'font-sf-pro text-[32px] md:text-5xl md:leading-[60px] lowercase',
+            heading2: 'font-sf-pro text-3xl lowercase',
+            heading3: 'font-sf-pro text-2xl leading-9 lowercase',
             eyebrow:  'font-sf-pro text-sm tracking-[0.14em] uppercase',
             bodyLg:   'font-sf-pro text-xl leading-8',
             body:     'font-sf-pro text-base leading-7',
