@@ -45,7 +45,21 @@ const AdminProductsPage = lazy(() => import("@/pages/admin/products/AdminProduct
 const AdminTanksPage = lazy(() => import("@/pages/admin/tanks/AdminTanksPage").then(m => ({ default: m.AdminTanksPage })));
 const DesignSystemPage = lazy(() => import("@/pages/admin/design-system/DesignSystemPage").then(m => ({ default: m.DesignSystemPage })));
 
+// Apply persisted design token overrides from localStorage on every mount
+const DS_STORAGE_KEY = 'void-ds-token-overrides';
+export function applyStoredTokens() {
+  try {
+    const stored = localStorage.getItem(DS_STORAGE_KEY);
+    if (!stored) return;
+    const tokens: Record<string, string> = JSON.parse(stored);
+    Object.entries(tokens).forEach(([cssVar, value]) => {
+      document.documentElement.style.setProperty(cssVar, value);
+    });
+  } catch {}
+}
+
 function App() {
+  applyStoredTokens();
   return (
     <CartProvider>
       <EasterEgg />

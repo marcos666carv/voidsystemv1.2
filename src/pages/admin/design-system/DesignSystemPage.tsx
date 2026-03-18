@@ -21,6 +21,23 @@ export type EditorProps = {
     editMode: boolean;
 };
 
+// ─── Storage ──────────────────────────────────────────────────────────────────
+
+const DS_STORAGE_KEY = 'void-ds-token-overrides';
+
+function loadStoredTokens(): Record<string, string> {
+    try {
+        const raw = localStorage.getItem(DS_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch { return {}; }
+}
+
+function persistTokens(tokens: Record<string, string>) {
+    try {
+        localStorage.setItem(DS_STORAGE_KEY, JSON.stringify(tokens));
+    } catch {}
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export function DesignSystemPage() {
@@ -78,12 +95,18 @@ export function DesignSystemPage() {
         setSaveStatus('idle');
     };
 
-    // ── Salvar no projeto ────────────────────────────────────────────────────
+    // ── Salvar (localStorage + tentativa de reescrita em dev) ────────────────
     const saveToProject = async () => {
         setSaveStatus('saving');
         const changes = Object.fromEntries(
             Object.entries(pendingChanges).map(([k, v]) => [k, v.value])
         );
+
+        // Persiste no localStorage — funciona em dev e prod
+        const existing = loadStoredTokens();
+        persistTokens({ ...existing, ...changes });
+
+        // Tenta reescrever src/index.css via Vite plugin (só funciona em dev)
         try {
             const res = await fetch('/api/design-tokens', {
                 method: 'POST',
@@ -91,20 +114,18 @@ export function DesignSystemPage() {
                 body: JSON.stringify({ changes }),
             });
             const data = await res.json();
-            if (data.success) {
-                // Remove overrides do DOM (o arquivo agora tem os valores)
-                Object.keys(pendingChanges).forEach((cssVar) => {
-                    document.documentElement.style.removeProperty(cssVar);
-                });
-                setPendingChanges({});
-                setSaveStatus('success');
-                setTimeout(() => setSaveStatus('idle'), 3000);
-            } else {
-                setSaveStatus('error');
+            if (!data.success) {
+                // silencia erro de prod — o localStorage já salvou
             }
         } catch {
-            setSaveStatus('error');
+            // sem Vite plugin (prod) — ok, localStorage já salvou
         }
+
+        // Os tokens já estão aplicados no DOM via setProperty (live preview)
+        // então não removemos — eles ficam ativos e foram persistidos
+        setPendingChanges({});
+        setSaveStatus('success');
+        setTimeout(() => setSaveStatus('idle'), 3000);
     };
 
     const editorProps: EditorProps = {
