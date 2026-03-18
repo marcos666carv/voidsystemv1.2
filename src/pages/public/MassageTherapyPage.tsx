@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Crown } from 'lucide-react';
-import { useDragScroll } from '@/hooks/useDragScroll';
+import { ReasonsCarousel } from '@/components/site/ReasonsCarousel';
 import {
     SiteAccordion,
     SiteAccordionItem,
@@ -90,60 +90,6 @@ function HeroSection() {
 
 // ─── Reasons ──────────────────────────────────────────────────────────────────
 
-function ReasonsSection() {
-    const { ref } = useDragScroll<HTMLUListElement>();
-
-    return (
-        <section id="massoterapia" className="bg-[#e3e3d9] py-30">
-            <div className="flex flex-col gap-18 md:gap-20">
-                <div className="site-container">
-                    <h2 className="font-sf-pro text-[32px] md:text-5xl lowercase text-[#082b3b]">
-                        massoterapia para reconectar
-                    </h2>
-                </div>
-
-                <ul
-                    ref={ref}
-                    className="flex gap-5 h-fit scrollbar-none overflow-y-hidden cursor-grab overflow-x-auto"
-                >
-                    {REASONS.map((reason) => (
-                        <li
-                            key={reason.title}
-                            className="first:pl-8 last:pr-8 xl:first:pl-30 xl:last:pr-30"
-                        >
-                            <div className="relative">
-                                <img
-                                    alt={reason.title}
-                                    loading="lazy"
-                                    draggable={false}
-                                    src={reason.image}
-                                    className="select-none min-w-[282px] min-h-[420px] md:min-w-[640px] md:h-[740px] bg-center object-cover rounded-3xl"
-                                />
-                                <div className="hidden md:block absolute -right-px top-12">
-                                    <img
-                                        alt=""
-                                        src="/assets/svgs/card-border-wave.svg"
-                                        width={48}
-                                        height={213}
-                                        className="select-none pointer-events-none"
-                                    />
-                                </div>
-                            </div>
-                            <div className="w-full flex flex-col gap-1 py-4 px-8">
-                                <h3 className="font-sf-pro text-[20px] md:text-[2rem] leading-6 lowercase text-[#082b3b]">
-                                    {reason.title}
-                                </h3>
-                                <p className="font-sf-pro text-xl leading-8 text-[#082b3b]">
-                                    {reason.description}
-                                </p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </section>
-    );
-}
 
 // ─── Escolha / Pricing Organism ───────────────────────────────────────────────
 
@@ -445,7 +391,7 @@ export default function MassageTherapyPage() {
     return (
         <main className="bg-[#e3e3d9]">
             <HeroSection />
-            <ReasonsSection />
+            <ReasonsCarousel id="massoterapia" heading="massoterapia para reconectar" items={REASONS} />
             <PricingSection />
             <ScheduleCTASection />
             <HighlightsSection />
