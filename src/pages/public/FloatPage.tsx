@@ -81,10 +81,9 @@ function HeroSection() {
 
             <div className="site-container flex flex-col h-full justify-end pb-16 md:pb-24">
                 <div className="flex flex-col gap-8 max-w-[560px]">
-                    <h2
-                        className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.95] lowercase"
-                        dangerouslySetInnerHTML={{ __html: 'o que a mente pensa,<br />o corpo sente.' }}
-                    />
+                    <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.95] lowercase">
+                        o que a mente pensa, o corpo sente.
+                    </h2>
                     <p className="text-lg text-white/70 leading-relaxed">
                         conheça a VOID, o primeiro spa de flutuação em Curitiba.
                     </p>
