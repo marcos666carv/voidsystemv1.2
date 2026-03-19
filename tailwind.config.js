@@ -1,3 +1,14 @@
+/**
+ * @file tailwind.config.js
+ * @description Tailwind CSS configuration.
+ *
+ * ⚠️  Cores brand (lilac, void, site) espelham src/design-system/tokens/palette.ts
+ *     tailwind.config.js não pode importar .ts diretamente (Node.js sem transpile).
+ *     Ao alterar cores, atualize palette.ts E este arquivo.
+ *
+ * Design System TypeScript: import { colors } from '@ds'
+ */
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -40,31 +51,30 @@ export default {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                // ─── Brand scales — espelha src/design-system/tokens/palette.ts ───
                 lilac: {
-                    50: '#F5F0FA',
-                    100: '#EDE4F7',
-                    200: '#DCC8F0',
-                    300: '#CCB0F0',
-                    400: '#B898E0',
-                    500: '#A880D0',
-                    600: '#9060C0',
-                    700: '#7548A0',
-                    800: '#5A3580',
-                    900: '#3F2460',
-                    950: '#241440',
+                    50: '#F5F0FA', 100: '#EDE4F7', 200: '#DCC8F0',
+                    300: '#CCB0F0', 400: '#B898E0', 500: '#A880D0',
+                    600: '#9060C0', 700: '#7548A0', 800: '#5A3580',
+                    900: '#3F2460', 950: '#241440',
                 },
                 void: {
-                    50: '#E8F0F4',
-                    100: '#C8DBE3',
-                    200: '#9BBCC9',
-                    300: '#6E9DAF',
-                    400: '#4A7E95',
-                    500: '#2E5F7A',
-                    600: '#1A4560',
-                    700: '#103549',
-                    800: '#08283B',
-                    900: '#051C2A',
-                    950: '#030F18',
+                    50: '#E8F0F4', 100: '#C8DBE3', 200: '#9BBCC9',
+                    300: '#6E9DAF', 400: '#4A7E95', 500: '#2E5F7A',
+                    600: '#1A4560', 700: '#103549', 800: '#08283B',
+                    900: '#051C2A', 950: '#030F18',
+                },
+                // ─── Site palette — espelha src/design-system/tokens/palette.ts ──
+                site: {
+                    alabaster:      '#e3e3d9',
+                    gunmetal:       '#082b3b',
+                    tiffany:        '#b0d6cf',
+                    rust:           '#ab542b',
+                    ocean:          '#008cff',
+                    mauve:          '#ccb0f0',
+                    silver:         '#86868b',
+                    deepOcean:      '#07162b',
+                    electricViolet: '#896dad',
                 },
             },
             borderRadius: {

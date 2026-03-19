@@ -29,9 +29,12 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@ds":        ["./src/design-system/index.ts"],
+      "@ds/*":      ["./src/design-system/*"],
+      "@ds/tokens": ["./src/design-system/tokens/index.ts"],
+      "@ds/components": ["./src/design-system/components/index.ts"],
+      "@ds/utils":  ["./src/design-system/utils/index.ts"]
     }
   },
   "include": [

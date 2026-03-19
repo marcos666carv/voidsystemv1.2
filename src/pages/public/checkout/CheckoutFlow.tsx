@@ -339,7 +339,7 @@ export default function CheckoutFlow() {
                                 size="lg"
                                 className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl px-10"
                                 onClick={handleNext}
-                                disabled={!canProceed() || status === 'processing'}
+                                disabled={!canProceed()}
                             >
                                 {currentStepIdx === steps.length - 1 ? 'Finalizar Compra' : 'Continuar'}
                             </Button>

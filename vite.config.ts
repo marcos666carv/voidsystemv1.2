@@ -54,7 +54,8 @@ export default defineConfig({
   plugins: [react(), designTokensPlugin()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@":  path.resolve(__dirname, "./src"),
+      "@ds": path.resolve(__dirname, "./src/design-system"),
     },
   },
 })
